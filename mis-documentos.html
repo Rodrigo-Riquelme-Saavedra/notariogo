@@ -9,55 +9,91 @@
   <style>
     .nav-logo-text { font-size: 22px; font-weight: 800; color: #0D1B3E; text-decoration: none; letter-spacing: -0.5px; }
     .nav-logo-text span { color: #3B8BFF; }
+    body { background: #F7F9FC; }
 
-    .page-header { background: #0D1B3E !important; padding: 3rem 2rem !important; text-align: center !important; }
-    .page-header h1 { font-family: 'DM Serif Display', serif !important; font-size: 2.4rem !important; color: white !important; margin-bottom: .5rem !important; }
-    .page-header p { color: rgba(255,255,255,0.6) !important; font-size: 15px !important; }
+    .page-header { background: #0D1B3E; padding: 3rem 2rem; text-align: center; }
+    .page-header h1 { font-family: 'DM Serif Display', serif; font-size: 2.4rem; color: white; margin-bottom: .5rem; }
+    .page-header p { color: rgba(255,255,255,0.6); font-size: 15px; }
+    .page-content { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
 
-    .page-content { max-width: 1100px !important; margin: 0 auto !important; padding: 3rem 2rem !important; }
-
-    footer { background: #0D1B3E !important; padding: 3rem 2rem 2rem !important; }
-    .footer-top { display: flex !important; justify-content: space-between !important; flex-wrap: wrap !important; gap: 2rem !important; margin-bottom: 2rem !important; }
-    .footer-logo { font-size: 20px !important; font-weight: 800 !important; color: white !important; text-decoration: none !important; display: block !important; margin-bottom: .3rem !important; }
-    .footer-logo span { color: #5DB3FF !important; }
-    .footer-tagline { font-size: 13px !important; color: rgba(255,255,255,0.45) !important; }
-    .footer-links { display: flex !important; gap: 3rem !important; }
-    .footer-col h5 { font-size: 12px !important; font-weight: 700 !important; text-transform: uppercase !important; letter-spacing: .06em !important; color: rgba(255,255,255,0.45) !important; margin-bottom: 1rem !important; }
-    .footer-col a { display: block !important; font-size: 13px !important; color: rgba(255,255,255,0.7) !important; text-decoration: none !important; margin-bottom: .6rem !important; }
-    .footer-col a:hover { color: white !important; }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1) !important; padding-top: 1.5rem !important; display: flex !important; justify-content: space-between !important; flex-wrap: wrap !important; gap: 1rem !important; }
-    .footer-copy { font-size: 12px !important; color: rgba(255,255,255,0.35) !important; }
-
-    .resumen-card {
-      background: #0D1B3E; border-radius: 16px; padding: 1.5rem 2rem;
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;
-    }
+    /* BIENVENIDA */
+    .resumen-card { background: #0D1B3E; border-radius: 16px; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
     .resumen-card p { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: .25rem; }
     .resumen-card h2 { font-family: 'DM Serif Display', serif; color: white; font-size: 1.6rem; margin-bottom: .25rem; }
     .resumen-card span { font-size: 13px; color: rgba(255,255,255,0.55); }
     .resumen-btns { display: flex; gap: .75rem; flex-wrap: wrap; }
-    .btn-ghost-dark {
-      background: rgba(255,255,255,0.1); color: white;
-      border: 1.5px solid rgba(255,255,255,0.25); border-radius: 8px;
-      padding: 10px 20px; font-size: 13px; font-weight: 600;
-      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1rem; }
-    .doc-card {
-      background: white; border: 2px solid #C1CBDF;
-      border-radius: 14px; padding: 1.25rem;
-      box-shadow: 0 2px 8px rgba(13,27,62,0.06);
-    }
-    .doc-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .75rem; }
-    .doc-emoji { font-size: 26px; }
-    .doc-estado { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 100px; }
-    .doc-card h4 { font-size: 14px; font-weight: 700; color: #0D1B3E; margin-bottom: .25rem; }
-    .doc-card p { font-size: 12px; color: #7888A8; }
-    .empty-state { text-align: center; padding: 4rem 2rem; }
-    .empty-state .empty-icon { font-size: 56px; margin-bottom: 1rem; }
-    .empty-state h3 { font-family: 'DM Serif Display', serif; color: #0D1B3E; font-size: 1.6rem; margin-bottom: .5rem; }
+    .btn-nuevo { background: #FFB800; color: #0D1B3E; border: none; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 800; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all .2s; }
+    .btn-nuevo:hover { background: #FFCA40; transform: translateY(-1px); }
+    .btn-salir { background: rgba(255,255,255,0.1); color: white; border: 1.5px solid rgba(255,255,255,0.25); border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all .2s; }
+    .btn-salir:hover { background: rgba(255,255,255,0.18); }
+
+    /* FILTROS */
+    .filtros-bar { display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center; }
+    .filtro-btn { padding: 7px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; border: 1.5px solid #C1CBDF; background: white; color: #7888A8; transition: all .2s; }
+    .filtro-btn:hover { border-color: #1E6FE8; color: #1E6FE8; }
+    .filtro-btn.active { border-color: #1E6FE8; background: #1E6FE8; color: white; }
+    .filtros-count { margin-left: auto; font-size: 13px; color: #7888A8; font-weight: 600; }
+
+    /* GRID DOCUMENTOS */
+    .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 1.25rem; }
+
+    /* CARD DOCUMENTO MEJORADA */
+    .doc-card { background: white; border: 2px solid #EEF2F9; border-radius: 16px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(13,27,62,0.06); transition: all .2s; display: flex; flex-direction: column; gap: .875rem; }
+    .doc-card:hover { border-color: #C5D9FF; box-shadow: 0 6px 20px rgba(13,27,62,0.1); transform: translateY(-2px); }
+
+    .doc-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .doc-tipo-wrap { display: flex; align-items: center; gap: 10px; }
+    .doc-emoji-circle { width: 44px; height: 44px; border-radius: 12px; background: #E6F0FF; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+    .doc-tipo { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #7888A8; }
+    .doc-subtipo { font-size: 13px; font-weight: 700; color: #0D1B3E; margin-top: 2px; }
+
+    .estado-pill { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 100px; text-transform: uppercase; letter-spacing: .04em; flex-shrink: 0; }
+
+    /* SEPARADOR */
+    .doc-divider { height: 1px; background: #EEF2F9; }
+
+    /* INFO PERSONAS */
+    .doc-personas { display: flex; flex-direction: column; gap: .5rem; }
+    .doc-persona { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+    .doc-persona-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #7888A8; min-width: 70px; }
+    .doc-persona-nombre { font-weight: 600; color: #0D1B3E; }
+
+    /* CÓDIGO ÚNICO */
+    .doc-codigo { display: flex; align-items: center; gap: 8px; background: #F7F9FC; border: 1px solid #EEF2F9; border-radius: 8px; padding: .5rem .875rem; }
+    .doc-codigo-label { font-size: 11px; font-weight: 700; color: #7888A8; text-transform: uppercase; letter-spacing: .04em; }
+    .doc-codigo-val { font-family: 'Courier New', monospace; font-size: 12px; font-weight: 700; color: #0D1B3E; letter-spacing: .04em; flex: 1; }
+    .doc-codigo-copy { background: none; border: none; cursor: pointer; font-size: 14px; padding: 0; opacity: .6; transition: opacity .2s; }
+    .doc-codigo-copy:hover { opacity: 1; }
+
+    /* FOOTER CARD */
+    .doc-card-footer { display: flex; justify-content: space-between; align-items: center; }
+    .doc-fecha { font-size: 12px; color: #7888A8; }
+    .doc-ver { font-size: 12px; font-weight: 700; color: #1E6FE8; text-decoration: none; cursor: pointer; background: none; border: none; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .doc-ver:hover { text-decoration: underline; }
+
+    /* EMPTY STATE */
+    .empty-state { text-align: center; padding: 5rem 2rem; }
+    .empty-icon { font-size: 64px; margin-bottom: 1rem; }
+    .empty-state h3 { font-family: 'DM Serif Display', serif; color: #0D1B3E; font-size: 1.8rem; margin-bottom: .5rem; }
     .empty-state p { color: #7888A8; font-size: 15px; margin-bottom: 1.5rem; }
+
+    /* LOADING */
+    .loading { text-align: center; padding: 4rem; color: #7888A8; }
+    .spinner { width: 36px; height: 36px; border: 3px solid #EEF2F9; border-top-color: #1E6FE8; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* FOOTER */
+    footer { background: #0D1B3E; padding: 3rem 2rem 2rem; margin-top: 2rem; }
+    .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; }
+    .footer-logo { font-size: 20px; font-weight: 800; color: white; text-decoration: none; display: block; margin-bottom: .3rem; }
+    .footer-logo span { color: #5DB3FF; }
+    .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.45); }
+    .footer-links { display: flex; gap: 3rem; }
+    .footer-col h5 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,0.45); margin-bottom: 1rem; }
+    .footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,0.7); text-decoration: none; margin-bottom: .6rem; }
+    .footer-col a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.35); }
   </style>
 </head>
 <body>
@@ -83,11 +119,20 @@
 
 <div class="page-content">
   <div id="resumen-usuario"></div>
-  <div id="mis-docs-contenido">
-    <div class="empty-state">
-      <div class="empty-icon">⏳</div>
-      <p style="color:#7888A8;">Cargando tus documentos...</p>
+
+  <div id="filtros-wrap" style="display:none;">
+    <div class="filtros-bar">
+      <button class="filtro-btn active" onclick="filtrarEstado('todos', this)">Todos</button>
+      <button class="filtro-btn" onclick="filtrarEstado('Pendiente', this)">⏳ Pendientes</button>
+      <button class="filtro-btn" onclick="filtrarEstado('En proceso', this)">🔄 En proceso</button>
+      <button class="filtro-btn" onclick="filtrarEstado('Completado', this)">✅ Completados</button>
+      <button class="filtro-btn" onclick="filtrarEstado('Rechazado', this)">❌ Rechazados</button>
+      <span class="filtros-count" id="filtros-count"></span>
     </div>
+  </div>
+
+  <div id="mis-docs-contenido">
+    <div class="loading"><div class="spinner"></div>Cargando tus documentos...</div>
   </div>
 </div>
 
@@ -120,22 +165,127 @@
 <script src="js/jsonbin.js"></script>
 <script src="js/app.js"></script>
 <script>
+  let tramitesUsuario = [];
+
   function estadoColor(estado) {
     const c = {
-      'Pendiente':  { bg:'#FEF3C7', text:'#92400E' },
-      'En proceso': { bg:'#DBEAFE', text:'#1E40AF' },
-      'Completado': { bg:'#D1FAE5', text:'#065F46' },
-      'Rechazado':  { bg:'#FEE2E2', text:'#991B1B' }
+      'Pendiente':   { bg:'#FEF3C7', text:'#92400E' },
+      'En proceso':  { bg:'#DBEAFE', text:'#1E40AF' },
+      'Completado':  { bg:'#D1FAE5', text:'#065F46' },
+      'Rechazado':   { bg:'#FEE2E2', text:'#991B1B' }
     };
     return c[estado] || { bg:'#EEF2F9', text:'#3A4A6B' };
+  }
+
+  function formatearFecha(iso) {
+    return new Date(iso).toLocaleDateString('es-CL', { day:'2-digit', month:'long', year:'numeric' });
+  }
+
+  // Extraer tipo principal y subtipo del nombre
+  function parseTipo(tipo) {
+    const partes = tipo.split('—').map(s => s.trim());
+    return {
+      principal: partes[0] || tipo,
+      subtipo: partes[1] || ''
+    };
+  }
+
+  // Extraer nombre del otorgante del formulario si existe
+  function getNombreOtorgante(tramite) {
+    if (tramite.formulario?.nombre_otorgante) return tramite.formulario.nombre_otorgante;
+    return tramite.usuarioNombre || '—';
+  }
+
+  function getNombreApoderado(tramite) {
+    if (tramite.formulario?.nombre_apoderado) return tramite.formulario.nombre_apoderado;
+    return null;
+  }
+
+  function copiarCodigo(codigo) {
+    navigator.clipboard.writeText(codigo).then(() => {
+      alert('Código copiado: ' + codigo);
+    }).catch(() => {
+      prompt('Copia este código:', codigo);
+    });
+  }
+
+  function renderTramites(lista) {
+    const contenido = document.getElementById('mis-docs-contenido');
+    document.getElementById('filtros-count').textContent = `${lista.length} documento${lista.length !== 1 ? 's' : ''}`;
+
+    if (lista.length === 0) {
+      contenido.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">📄</div>
+          <h3>Sin resultados</h3>
+          <p>No tienes trámites con ese estado.</p>
+          <a href="tramites.html" class="btn-nuevo" style="display:inline-flex; margin:0 auto;">+ Nuevo trámite</a>
+        </div>`;
+      return;
+    }
+
+    contenido.innerHTML = `<div class="doc-grid">${lista.map(t => {
+      const col = estadoColor(t.estado);
+      const { principal, subtipo } = parseTipo(t.tipo);
+      const otorgante = getNombreOtorgante(t);
+      const apoderado = getNombreApoderado(t);
+      const codigo = t.codigo || '—';
+
+      return `
+        <div class="doc-card">
+          <div class="doc-card-top">
+            <div class="doc-tipo-wrap">
+              <div class="doc-emoji-circle">${t.emoji || '📋'}</div>
+              <div>
+                <div class="doc-tipo">${principal}</div>
+                <div class="doc-subtipo">${subtipo || principal}</div>
+              </div>
+            </div>
+            <span class="estado-pill" style="background:${col.bg}; color:${col.text};">${t.estado}</span>
+          </div>
+
+          <div class="doc-divider"></div>
+
+          <div class="doc-personas">
+            <div class="doc-persona">
+              <span class="doc-persona-label">Otorgante</span>
+              <span class="doc-persona-nombre">${otorgante}</span>
+            </div>
+            ${apoderado ? `
+            <div class="doc-persona">
+              <span class="doc-persona-label">Apoderado</span>
+              <span class="doc-persona-nombre">${apoderado}</span>
+            </div>` : ''}
+          </div>
+
+          <div class="doc-codigo">
+            <span class="doc-codigo-label">Código</span>
+            <span class="doc-codigo-val">${codigo}</span>
+            ${codigo !== '—' ? `<button class="doc-codigo-copy" onclick="copiarCodigo('${codigo}')" title="Copiar código">📋</button>` : ''}
+          </div>
+
+          <div class="doc-card-footer">
+            <span class="doc-fecha">📅 ${formatearFecha(t.fecha)}</span>
+          </div>
+        </div>`;
+    }).join('')}</div>`;
+  }
+
+  function filtrarEstado(estado, btn) {
+    document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const lista = estado === 'todos'
+      ? tramitesUsuario
+      : tramitesUsuario.filter(t => t.estado === estado);
+    renderTramites(lista);
   }
 
   document.addEventListener('DOMContentLoaded', async () => {
     const user = usuarioActual();
     if (!user) return window.location.href = 'login.html';
 
-    const resumen = document.getElementById('resumen-usuario');
-    resumen.innerHTML = `
+    // Saludo
+    document.getElementById('resumen-usuario').innerHTML = `
       <div class="resumen-card">
         <div>
           <p>Bienvenido de vuelta</p>
@@ -143,44 +293,35 @@
           <span>${user.email}</span>
         </div>
         <div class="resumen-btns">
-          <a href="tramites.html" class="btn-primary" style="font-size:13px; padding:10px 20px;">+ Nuevo trámite</a>
-          <button onclick="cerrarSesion()" class="btn-ghost-dark">Cerrar sesión</button>
+          <a href="tramites.html" class="btn-nuevo">+ Nuevo trámite</a>
+          <button onclick="cerrarSesion()" class="btn-salir">Cerrar sesión</button>
         </div>
-      </div>
-    `;
+      </div>`;
 
-    const contenido = document.getElementById('mis-docs-contenido');
     try {
       const data = await JSONBIN.get('tramites');
-      const misTramites = data.tramites.filter(t => t.usuarioId === user.id);
+      tramitesUsuario = (data.tramites || [])
+        .filter(t => t.usuarioId === user.id)
+        .sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
 
-      if (misTramites.length === 0) {
-        contenido.innerHTML = `
+      if (tramitesUsuario.length === 0) {
+        document.getElementById('mis-docs-contenido').innerHTML = `
           <div class="empty-state">
             <div class="empty-icon">📄</div>
             <h3>Aún no tienes trámites</h3>
             <p>Inicia tu primer trámite notarial en minutos.</p>
-            <a href="tramites.html" class="btn-primary" style="font-size:14px; padding:12px 28px;">Iniciar trámite</a>
+            <a href="tramites.html" class="btn-nuevo" style="display:inline-flex; margin:0 auto;">+ Iniciar trámite</a>
           </div>`;
         return;
       }
 
-      contenido.innerHTML = `<div class="doc-grid">
-        ${misTramites.map(t => {
-          const col = estadoColor(t.estado);
-          return `
-          <div class="doc-card">
-            <div class="doc-card-top">
-              <span class="doc-emoji">${t.emoji || '📋'}</span>
-              <span class="doc-estado" style="background:${col.bg}; color:${col.text};">${t.estado}</span>
-            </div>
-            <h4>${t.tipo}</h4>
-            <p>${new Date(t.fecha).toLocaleDateString('es-CL',{day:'2-digit',month:'long',year:'numeric'})}</p>
-          </div>`;
-        }).join('')}
-      </div>`;
+      document.getElementById('filtros-wrap').style.display = 'block';
+      document.getElementById('filtros-count').textContent = `${tramitesUsuario.length} documento${tramitesUsuario.length !== 1 ? 's' : ''}`;
+      renderTramites(tramitesUsuario);
+
     } catch(e) {
-      contenido.innerHTML = '<p style="color:red; text-align:center;">Error al cargar. Intenta más tarde.</p>';
+      document.getElementById('mis-docs-contenido').innerHTML =
+        '<p style="color:red; text-align:center; padding:2rem;">Error al cargar. Intenta más tarde.</p>';
     }
   });
 </script>
