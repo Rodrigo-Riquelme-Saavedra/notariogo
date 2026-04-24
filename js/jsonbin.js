@@ -9,8 +9,14 @@ const JSONBIN = {
 
   async get(bin) {
     const r = await fetch(`${this.BASE}/${this.BINS[bin]}/latest`, {
-      headers: { "X-Master-Key": this.KEY }
+      method: "GET",
+      headers: {
+        "X-Master-Key": this.KEY,
+        "X-Access-Key": this.KEY,
+        "Content-Type": "application/json"
+      }
     });
+    if (!r.ok) throw new Error(`Error GET ${bin}: ${r.status}`);
     const data = await r.json();
     return data.record;
   },
@@ -20,10 +26,12 @@ const JSONBIN = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "X-Master-Key": this.KEY
+        "X-Master-Key": this.KEY,
+        "X-Access-Key": this.KEY
       },
       body: JSON.stringify(record)
     });
+    if (!r.ok) throw new Error(`Error PUT ${bin}: ${r.status}`);
     return await r.json();
   }
 };
