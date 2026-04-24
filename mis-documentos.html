@@ -6,13 +6,64 @@
   <title>NotarioGO — Mis documentos</title>
   <link rel="stylesheet" href="css/style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    .nav-logo-text { font-size: 22px; font-weight: 800; color: #0D1B3E; text-decoration: none; letter-spacing: -0.5px; }
+    .nav-logo-text span { color: #3B8BFF; }
+
+    .page-header { background: #0D1B3E !important; padding: 3rem 2rem !important; text-align: center !important; }
+    .page-header h1 { font-family: 'DM Serif Display', serif !important; font-size: 2.4rem !important; color: white !important; margin-bottom: .5rem !important; }
+    .page-header p { color: rgba(255,255,255,0.6) !important; font-size: 15px !important; }
+
+    .page-content { max-width: 1100px !important; margin: 0 auto !important; padding: 3rem 2rem !important; }
+
+    footer { background: #0D1B3E !important; padding: 3rem 2rem 2rem !important; }
+    .footer-top { display: flex !important; justify-content: space-between !important; flex-wrap: wrap !important; gap: 2rem !important; margin-bottom: 2rem !important; }
+    .footer-logo { font-size: 20px !important; font-weight: 800 !important; color: white !important; text-decoration: none !important; display: block !important; margin-bottom: .3rem !important; }
+    .footer-logo span { color: #5DB3FF !important; }
+    .footer-tagline { font-size: 13px !important; color: rgba(255,255,255,0.45) !important; }
+    .footer-links { display: flex !important; gap: 3rem !important; }
+    .footer-col h5 { font-size: 12px !important; font-weight: 700 !important; text-transform: uppercase !important; letter-spacing: .06em !important; color: rgba(255,255,255,0.45) !important; margin-bottom: 1rem !important; }
+    .footer-col a { display: block !important; font-size: 13px !important; color: rgba(255,255,255,0.7) !important; text-decoration: none !important; margin-bottom: .6rem !important; }
+    .footer-col a:hover { color: white !important; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1) !important; padding-top: 1.5rem !important; display: flex !important; justify-content: space-between !important; flex-wrap: wrap !important; gap: 1rem !important; }
+    .footer-copy { font-size: 12px !important; color: rgba(255,255,255,0.35) !important; }
+
+    .resumen-card {
+      background: #0D1B3E; border-radius: 16px; padding: 1.5rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;
+    }
+    .resumen-card p { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: .25rem; }
+    .resumen-card h2 { font-family: 'DM Serif Display', serif; color: white; font-size: 1.6rem; margin-bottom: .25rem; }
+    .resumen-card span { font-size: 13px; color: rgba(255,255,255,0.55); }
+    .resumen-btns { display: flex; gap: .75rem; flex-wrap: wrap; }
+    .btn-ghost-dark {
+      background: rgba(255,255,255,0.1); color: white;
+      border: 1.5px solid rgba(255,255,255,0.25); border-radius: 8px;
+      padding: 10px 20px; font-size: 13px; font-weight: 600;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1rem; }
+    .doc-card {
+      background: white; border: 2px solid #C1CBDF;
+      border-radius: 14px; padding: 1.25rem;
+      box-shadow: 0 2px 8px rgba(13,27,62,0.06);
+    }
+    .doc-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .75rem; }
+    .doc-emoji { font-size: 26px; }
+    .doc-estado { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 100px; }
+    .doc-card h4 { font-size: 14px; font-weight: 700; color: #0D1B3E; margin-bottom: .25rem; }
+    .doc-card p { font-size: 12px; color: #7888A8; }
+    .empty-state { text-align: center; padding: 4rem 2rem; }
+    .empty-state .empty-icon { font-size: 56px; margin-bottom: 1rem; }
+    .empty-state h3 { font-family: 'DM Serif Display', serif; color: #0D1B3E; font-size: 1.6rem; margin-bottom: .5rem; }
+    .empty-state p { color: #7888A8; font-size: 15px; margin-bottom: 1.5rem; }
+  </style>
 </head>
 <body>
 
 <nav>
-  <a class="nav-logo" href="index.html">
-    <img src="assets/Logo-NotarioGO.png" alt="NotarioGO"/>
-  </a>
+  <a class="nav-logo-text" href="index.html">Notario<span>Go</span></a>
   <div class="nav-links">
     <a href="index.html">Inicio</a>
     <a href="tramites.html">Trámites</a>
@@ -31,15 +82,13 @@
 </div>
 
 <div class="page-content">
-
-  <!-- RESUMEN -->
-  <div id="resumen-usuario" style="margin-bottom:2rem;"></div>
-
-  <!-- CONTENIDO PRINCIPAL -->
+  <div id="resumen-usuario"></div>
   <div id="mis-docs-contenido">
-    <p style="color:var(--gray-500);">Cargando...</p>
+    <div class="empty-state">
+      <div class="empty-icon">⏳</div>
+      <p style="color:#7888A8;">Cargando tus documentos...</p>
+    </div>
   </div>
-
 </div>
 
 <footer>
@@ -63,4 +112,78 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="f
+    <div class="footer-copy">© 2025 NotarioGO SpA · Santiago, Chile</div>
+    <div class="footer-copy">Ley N° 19.799 sobre firma electrónica</div>
+  </div>
+</footer>
+
+<script src="js/jsonbin.js"></script>
+<script src="js/app.js"></script>
+<script>
+  function estadoColor(estado) {
+    const c = {
+      'Pendiente':  { bg:'#FEF3C7', text:'#92400E' },
+      'En proceso': { bg:'#DBEAFE', text:'#1E40AF' },
+      'Completado': { bg:'#D1FAE5', text:'#065F46' },
+      'Rechazado':  { bg:'#FEE2E2', text:'#991B1B' }
+    };
+    return c[estado] || { bg:'#EEF2F9', text:'#3A4A6B' };
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const user = usuarioActual();
+    if (!user) return window.location.href = 'login.html';
+
+    const resumen = document.getElementById('resumen-usuario');
+    resumen.innerHTML = `
+      <div class="resumen-card">
+        <div>
+          <p>Bienvenido de vuelta</p>
+          <h2>${user.nombre}</h2>
+          <span>${user.email}</span>
+        </div>
+        <div class="resumen-btns">
+          <a href="tramites.html" class="btn-primary" style="font-size:13px; padding:10px 20px;">+ Nuevo trámite</a>
+          <button onclick="cerrarSesion()" class="btn-ghost-dark">Cerrar sesión</button>
+        </div>
+      </div>
+    `;
+
+    const contenido = document.getElementById('mis-docs-contenido');
+    try {
+      const data = await JSONBIN.get('tramites');
+      const misTramites = data.tramites.filter(t => t.usuarioId === user.id);
+
+      if (misTramites.length === 0) {
+        contenido.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📄</div>
+            <h3>Aún no tienes trámites</h3>
+            <p>Inicia tu primer trámite notarial en minutos.</p>
+            <a href="tramites.html" class="btn-primary" style="font-size:14px; padding:12px 28px;">Iniciar trámite</a>
+          </div>`;
+        return;
+      }
+
+      contenido.innerHTML = `<div class="doc-grid">
+        ${misTramites.map(t => {
+          const col = estadoColor(t.estado);
+          return `
+          <div class="doc-card">
+            <div class="doc-card-top">
+              <span class="doc-emoji">${t.emoji || '📋'}</span>
+              <span class="doc-estado" style="background:${col.bg}; color:${col.text};">${t.estado}</span>
+            </div>
+            <h4>${t.tipo}</h4>
+            <p>${new Date(t.fecha).toLocaleDateString('es-CL',{day:'2-digit',month:'long',year:'numeric'})}</p>
+          </div>`;
+        }).join('')}
+      </div>`;
+    } catch(e) {
+      contenido.innerHTML = '<p style="color:red; text-align:center;">Error al cargar. Intenta más tarde.</p>';
+    }
+  });
+</script>
+
+</body>
+</html>
