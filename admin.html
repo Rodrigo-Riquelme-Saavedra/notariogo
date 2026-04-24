@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NotarioGO — Panel Admin</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <style>
+    .nav-logo-text { font-size: 22px; font-weight: 800; color: #0D1B3E; text-decoration: none; letter-spacing: -0.5px; }
+    .nav-logo-text span { color: #3B8BFF; }
+    body { background: #F7F9FC; }
+
+    /* HEADER */
+    .admin-header {
+      background: #0D1B3E; padding: 2rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+    .admin-header-left h1 { font-family: 'DM Serif Display', serif; color: white; font-size: 1.8rem; margin-bottom: .25rem; }
+    .admin-header-left p { color: rgba(255,255,255,0.55); font-size: 13px; }
+    .admin-badge { background: rgba(255,184,0,0.2); border: 1px solid rgba(255,184,0,0.4); color: #FFB800; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 100px; text-transform: uppercase; letter-spacing: .05em; }
+
+    /* LAYOUT */
+    .admin-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+    /* KPI CARDS */
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .kpi-card { background: white; border: 2px solid #EEF2F9; border-radius: 16px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(13,27,62,0.06); }
+    .kpi-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .kpi-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .kpi-trend { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 100px; }
+    .trend-up { background: #D1FAE5; color: #065F46; }
+    .trend-neutral { background: #EEF2F9; color: #3A4A6B; }
+    .kpi-num { font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: #0D1B3E; margin-bottom: .25rem; }
+    .kpi-label { font-size: 13px; color: #7888A8; font-weight: 500; }
+
+    /* CHARTS */
+    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+    .chart-card { background: white; border: 2px solid #EEF2F9; border-radius: 16px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(13,27,62,0.06); }
+    .chart-card.full { grid-column: 1 / -1; }
+    .chart-title { font-size: 15px; font-weight: 700; color: #0D1B3E; margin-bottom: .25rem; }
+    .chart-sub { font-size: 12px; color: #7888A8; margin-bottom: 1.25rem; }
+    .chart-wrap { position: relative; height: 260px; }
+
+    /* TABLA */
+    .tabla-card { background: white; border: 2px solid #EEF2F9; border-radius: 16px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(13,27,62,0.06); margin-bottom: 2rem; }
+    .tabla-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem; }
+    .tabla-title { font-size: 15px; font-weight: 700; color: #0D1B3E; }
+    .search-input { padding: 8px 14px; border: 1.5px solid #C1CBDF; border-radius: 8px; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; color: #0D1B3E; outline: none; width: 220px; }
+    .search-input:focus { border-color: #1E6FE8; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th { text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #7888A8; padding: .75rem 1rem; border-bottom: 2px solid #EEF2F9; }
+    tbody tr { border-bottom: 1px solid #F7F9FC; transition: background .15s; }
+    tbody tr:hover { background: #F7F9FC; }
+    tbody td { padding: .875rem 1rem; font-size: 13px; color: #0D1B3E; }
+    .estado-pill { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 100px; text-transform: uppercase; letter-spacing: .04em; }
+    .select-estado { border: 1.5px solid #C1CBDF; border-radius: 6px; font-size: 12px; font-family: 'Plus Jakarta Sans', sans-serif; padding: 4px 8px; color: #0D1B3E; cursor: pointer; background: white; outline: none; }
+
+    /* FOOTER */
+    footer { background: #0D1B3E !important; padding: 2rem !important; }
+    .footer-bottom { display: flex !important; justify-content: space-between !important; flex-wrap: wrap !important; gap: 1rem !important; }
+    .footer-copy { font-size: 12px !important; color: rgba(255,255,255,0.35) !important; }
+
+    /* LOADING */
+    .loading { text-align: center; padding: 4rem; color: #7888A8; font-size: 15px; }
+    .spinner { width: 36px; height: 36px; border: 3px solid #EEF2F9; border-top-color: #1E6FE8; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 768px) {
+      .charts-grid { grid-template-columns: 1fr; }
+      .chart-card.full { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo-text" href="index.html">Notario<span>Go</span></a>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="tramites.html">Trámites</a>
+    <a href="mis-documentos.html">Mis documentos</a>
+    <a href="admin.html" class="active">Admin</a>
+  </div>
+  <div class="nav-actions">
+    <a href="mis-documentos.html" class="btn-outline">Mis documentos</a>
+    <button onclick="cerrarSesion()" class="btn-primary">Cerrar sesión</button>
+  </div>
+</nav>
+
+<div class="admin-header">
+  <div class="admin-header-left">
+    <h1>Panel de Administración</h1>
+    <p id="admin-nombre">Cargando...</p>
+  </div>
+  <div class="admin-badge">⚡ Rol: Administrador</div>
+</div>
+
+<div class="admin-wrap">
+
+  <!-- LOADING -->
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    Cargando datos del sistema...
+  </div>
+
+  <!-- CONTENIDO (oculto hasta cargar) -->
+  <div id="contenido" style="display:none;">
+
+    <!-- KPIs -->
+    <div class="kpi-grid" id="kpi-grid"></div>
+
+    <!-- GRÁFICOS FILA 1 -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">Trámites por tipo</div>
+        <div class="chart-sub">Distribución del catálogo solicitado</div>
+        <div class="chart-wrap"><canvas id="chartTipo"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Trámites por estado</div>
+        <div class="chart-sub">Estado actual de todos los trámites</div>
+        <div class="chart-wrap"><canvas id="chartEstado"></canvas></div>
+      </div>
+      <div class="chart-card full">
+        <div class="chart-title">Trámites en el tiempo</div>
+        <div class="chart-sub">Evolución diaria de trámites iniciados</div>
+        <div class="chart-wrap"><canvas id="chartTiempo"></canvas></div>
+      </div>
+      <div class="chart-card full">
+        <div class="chart-title">Usuarios registrados en el tiempo</div>
+        <div class="chart-sub">Crecimiento acumulado de la plataforma</div>
+        <div class="chart-wrap"><canvas id="chartUsuarios"></canvas></div>
+      </div>
+    </div>
+
+    <!-- TABLA TRÁMITES -->
+    <div class="tabla-card">
+      <div class="tabla-head">
+        <div class="tabla-title">📋 Todos los trámites</div>
+        <input type="text" class="search-input" id="buscador" placeholder="Buscar por nombre o tipo..." oninput="filtrarTabla()"/>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Trámite</th>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-tramites"></tbody>
+      </table>
+    </div>
+
+    <!-- TABLA USUARIOS -->
+    <div class="tabla-card">
+      <div class="tabla-head">
+        <div class="tabla-title">👥 Usuarios registrados</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Fecha registro</th>
+            <th>Rol</th>
+            <th>Trámites</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-usuarios"></tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 NotarioGO SpA · Panel de Administración</div>
+    <div class="footer-copy">Solo acceso autorizado</div>
+  </div>
+</footer>
+
+<script src="js/jsonbin.js"></script>
+<script src="js/app.js"></script>
+<script>
+  let todosLosTramites = [];
+  let todosLosUsuarios = [];
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const user = usuarioActual();
+    if (!user) return window.location.href = 'login.html';
+    if (user.rol !== 'admin') return window.location.href = 'index.html';
+
+    document.getElementById('admin-nombre').textContent = 'Bienvenido, ' + user.nombre;
+
+    try {
+      const [dataTramites, dataUsuarios] = await Promise.all([
+        JSONBIN.get('tramites'),
+        JSONBIN.get('usuarios')
+      ]);
+
+      todosLosTramites = dataTramites.tramites || [];
+      todosLosUsuarios = dataUsuarios.usuarios || [];
+
+      renderKPIs();
+      renderChartTipo();
+      renderChartEstado();
+      renderChartTiempo();
+      renderChartUsuarios();
+      renderTablaTramites();
+      renderTablaUsuarios();
+
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('contenido').style.display = 'block';
+
+    } catch(e) {
+      document.getElementById('loading').innerHTML = '<p style="color:red;">Error al cargar datos. Intenta más tarde.</p>';
+    }
+  });
+
+  // ── KPIs ──
+  function renderKPIs() {
+    const total = todosLosTramites.length;
+    const pendientes = todosLosTramites.filter(t => t.estado === 'Pendiente').length;
+    const completados = todosLosTramites.filter(t => t.estado === 'Completado').length;
+    const usuarios = todosLosUsuarios.length;
+
+    document.getElementById('kpi-grid').innerHTML = `
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon" style="background:#E6F0FF;">📋</div>
+          <span class="kpi-trend trend-up">Total</span>
+        </div>
+        <div class="kpi-num">${total}</div>
+        <div class="kpi-label">Trámites iniciados</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon" style="background:#FEF3C7;">⏳</div>
+          <span class="kpi-trend trend-neutral">Activos</span>
+        </div>
+        <div class="kpi-num">${pendientes}</div>
+        <div class="kpi-label">Trámites pendientes</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon" style="background:#D1FAE5;">✅</div>
+          <span class="kpi-trend trend-up">Listos</span>
+        </div>
+        <div class="kpi-num">${completados}</div>
+        <div class="kpi-label">Trámites completados</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon" style="background:#EDE9FE;">👥</div>
+          <span class="kpi-trend trend-up">Registrados</span>
+        </div>
+        <div class="kpi-num">${usuarios}</div>
+        <div class="kpi-label">Usuarios en plataforma</div>
+      </div>
+    `;
+  }
+
+  // ── CHART TIPO ──
+  function renderChartTipo() {
+    const conteo = {};
+    todosLosTramites.forEach(t => { conteo[t.tipo] = (conteo[t.tipo] || 0) + 1; });
+    const labels = Object.keys(conteo);
+    const data = Object.values(conteo);
+    const colores = ['#1E6FE8','#3B8BFF','#FFB800','#10B981','#F59E0B','#EF4444','#8B5CF6','#06B6D4'];
+
+    new Chart(document.getElementById('chartTipo'), {
+      type: 'doughnut',
+      data: { labels, datasets: [{ data, backgroundColor: colores.slice(0, labels.length), borderWidth: 2, borderColor: '#fff' }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { font: { family: 'Plus Jakarta Sans', size: 12 }, padding: 16 } } } }
+    });
+  }
+
+  // ── CHART ESTADO ──
+  function renderChartEstado() {
+    const estados = ['Pendiente','En proceso','Completado','Rechazado'];
+    const colores = ['#F59E0B','#3B8BFF','#10B981','#EF4444'];
+    const data = estados.map(e => todosLosTramites.filter(t => t.estado === e).length);
+
+    new Chart(document.getElementById('chartEstado'), {
+      type: 'bar',
+      data: { labels: estados, datasets: [{ label: 'Trámites', data, backgroundColor: colores, borderRadius: 8, borderSkipped: false }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#EEF2F9' }, ticks: { font: { family: 'Plus Jakarta Sans' } } }, x: { grid: { display: false }, ticks: { font: { family: 'Plus Jakarta Sans' } } } } }
+    });
+  }
+
+  // ── CHART TIEMPO ──
+  function renderChartTiempo() {
+    const porDia = {};
+    todosLosTramites.forEach(t => {
+      const dia = t.fecha.split('T')[0];
+      porDia[dia] = (porDia[dia] || 0) + 1;
+    });
+    const labels = Object.keys(porDia).sort();
+    const data = labels.map(d => porDia[d]);
+
+    new Chart(document.getElementById('chartTiempo'), {
+      type: 'line',
+      data: { labels, datasets: [{ label: 'Trámites', data, borderColor: '#1E6FE8', backgroundColor: 'rgba(30,111,232,0.08)', borderWidth: 2.5, pointBackgroundColor: '#1E6FE8', pointRadius: 5, tension: 0.4, fill: true }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#EEF2F9' }, ticks: { font: { family: 'Plus Jakarta Sans' } } }, x: { grid: { display: false }, ticks: { font: { family: 'Plus Jakarta Sans' } } } } }
+    });
+  }
+
+  // ── CHART USUARIOS ──
+  function renderChartUsuarios() {
+    const sorted = [...todosLosUsuarios].sort((a,b) => new Date(a.fechaRegistro) - new Date(b.fechaRegistro));
+    const labels = sorted.map(u => u.fechaRegistro.split('T')[0]);
+    const data = labels.map((_, i) => i + 1);
+
+    new Chart(document.getElementById('chartUsuarios'), {
+      type: 'line',
+      data: { labels, datasets: [{ label: 'Usuarios', data, borderColor: '#10B981', backgroundColor: 'rgba(16,185,129,0.08)', borderWidth: 2.5, pointBackgroundColor: '#10B981', pointRadius: 5, tension: 0.4, fill: true }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#EEF2F9' }, ticks: { font: { family: 'Plus Jakarta Sans' } } }, x: { grid: { display: false }, ticks: { font: { family: 'Plus Jakarta Sans' } } } } }
+    });
+  }
+
+  // ── TABLA TRÁMITES ──
+  function renderTablaTramites(filtro = '') {
+    const tbody = document.getElementById('tabla-tramites');
+    const lista = filtro
+      ? todosLosTramites.filter(t => t.usuarioNombre?.toLowerCase().includes(filtro) || t.tipo?.toLowerCase().includes(filtro))
+      : todosLosTramites;
+
+    if (lista.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#7888A8; padding:2rem;">No hay trámites registrados</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = lista.map(t => {
+      const col = estadoColor(t.estado);
+      return `
+        <tr>
+          <td><span style="margin-right:6px;">${t.emoji || '📋'}</span>${t.tipo}</td>
+          <td style="font-weight:600;">${t.usuarioNombre || '—'}</td>
+          <td style="color:#7888A8;">${t.usuarioEmail || '—'}</td>
+          <td style="color:#7888A8;">${formatearFecha(t.fecha)}</td>
+          <td><span class="estado-pill" style="background:${col.bg}; color:${col.text};">${t.estado}</span></td>
+          <td>
+            <select class="select-estado" onchange="cambiarEstado('${t.id}', this.value)">
+              <option value="Pendiente" ${t.estado==='Pendiente'?'selected':''}>Pendiente</option>
+              <option value="En proceso" ${t.estado==='En proceso'?'selected':''}>En proceso</option>
+              <option value="Completado" ${t.estado==='Completado'?'selected':''}>Completado</option>
+              <option value="Rechazado" ${t.estado==='Rechazado'?'selected':''}>Rechazado</option>
+            </select>
+          </td>
+        </tr>`;
+    }).join('');
+  }
+
+  // ── TABLA USUARIOS ──
+  function renderTablaUsuarios() {
+    const tbody = document.getElementById('tabla-usuarios');
+    if (todosLosUsuarios.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#7888A8; padding:2rem;">No hay usuarios registrados</td></tr>';
+      return;
+    }
+    tbody.innerHTML = todosLosUsuarios.map(u => {
+      const tramitesUser = todosLosTramites.filter(t => t.usuarioId === u.id).length;
+      const rolColor = u.rol === 'admin' ? { bg:'#EDE9FE', text:'#5B21B6' } : { bg:'#E6F0FF', text:'#1E40AF' };
+      return `
+        <tr>
+          <td style="font-weight:600;">${u.nombre}</td>
+          <td style="color:#7888A8;">${u.email}</td>
+          <td style="color:#7888A8;">${formatearFecha(u.fechaRegistro)}</td>
+          <td><span class="estado-pill" style="background:${rolColor.bg}; color:${rolColor.text};">${u.rol || 'user'}</span></td>
+          <td style="font-weight:700; color:#1E6FE8;">${tramitesUser}</td>
+        </tr>`;
+    }).join('');
+  }
+
+  // ── CAMBIAR ESTADO ──
+  async function cambiarEstado(tramiteId, nuevoEstado) {
+    try {
+      const data = await JSONBIN.get('tramites');
+      const idx = data.tramites.findIndex(t => String(t.id) === String(tramiteId));
+      if (idx === -1) return;
+      data.tramites[idx].estado = nuevoEstado;
+      todosLosTramites[idx].estado = nuevoEstado;
+      await JSONBIN.set('tramites', data);
+      renderTablaTramites(document.getElementById('buscador').value.toLowerCase());
+    } catch(e) {
+      alert('Error al actualizar el estado. Intenta más tarde.');
+    }
+  }
+
+  // ── FILTRAR TABLA ──
+  function filtrarTabla() {
+    const filtro = document.getElementById('buscador').value.toLowerCase();
+    renderTablaTramites(filtro);
+  }
+</script>
+
+</body>
+</html>
