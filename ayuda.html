@@ -6,13 +6,60 @@
   <title>NotarioGO — Ayuda</title>
   <link rel="stylesheet" href="css/style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    .nav-logo-text { font-size: 22px; font-weight: 800; color: #0D1B3E; text-decoration: none; letter-spacing: -0.5px; }
+    .nav-logo-text span { color: #3B8BFF; }
+
+    .page-header { background: #0D1B3E !important; padding: 3rem 2rem !important; text-align: center !important; }
+    .page-header h1 { font-family: 'DM Serif Display', serif !important; font-size: 2.4rem !important; color: white !important; margin-bottom: .5rem !important; }
+    .page-header p { color: rgba(255,255,255,0.6) !important; font-size: 15px !important; }
+
+    .page-content { max-width: 1100px !important; margin: 0 auto !important; padding: 3rem 2rem !important; }
+
+    .section-tag { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #1E6FE8; margin-bottom: .75rem; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: 2rem; color: #0D1B3E; margin-bottom: 1.5rem; line-height: 1.2; }
+
+    /* Pasos */
+    .pasos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1.25rem; margin-bottom: 3rem; }
+    .paso-card { background: white; border: 2px solid #C1CBDF; border-radius: 16px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(13,27,62,0.06); }
+    .paso-num { width: 40px; height: 40px; background: #1E6FE8; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 16px; margin-bottom: 1rem; }
+    .paso-card h3 { font-size: 15px; font-weight: 700; color: #0D1B3E; margin-bottom: .5rem; }
+    .paso-card p { font-size: 13px; color: #7888A8; line-height: 1.6; }
+
+    /* FAQ */
+    .faq-wrap { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 3rem; }
+    .faq-item { border: 2px solid #C1CBDF; border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 2px 8px rgba(13,27,62,0.04); }
+    .faq-btn { width: 100%; text-align: left; padding: 1rem 1.25rem; background: white; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; color: #0D1B3E; display: flex; justify-content: space-between; align-items: center; }
+    .faq-btn:hover { background: #F7F9FC; }
+    .faq-icon { font-size: 20px; color: #1E6FE8; font-weight: 400; min-width: 20px; text-align: center; }
+    .faq-resp { display: none; padding: 0 1.25rem 1rem; font-size: 13px; color: #7888A8; line-height: 1.7; border-top: 1px solid #EEF2F9; padding-top: .875rem; }
+
+    /* CTA */
+    .cta-ayuda { background: #0D1B3E; border-radius: 20px; padding: 2.5rem; text-align: center; }
+    .cta-ayuda h2 { font-family: 'DM Serif Display', serif; color: white; font-size: 1.8rem; margin-bottom: .75rem; }
+    .cta-ayuda p { color: rgba(255,255,255,0.6); font-size: 15px; margin-bottom: 2rem; max-width: 400px; margin-left: auto; margin-right: auto; }
+    .cta-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .btn-hero { background: #3B8BFF; color: white; border: none; border-radius: 10px; padding: 12px 24px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; text-decoration: none; display: inline-flex; align-items: center; box-shadow: 0 6px 24px rgba(59,139,255,0.45); }
+    .btn-ghost { background: rgba(255,255,255,0.1); color: white; border: 1.5px solid rgba(255,255,255,0.25); border-radius: 10px; padding: 11px 24px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; text-decoration: none; display: inline-flex; align-items: center; }
+
+    /* Footer */
+    footer { background: #0D1B3E !important; padding: 3rem 2rem 2rem !important; margin-top: 0 !important; }
+    .footer-top { display: flex !important; justify-content: space-between !important; flex-wrap: wrap !important; gap: 2rem !important; margin-bottom: 2rem !important; }
+    .footer-logo { font-size: 20px !important; font-weight: 800 !important; color: white !important; text-decoration: none !important; display: block !important; margin-bottom: .3rem !important; }
+    .footer-logo span { color: #5DB3FF !important; }
+    .footer-tagline { font-size: 13px !important; color: rgba(255,255,255,0.45) !important; }
+    .footer-links { display: flex !important; gap: 3rem !important; }
+    .footer-col h5 { font-size: 12px !important; font-weight: 700 !important; text-transform: uppercase !important; letter-spacing: .06em !important; color: rgba(255,255,255,0.45) !important; margin-bottom: 1rem !important; }
+    .footer-col a { display: block !important; font-size: 13px !important; color: rgba(255,255,255,0.7) !important; text-decoration: none !important; margin-bottom: .6rem !important; }
+    .footer-col a:hover { color: white !important; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1) !important; padding-top: 1.5rem !important; display: flex !important; justify-content: space-between !important; flex-wrap: wrap !important; gap: 1rem !important; }
+    .footer-copy { font-size: 12px !important; color: rgba(255,255,255,0.35) !important; }
+  </style>
 </head>
 <body>
 
 <nav>
-  <a class="nav-logo" href="index.html">
-    <img src="assets/Logo-NotarioGO.png" alt="NotarioGO"/>
-  </a>
+  <a class="nav-logo-text" href="index.html">Notario<span>Go</span></a>
   <div class="nav-links">
     <a href="index.html">Inicio</a>
     <a href="tramites.html">Trámites</a>
@@ -32,141 +79,83 @@
 
 <div class="page-content">
 
-  <!-- CÓMO FUNCIONA -->
-  <div style="margin-bottom:3rem;">
-    <div class="section-tag">Cómo funciona</div>
-    <h2 class="section-title">Proceso paso a paso</h2>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-top:1.5rem;">
-      <div style="background:var(--white); border:1px solid var(--gray-100); border-radius:16px; padding:1.5rem;">
-        <div style="width:40px; height:40px; background:var(--blue); border-radius:10px;
-                    display:flex; align-items:center; justify-content:center;
-                    color:white; font-weight:800; font-size:16px; margin-bottom:1rem;">1</div>
-        <h3 style="font-size:15px; font-weight:700; color:var(--navy); margin-bottom:.5rem;">Crea tu cuenta</h3>
-        <p style="font-size:13px; color:var(--gray-500); line-height:1.6;">
-          Regístrate gratis con tu correo. Solo toma 1 minuto y no necesitas tarjeta de crédito.
-        </p>
-      </div>
-      <div style="background:var(--white); border:1px solid var(--gray-100); border-radius:16px; padding:1.5rem;">
-        <div style="width:40px; height:40px; background:var(--blue); border-radius:10px;
-                    display:flex; align-items:center; justify-content:center;
-                    color:white; font-weight:800; font-size:16px; margin-bottom:1rem;">2</div>
-        <h3 style="font-size:15px; font-weight:700; color:var(--navy); margin-bottom:.5rem;">Elige tu trámite</h3>
-        <p style="font-size:13px; color:var(--gray-500); line-height:1.6;">
-          Selecciona el tipo de trámite que necesitas del catálogo disponible.
-        </p>
-      </div>
-      <div style="background:var(--white); border:1px solid var(--gray-100); border-radius:16px; padding:1.5rem;">
-        <div style="width:40px; height:40px; background:var(--blue); border-radius:10px;
-                    display:flex; align-items:center; justify-content:center;
-                    color:white; font-weight:800; font-size:16px; margin-bottom:1rem;">3</div>
-        <h3 style="font-size:15px; font-weight:700; color:var(--navy); margin-bottom:.5rem;">Sube tus documentos</h3>
-        <p style="font-size:13px; color:var(--gray-500); line-height:1.6;">
-          Adjunta los archivos requeridos en formato PDF, JPG o PNG desde tu dispositivo.
-        </p>
-      </div>
-      <div style="background:var(--white); border:1px solid var(--gray-100); border-radius:16px; padding:1.5rem;">
-        <div style="width:40px; height:40px; background:var(--blue); border-radius:10px;
-                    display:flex; align-items:center; justify-content:center;
-                    color:white; font-weight:800; font-size:16px; margin-bottom:1rem;">4</div>
-        <h3 style="font-size:15px; font-weight:700; color:var(--navy); margin-bottom:.5rem;">Recibe tu documento</h3>
-        <p style="font-size:13px; color:var(--gray-500); line-height:1.6;">
-          En menos de 24 horas recibes tu documento notarizado con validez legal en Chile.
-        </p>
-      </div>
+  <div class="section-tag">Cómo funciona</div>
+  <h2 class="section-title">Proceso paso a paso</h2>
+  <div class="pasos-grid">
+    <div class="paso-card">
+      <div class="paso-num">1</div>
+      <h3>Crea tu cuenta</h3>
+      <p>Regístrate gratis con tu correo. Solo toma 1 minuto y no necesitas tarjeta de crédito.</p>
+    </div>
+    <div class="paso-card">
+      <div class="paso-num">2</div>
+      <h3>Elige tu trámite</h3>
+      <p>Selecciona el tipo de trámite que necesitas del catálogo disponible.</p>
+    </div>
+    <div class="paso-card">
+      <div class="paso-num">3</div>
+      <h3>Sube tus documentos</h3>
+      <p>Adjunta los archivos requeridos en formato PDF, JPG o PNG desde tu dispositivo.</p>
+    </div>
+    <div class="paso-card">
+      <div class="paso-num">4</div>
+      <h3>Recibe tu documento</h3>
+      <p>En menos de 24 horas recibes tu documento notarizado con validez legal en Chile.</p>
     </div>
   </div>
 
-  <!-- PREGUNTAS FRECUENTES -->
-  <div style="margin-bottom:3rem;">
-    <div class="section-tag">Preguntas frecuentes</div>
-    <h2 class="section-title">¿Tienes dudas?</h2>
-    <div style="display:flex; flex-direction:column; gap:.75rem; margin-top:1.5rem;" id="faqs">
+  <div class="section-tag">Preguntas frecuentes</div>
+  <h2 class="section-title">¿Tienes dudas?</h2>
+  <div class="faq-wrap">
 
-      <div class="faq-item" style="border:1px solid var(--gray-100); border-radius:12px; overflow:hidden;">
-        <button onclick="toggleFaq(this)"
-          style="width:100%; text-align:left; padding:1rem 1.25rem; background:var(--white);
-                 border:none; cursor:pointer; font-family:var(--font); font-size:14px;
-                 font-weight:700; color:var(--navy); display:flex; justify-content:space-between; align-items:center;">
-          ¿Los documentos tienen validez legal en Chile?
-          <span style="font-size:20px; color:var(--blue); transition:transform .2s;">+</span>
-        </button>
-        <div class="faq-resp" style="display:none; padding:0 1.25rem 1rem; font-size:13px; color:var(--gray-500); line-height:1.7;">
-          Sí. Todos los documentos procesados por NotarioGO cumplen con la Ley N° 19.799 sobre documentos electrónicos y firma electrónica, teniendo plena validez legal en todo el territorio chileno.
-        </div>
-      </div>
-
-      <div class="faq-item" style="border:1px solid var(--gray-100); border-radius:12px; overflow:hidden;">
-        <button onclick="toggleFaq(this)"
-          style="width:100%; text-align:left; padding:1rem 1.25rem; background:var(--white);
-                 border:none; cursor:pointer; font-family:var(--font); font-size:14px;
-                 font-weight:700; color:var(--navy); display:flex; justify-content:space-between; align-items:center;">
-          ¿Cuánto tiempo demora un trámite?
-          <span style="font-size:20px; color:var(--blue); transition:transform .2s;">+</span>
-        </button>
-        <div class="faq-resp" style="display:none; padding:0 1.25rem 1rem; font-size:13px; color:var(--gray-500); line-height:1.7;">
-          La mayoría de los trámites se completan en menos de 24 horas hábiles. Trámites simples como poderes o declaraciones juradas pueden estar listos en menos de 2 horas.
-        </div>
-      </div>
-
-      <div class="faq-item" style="border:1px solid var(--gray-100); border-radius:12px; overflow:hidden;">
-        <button onclick="toggleFaq(this)"
-          style="width:100%; text-align:left; padding:1rem 1.25rem; background:var(--white);
-                 border:none; cursor:pointer; font-family:var(--font); font-size:14px;
-                 font-weight:700; color:var(--navy); display:flex; justify-content:space-between; align-items:center;">
-          ¿Necesito ClaveÚnica para usar NotarioGO?
-          <span style="font-size:20px; color:var(--blue); transition:transform .2s;">+</span>
-        </button>
-        <div class="faq-resp" style="display:none; padding:0 1.25rem 1rem; font-size:13px; color:var(--gray-500); line-height:1.7;">
-          Para algunos trámites que requieren firma electrónica avanzada sí necesitarás ClaveÚnica o eToken. Para trámites básicos basta con tu correo y contraseña de NotarioGO.
-        </div>
-      </div>
-
-      <div class="faq-item" style="border:1px solid var(--gray-100); border-radius:12px; overflow:hidden;">
-        <button onclick="toggleFaq(this)"
-          style="width:100%; text-align:left; padding:1rem 1.25rem; background:var(--white);
-                 border:none; cursor:pointer; font-family:var(--font); font-size:14px;
-                 font-weight:700; color:var(--navy); display:flex; justify-content:space-between; align-items:center;">
-          ¿Mis documentos están seguros?
-          <span style="font-size:20px; color:var(--blue); transition:transform .2s;">+</span>
-        </button>
-        <div class="faq-resp" style="display:none; padding:0 1.25rem 1rem; font-size:13px; color:var(--gray-500); line-height:1.7;">
-          Sí. Utilizamos cifrado SSL de 256 bits y almacenamiento seguro. Tus documentos solo son accesibles por ti y por el notario asignado a tu trámite.
-        </div>
-      </div>
-
-      <div class="faq-item" style="border:1px solid var(--gray-100); border-radius:12px; overflow:hidden;">
-        <button onclick="toggleFaq(this)"
-          style="width:100%; text-align:left; padding:1rem 1.25rem; background:var(--white);
-                 border:none; cursor:pointer; font-family:var(--font); font-size:14px;
-                 font-weight:700; color:var(--navy); display:flex; justify-content:space-between; align-items:center;">
-          ¿Puedo usar NotarioGO desde el celular?
-          <span style="font-size:20px; color:var(--blue); transition:transform .2s;">+</span>
-        </button>
-        <div class="faq-resp" style="display:none; padding:0 1.25rem 1rem; font-size:13px; color:var(--gray-500); line-height:1.7;">
-          Sí, NotarioGO está optimizado para funcionar en cualquier dispositivo — computador, tablet o celular — desde cualquier navegador moderno.
-        </div>
-      </div>
-
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        ¿Los documentos tienen validez legal en Chile?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-resp">Sí. Todos los documentos procesados por NotarioGO cumplen con la Ley N° 19.799 sobre documentos electrónicos y firma electrónica, teniendo plena validez legal en todo el territorio chileno.</div>
     </div>
+
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        ¿Cuánto tiempo demora un trámite?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-resp">La mayoría de los trámites se completan en menos de 24 horas hábiles. Trámites simples como poderes o declaraciones juradas pueden estar listos en menos de 2 horas.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        ¿Necesito ClaveÚnica para usar NotarioGO?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-resp">Para algunos trámites que requieren firma electrónica avanzada sí necesitarás ClaveÚnica o eToken. Para trámites básicos basta con tu correo y contraseña de NotarioGO.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        ¿Mis documentos están seguros?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-resp">Sí. Utilizamos cifrado SSL de 256 bits y almacenamiento seguro. Tus documentos solo son accesibles por ti y por el notario asignado a tu trámite.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        ¿Puedo usar NotarioGO desde el celular?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-resp">Sí, NotarioGO está optimizado para funcionar en cualquier dispositivo — computador, tablet o celular — desde cualquier navegador moderno.</div>
+    </div>
+
   </div>
 
-  <!-- CONTACTO -->
-  <div style="background:var(--navy); border-radius:20px; padding:2.5rem; text-align:center;">
-    <h2 style="font-family:var(--serif); color:white; font-size:1.8rem; margin-bottom:.75rem;">
-      ¿Aún tienes dudas?
-    </h2>
-    <p style="color:rgba(255,255,255,0.6); font-size:15px; margin-bottom:2rem; max-width:400px; margin-left:auto; margin-right:auto;">
-      Nuestro equipo está disponible para ayudarte en cada paso del proceso.
-    </p>
-    <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
-      <a href="mailto:contacto@notariogo.cl" class="btn-hero"
-        style="font-size:14px; padding:12px 24px;">
-        ✉️ Escribirnos
-      </a>
-      <a href="tramites.html" class="btn-ghost"
-        style="font-size:14px; padding:11px 24px;">
-        Ver trámites
-      </a>
+  <div class="cta-ayuda">
+    <h2>¿Aún tienes dudas?</h2>
+    <p>Nuestro equipo está disponible para ayudarte en cada paso del proceso.</p>
+    <div class="cta-btns">
+      <a href="mailto:contacto@notariogo.cl" class="btn-hero">✉️ Escribirnos</a>
+      <a href="tramites.html" class="btn-ghost">Ver trámites</a>
     </div>
   </div>
 
@@ -203,11 +192,10 @@
 <script>
   function toggleFaq(btn) {
     const resp = btn.nextElementSibling;
-    const icon = btn.querySelector('span');
+    const icon = btn.querySelector('.faq-icon');
     const abierto = resp.style.display === 'block';
     resp.style.display = abierto ? 'none' : 'block';
     icon.textContent = abierto ? '+' : '−';
-    icon.style.transform = abierto ? 'rotate(0deg)' : 'rotate(0deg)';
   }
 </script>
 
