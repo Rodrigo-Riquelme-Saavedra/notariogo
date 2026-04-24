@@ -159,10 +159,10 @@
           <div class="sub-item">
             <div class="sub-item-info">
               <div class="sub-item-nombre">Vehículo</div>
-              <div class="sub-item-desc">Autoriza trámites relacionados con vehículos motorizados</div>
+              <div class="sub-item-desc">Autoriza el retiro de vehículos desde corrales, talleres u otros lugares</div>
             </div>
             <span class="sub-item-tag">24 hrs</span>
-            <a class="btn-iniciar proximamente">Próximamente</a>
+            <a href="poder-vehiculo.html" class="btn-iniciar">Iniciar →</a>
           </div>
 
           <div class="sub-item">
@@ -339,8 +339,7 @@
     const body = header.nextElementSibling;
     const estaAbierto = header.classList.contains('abierto');
     document.querySelectorAll('.cat-header').forEach(h => {
-      h.classList.remove('abierto');
-      h.nextElementSibling.classList.remove('abierto');
+      h.classList.remove('abierto'); h.nextElementSibling.classList.remove('abierto');
     });
     document.querySelectorAll('.sub-grupo-header').forEach(h => h.classList.remove('abierto'));
     document.querySelectorAll('.sub-items').forEach(s => s.classList.remove('abierto'));
@@ -363,8 +362,7 @@
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('.cat-header').forEach(h => {
-      h.classList.remove('abierto');
-      h.nextElementSibling.classList.remove('abierto');
+      h.classList.remove('abierto'); h.nextElementSibling.classList.remove('abierto');
     });
     document.querySelectorAll('.cat-seccion').forEach(s => {
       s.classList.toggle('hidden', cat !== 'todos' && s.dataset.cat !== cat);
