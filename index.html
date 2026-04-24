@@ -7,9 +7,50 @@
   <link rel="stylesheet" href="css/style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
   <style>
+    .nav-logo-text { font-size: 22px; font-weight: 800; color: #0D1B3E; text-decoration: none; letter-spacing: -0.5px; }
+    .nav-logo-text span { color: #3B8BFF; }
+
+    /* Hero textos */
     .hero h1 { color: #FFFFFF !important; }
     .hero-desc { color: rgba(255,255,255,0.85) !important; }
-    .hero-badge { color: #7DB8FF !important; }
+
+    /* Badge más grande e inmediato bajo el logo */
+    .hero-badge {
+      display: inline-flex !important; align-items: center !important; gap: 8px !important;
+      background: rgba(59,139,255,0.25) !important;
+      border: 1.5px solid rgba(59,139,255,0.5) !important;
+      border-radius: 100px !important; padding: 10px 20px !important;
+      font-size: 15px !important; font-weight: 700 !important;
+      color: #FFFFFF !important; letter-spacing: .02em !important;
+      margin-bottom: 1.25rem !important; margin-top: .5rem !important;
+    }
+    .badge-dot { width: 8px !important; height: 8px !important; border-radius: 50% !important; background: #4DAAFF !important; animation: pulse 2s infinite !important; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    /* Logo en tarjeta blanca */
+    .hero-logo-wrap {
+      background: white; border-radius: 16px; padding: 16px 24px;
+      display: inline-block; margin-bottom: .75rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    }
+    .hero-logo { width: 260px; display: block; }
+
+    /* Botón Iniciar trámite destacado */
+    .btn-hero {
+      background: #FFB800 !important; color: #0D1B3E !important;
+      border: none !important; border-radius: 10px !important;
+      padding: 14px 28px !important; font-size: 15px !important;
+      font-weight: 800 !important; cursor: pointer !important;
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+      text-decoration: none !important;
+      box-shadow: 0 6px 24px rgba(255,184,0,0.45) !important;
+      transition: all .2s !important; display: inline-flex !important;
+      align-items: center !important;
+    }
+    .btn-hero:hover { background: #FFCA40 !important; transform: translateY(-2px) !important; }
+    .btn-ghost { color: #FFFFFF !important; border-color: rgba(255,255,255,0.4) !important; }
+
+    /* Card pasos */
     .hero-card { background: rgba(255,255,255,0.12) !important; border: 1px solid rgba(255,255,255,0.25) !important; border-radius: 16px !important; padding: 1.5rem !important; }
     .hero-card-title { color: #7DB8FF !important; }
     .hero-steps { display: flex !important; flex-direction: column !important; gap: .75rem !important; }
@@ -18,18 +59,19 @@
     .step-info { flex: 1 !important; }
     .step-info strong { display: block !important; font-size: 13px !important; font-weight: 700 !important; color: white !important; }
     .step-info span { font-size: 12px !important; color: rgba(255,255,255,0.7) !important; }
-    .btn-ghost { color: #FFFFFF !important; border-color: rgba(255,255,255,0.4) !important; }
-    .nav-logo-text { font-size: 22px; font-weight: 800; color: #0D1B3E; text-decoration: none; letter-spacing: -0.5px; }
-    .nav-logo-text span { color: #3B8BFF; }
-    .hero-logo-wrap {
-      background: white;
-      border-radius: 16px;
-      padding: 16px 24px;
-      display: inline-block;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
-    }
-    .hero-logo { width: 260px; display: block; }
+
+    /* Footer */
+    footer { background: #0D1B3E !important; padding: 3rem 2rem 2rem !important; }
+    .footer-top { display: flex !important; justify-content: space-between !important; flex-wrap: wrap !important; gap: 2rem !important; margin-bottom: 2rem !important; }
+    .footer-logo { font-size: 20px !important; font-weight: 800 !important; color: white !important; text-decoration: none !important; display: block !important; margin-bottom: .3rem !important; }
+    .footer-logo span { color: #5DB3FF !important; }
+    .footer-tagline { font-size: 13px !important; color: rgba(255,255,255,0.45) !important; }
+    .footer-links { display: flex !important; gap: 3rem !important; }
+    .footer-col h5 { font-size: 12px !important; font-weight: 700 !important; text-transform: uppercase !important; letter-spacing: .06em !important; color: rgba(255,255,255,0.45) !important; margin-bottom: 1rem !important; }
+    .footer-col a { display: block !important; font-size: 13px !important; color: rgba(255,255,255,0.7) !important; text-decoration: none !important; margin-bottom: .6rem !important; }
+    .footer-col a:hover { color: white !important; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1) !important; padding-top: 1.5rem !important; display: flex !important; justify-content: space-between !important; flex-wrap: wrap !important; gap: 1rem !important; }
+    .footer-copy { font-size: 12px !important; color: rgba(255,255,255,0.35) !important; }
   </style>
 </head>
 <body>
