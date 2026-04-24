@@ -60,8 +60,7 @@
     .sub-item-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #1E6FE8; background: #E6F0FF; padding: 3px 8px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
     .btn-iniciar { background: #1E6FE8; color: white; border: none; border-radius: 8px; padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; white-space: nowrap; transition: all .2s; box-shadow: 0 2px 8px rgba(30,111,232,0.25); flex-shrink: 0; text-decoration: none; display: inline-flex; align-items: center; }
     .btn-iniciar:hover { background: #1458C4; transform: translateY(-1px); }
-    .btn-iniciar.proximamente { background: #C1CBDF; cursor: not-allowed; box-shadow: none; color: #7888A8; }
-    .btn-iniciar.proximamente:hover { transform: none; background: #C1CBDF; }
+    .btn-iniciar.proximamente { background: #C1CBDF; cursor: not-allowed; box-shadow: none; color: #7888A8; pointer-events: none; }
 
     footer { background: #0D1B3E; padding: 3rem 2rem 2rem; }
     .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; }
@@ -108,7 +107,7 @@
     <button class="cat-btn" onclick="mostrarCat('documentos', this)"><span class="cat-emoji">📄</span> Documentos</button>
   </div>
 
-  <!-- PODERES -->
+  <!-- ══════════════ PODERES ══════════════ -->
   <div class="cat-seccion" data-cat="poderes">
     <div class="cat-header" onclick="toggleCat(this)">
       <span class="cat-header-emoji">📋</span>
@@ -129,41 +128,70 @@
           <span class="sub-arrow">▼</span>
         </div>
         <div class="sub-items">
+
           <div class="sub-item">
-            <div class="sub-item-info"><div class="sub-item-nombre">Bancario</div><div class="sub-item-desc">Autoriza gestiones en bancos e instituciones financieras</div></div>
+            <div class="sub-item-info">
+              <div class="sub-item-nombre">Bancario</div>
+              <div class="sub-item-desc">Autoriza gestiones en bancos e instituciones financieras</div>
+            </div>
             <span class="sub-item-tag">Popular</span>
             <a href="poder-bancario.html" class="btn-iniciar">Iniciar →</a>
           </div>
+
           <div class="sub-item">
-            <div class="sub-item-info"><div class="sub-item-nombre">Retiro de documentos</div><div class="sub-item-desc">Autoriza el retiro de documentos en organismos públicos o privados</div></div>
+            <div class="sub-item-info">
+              <div class="sub-item-nombre">Retiro de documentos</div>
+              <div class="sub-item-desc">Autoriza el retiro de documentos en organismos públicos o privados</div>
+            </div>
             <span class="sub-item-tag">Rápido</span>
             <a href="poder-retiro-documentos.html" class="btn-iniciar">Iniciar →</a>
           </div>
+
           <div class="sub-item">
-            <div class="sub-item-info"><div class="sub-item-nombre">Instituciones públicas</div><div class="sub-item-desc">Gestiones ante SII, Registro Civil, municipios y otros organismos</div></div>
+            <div class="sub-item-info">
+              <div class="sub-item-nombre">Instituciones públicas</div>
+              <div class="sub-item-desc">Gestiones ante SII, Registro Civil, municipios y otros organismos</div>
+            </div>
             <span class="sub-item-tag">Frecuente</span>
-            <a class="btn-iniciar proximamente">Próximamente</a>
+            <a href="poder-instituciones.html" class="btn-iniciar">Iniciar →</a>
           </div>
+
           <div class="sub-item">
-            <div class="sub-item-info"><div class="sub-item-nombre">Vehículo</div><div class="sub-item-desc">Autoriza trámites relacionados con vehículos motorizados</div></div>
+            <div class="sub-item-info">
+              <div class="sub-item-nombre">Vehículo</div>
+              <div class="sub-item-desc">Autoriza trámites relacionados con vehículos motorizados</div>
+            </div>
             <span class="sub-item-tag">24 hrs</span>
             <a class="btn-iniciar proximamente">Próximamente</a>
           </div>
+
           <div class="sub-item">
-            <div class="sub-item-info"><div class="sub-item-nombre">Encomienda</div><div class="sub-item-desc">Autoriza el retiro de encomiendas y paquetes</div></div>
+            <div class="sub-item-info">
+              <div class="sub-item-nombre">Encomienda</div>
+              <div class="sub-item-desc">Autoriza el retiro de encomiendas y paquetes</div>
+            </div>
             <span class="sub-item-tag">Rápido</span>
             <a class="btn-iniciar proximamente">Próximamente</a>
           </div>
+
           <div class="sub-item">
-            <div class="sub-item-info"><div class="sub-item-nombre">Legal específico</div><div class="sub-item-desc">Para gestiones legales con un alcance determinado</div></div>
+            <div class="sub-item-info">
+              <div class="sub-item-nombre">Legal específico</div>
+              <div class="sub-item-desc">Para gestiones legales con un alcance determinado</div>
+            </div>
             <span class="sub-item-tag">Legal</span>
             <a class="btn-iniciar proximamente">Próximamente</a>
           </div>
+
           <div class="sub-item">
-            <div class="sub-item-info"><div class="sub-item-nombre">Personalizado</div><div class="sub-item-desc">Define tú mismo el alcance y las facultades del poder</div></div>
+            <div class="sub-item-info">
+              <div class="sub-item-nombre">Personalizado</div>
+              <div class="sub-item-desc">Define tú mismo el alcance y las facultades del poder</div>
+            </div>
             <span class="sub-item-tag">Flexible</span>
             <a class="btn-iniciar proximamente">Próximamente</a>
           </div>
+
         </div>
       </div>
 
@@ -197,7 +225,7 @@
     </div>
   </div>
 
-  <!-- DECLARACIONES -->
+  <!-- ══════════════ DECLARACIONES ══════════════ -->
   <div class="cat-seccion" data-cat="declaraciones">
     <div class="cat-header" onclick="toggleCat(this)">
       <span class="cat-header-emoji">🏛️</span>
@@ -224,7 +252,7 @@
     </div>
   </div>
 
-  <!-- CONTRATOS -->
+  <!-- ══════════════ CONTRATOS ══════════════ -->
   <div class="cat-seccion" data-cat="contratos">
     <div class="cat-header" onclick="toggleCat(this)">
       <span class="cat-header-emoji">🤝</span>
@@ -250,7 +278,7 @@
     </div>
   </div>
 
-  <!-- DOCUMENTOS -->
+  <!-- ══════════════ DOCUMENTOS ══════════════ -->
   <div class="cat-seccion" data-cat="documentos">
     <div class="cat-header" onclick="toggleCat(this)">
       <span class="cat-header-emoji">📄</span>
@@ -310,7 +338,10 @@
   function toggleCat(header) {
     const body = header.nextElementSibling;
     const estaAbierto = header.classList.contains('abierto');
-    document.querySelectorAll('.cat-header').forEach(h => { h.classList.remove('abierto'); h.nextElementSibling.classList.remove('abierto'); });
+    document.querySelectorAll('.cat-header').forEach(h => {
+      h.classList.remove('abierto');
+      h.nextElementSibling.classList.remove('abierto');
+    });
     document.querySelectorAll('.sub-grupo-header').forEach(h => h.classList.remove('abierto'));
     document.querySelectorAll('.sub-items').forEach(s => s.classList.remove('abierto'));
     document.querySelectorAll('.sub-arrow').forEach(a => a.classList.remove('abierto'));
@@ -331,7 +362,10 @@
   function mostrarCat(cat, btn) {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    document.querySelectorAll('.cat-header').forEach(h => { h.classList.remove('abierto'); h.nextElementSibling.classList.remove('abierto'); });
+    document.querySelectorAll('.cat-header').forEach(h => {
+      h.classList.remove('abierto');
+      h.nextElementSibling.classList.remove('abierto');
+    });
     document.querySelectorAll('.cat-seccion').forEach(s => {
       s.classList.toggle('hidden', cat !== 'todos' && s.dataset.cat !== cat);
     });
