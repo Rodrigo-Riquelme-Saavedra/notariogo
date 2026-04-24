@@ -1,10 +1,10 @@
 const JSONBIN = {
   BASE: "https://api.jsonbin.io/v3/b",
-  KEY: "TU_MASTER_KEY_AQUI",
+  KEY: "$2a$10$w4s0yGLGWGdtbtqWXnUa/ulkuknRemES2b6n7fA4pxIH9G5sOea/K",
   BINS: {
-    usuarios:    "TU_BIN_ID_USUARIOS",
-    tramites:    "TU_BIN_ID_TRAMITES",
-    documentos:  "TU_BIN_ID_DOCUMENTOS"
+    usuarios:   "69eab1cd36566621a8e5fd40",
+    tramites:   "69eab344856a6821896778f4",
+    documentos: "69eab375aaba8821972f9f84"
   },
 
   async get(bin) {
