@@ -14,86 +14,99 @@
     .page-header { background: #0D1B3E; padding: 3rem 2rem; text-align: center; }
     .page-header h1 { font-family: 'DM Serif Display', serif; font-size: 2.4rem; color: white; margin-bottom: .5rem; }
     .page-header p { color: rgba(255,255,255,0.6); font-size: 15px; }
-    .page-content { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+    .page-content { max-width: 1200px; margin: 0 auto; padding: 2rem; }
 
     /* BIENVENIDA */
-    .resumen-card { background: #0D1B3E; border-radius: 16px; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+    .resumen-card { background: #0D1B3E; border-radius: 16px; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
     .resumen-card p { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: .25rem; }
-    .resumen-card h2 { font-family: 'DM Serif Display', serif; color: white; font-size: 1.6rem; margin-bottom: .25rem; }
-    .resumen-card span { font-size: 13px; color: rgba(255,255,255,0.55); }
+    .resumen-card h2 { font-family: 'DM Serif Display', serif; color: white; font-size: 1.5rem; margin-bottom: .25rem; }
+    .resumen-card small { font-size: 13px; color: rgba(255,255,255,0.45); }
     .resumen-btns { display: flex; gap: .75rem; flex-wrap: wrap; }
     .btn-nuevo { background: #FFB800; color: #0D1B3E; border: none; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 800; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all .2s; }
     .btn-nuevo:hover { background: #FFCA40; transform: translateY(-1px); }
     .btn-salir { background: rgba(255,255,255,0.1); color: white; border: 1.5px solid rgba(255,255,255,0.25); border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all .2s; }
     .btn-salir:hover { background: rgba(255,255,255,0.18); }
 
-    /* FILTROS */
-    .filtros-bar { display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center; }
-    .filtro-btn { padding: 7px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; border: 1.5px solid #C1CBDF; background: white; color: #7888A8; transition: all .2s; }
-    .filtro-btn:hover { border-color: #1E6FE8; color: #1E6FE8; }
-    .filtro-btn.active { border-color: #1E6FE8; background: #1E6FE8; color: white; }
-    .filtros-count { margin-left: auto; font-size: 13px; color: #7888A8; font-weight: 600; }
+    /* KPIs */
+    .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .kpi-mini { background: white; border: 2px solid #EEF2F9; border-radius: 12px; padding: 1rem 1.25rem; box-shadow: 0 2px 6px rgba(13,27,62,0.05); cursor: pointer; transition: all .2s; }
+    .kpi-mini:hover { border-color: #C5D9FF; transform: translateY(-1px); }
+    .kpi-mini.active { border-color: #1E6FE8; background: #E6F0FF; }
+    .kpi-mini-num { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #0D1B3E; line-height: 1; margin-bottom: .25rem; }
+    .kpi-mini-label { font-size: 12px; font-weight: 600; color: #7888A8; }
+    .kpi-mini.todos .kpi-mini-num { color: #0D1B3E; }
+    .kpi-mini.pendiente .kpi-mini-num { color: #92400E; }
+    .kpi-mini.proceso .kpi-mini-num { color: #1E40AF; }
+    .kpi-mini.completado .kpi-mini-num { color: #065F46; }
+    .kpi-mini.rechazado .kpi-mini-num { color: #991B1B; }
 
-    /* GRID DOCUMENTOS */
-    .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 1.25rem; }
+    /* BARRA HERRAMIENTAS */
+    .toolbar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .search-box { flex: 1; min-width: 200px; position: relative; }
+    .search-box input { width: 100%; padding: 9px 14px 9px 36px; border: 1.5px solid #C1CBDF; border-radius: 8px; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; color: #0D1B3E; outline: none; transition: border-color .2s; box-sizing: border-box; background: white; }
+    .search-box input:focus { border-color: #1E6FE8; }
+    .search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-size: 14px; color: #7888A8; }
+    .toolbar-right { display: flex; align-items: center; gap: .75rem; }
+    .sort-select { padding: 9px 12px; border: 1.5px solid #C1CBDF; border-radius: 8px; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; color: #0D1B3E; outline: none; background: white; cursor: pointer; }
+    .sort-select:focus { border-color: #1E6FE8; }
+    .results-count { font-size: 13px; color: #7888A8; font-weight: 600; white-space: nowrap; }
 
-    /* CARD DOCUMENTO MEJORADA */
-    .doc-card { background: white; border: 2px solid #EEF2F9; border-radius: 16px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(13,27,62,0.06); transition: all .2s; display: flex; flex-direction: column; gap: .875rem; }
-    .doc-card:hover { border-color: #C5D9FF; box-shadow: 0 6px 20px rgba(13,27,62,0.1); transform: translateY(-2px); }
+    /* TABLA */
+    .tabla-wrap { background: white; border: 2px solid #EEF2F9; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(13,27,62,0.06); }
+    .tabla-wrap table { width: 100%; border-collapse: collapse; }
+    thead th { background: #F7F9FC; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #7888A8; padding: .875rem 1rem; border-bottom: 2px solid #EEF2F9; white-space: nowrap; cursor: pointer; user-select: none; transition: background .15s; }
+    thead th:hover { background: #EEF2F9; color: #3A4A6B; }
+    thead th.sorted { color: #1E6FE8; }
+    thead th .sort-icon { margin-left: 4px; opacity: .5; }
+    thead th.sorted .sort-icon { opacity: 1; }
+    tbody tr { border-bottom: 1px solid #F7F9FC; transition: background .15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #F7F9FC; }
+    tbody td { padding: .875rem 1rem; font-size: 13px; color: #0D1B3E; vertical-align: middle; }
 
-    .doc-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
-    .doc-tipo-wrap { display: flex; align-items: center; gap: 10px; }
-    .doc-emoji-circle { width: 44px; height: 44px; border-radius: 12px; background: #E6F0FF; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-    .doc-tipo { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #7888A8; }
-    .doc-subtipo { font-size: 13px; font-weight: 700; color: #0D1B3E; margin-top: 2px; }
+    /* CELDAS ESPECÍFICAS */
+    .td-codigo { font-family: 'Courier New', monospace; font-size: 11px; color: #7888A8; letter-spacing: .04em; white-space: nowrap; }
+    .td-codigo button { background: none; border: none; cursor: pointer; font-size: 12px; opacity: .5; transition: opacity .2s; margin-left: 4px; }
+    .td-codigo button:hover { opacity: 1; }
+    .td-tipo { font-weight: 700; color: #0D1B3E; }
+    .td-subtipo { font-size: 11px; color: #7888A8; font-weight: 500; margin-top: 2px; }
+    .td-emoji { font-size: 20px; margin-right: 8px; }
+    .td-nombre { font-weight: 600; }
+    .td-nombre small { display: block; font-size: 11px; color: #7888A8; font-weight: 400; margin-top: 1px; }
+    .td-fecha { font-size: 12px; color: #7888A8; white-space: nowrap; }
+    .td-fecha small { display: block; font-size: 11px; color: #C1CBDF; margin-top: 1px; }
 
-    .estado-pill { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 100px; text-transform: uppercase; letter-spacing: .04em; flex-shrink: 0; }
+    .estado-pill { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 100px; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; display: inline-block; }
 
-    /* SEPARADOR */
-    .doc-divider { height: 1px; background: #EEF2F9; }
+    /* PAGINACIÓN */
+    .paginacion { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; border-top: 1px solid #EEF2F9; flex-wrap: wrap; gap: .75rem; }
+    .pag-info { font-size: 13px; color: #7888A8; }
+    .pag-btns { display: flex; gap: .5rem; }
+    .pag-btn { padding: 6px 12px; border: 1.5px solid #C1CBDF; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; background: white; color: #7888A8; transition: all .2s; }
+    .pag-btn:hover:not(:disabled) { border-color: #1E6FE8; color: #1E6FE8; }
+    .pag-btn.active { border-color: #1E6FE8; background: #1E6FE8; color: white; }
+    .pag-btn:disabled { opacity: .4; cursor: not-allowed; }
 
-    /* INFO PERSONAS */
-    .doc-personas { display: flex; flex-direction: column; gap: .5rem; }
-    .doc-persona { display: flex; align-items: center; gap: 8px; font-size: 13px; }
-    .doc-persona-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #7888A8; min-width: 70px; }
-    .doc-persona-nombre { font-weight: 600; color: #0D1B3E; }
-
-    /* CÓDIGO ÚNICO */
-    .doc-codigo { display: flex; align-items: center; gap: 8px; background: #F7F9FC; border: 1px solid #EEF2F9; border-radius: 8px; padding: .5rem .875rem; }
-    .doc-codigo-label { font-size: 11px; font-weight: 700; color: #7888A8; text-transform: uppercase; letter-spacing: .04em; }
-    .doc-codigo-val { font-family: 'Courier New', monospace; font-size: 12px; font-weight: 700; color: #0D1B3E; letter-spacing: .04em; flex: 1; }
-    .doc-codigo-copy { background: none; border: none; cursor: pointer; font-size: 14px; padding: 0; opacity: .6; transition: opacity .2s; }
-    .doc-codigo-copy:hover { opacity: 1; }
-
-    /* FOOTER CARD */
-    .doc-card-footer { display: flex; justify-content: space-between; align-items: center; }
-    .doc-fecha { font-size: 12px; color: #7888A8; }
-    .doc-ver { font-size: 12px; font-weight: 700; color: #1E6FE8; text-decoration: none; cursor: pointer; background: none; border: none; font-family: 'Plus Jakarta Sans', sans-serif; }
-    .doc-ver:hover { text-decoration: underline; }
-
-    /* EMPTY STATE */
-    .empty-state { text-align: center; padding: 5rem 2rem; }
-    .empty-icon { font-size: 64px; margin-bottom: 1rem; }
-    .empty-state h3 { font-family: 'DM Serif Display', serif; color: #0D1B3E; font-size: 1.8rem; margin-bottom: .5rem; }
-    .empty-state p { color: #7888A8; font-size: 15px; margin-bottom: 1.5rem; }
+    /* EMPTY */
+    .empty-state { text-align: center; padding: 4rem 2rem; }
+    .empty-icon { font-size: 56px; margin-bottom: 1rem; }
+    .empty-state h3 { font-family: 'DM Serif Display', serif; color: #0D1B3E; font-size: 1.6rem; margin-bottom: .5rem; }
+    .empty-state p { color: #7888A8; font-size: 14px; margin-bottom: 1.5rem; }
 
     /* LOADING */
     .loading { text-align: center; padding: 4rem; color: #7888A8; }
-    .spinner { width: 36px; height: 36px; border: 3px solid #EEF2F9; border-top-color: #1E6FE8; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+    .spinner { width: 32px; height: 32px; border: 3px solid #EEF2F9; border-top-color: #1E6FE8; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* FOOTER */
-    footer { background: #0D1B3E; padding: 3rem 2rem 2rem; margin-top: 2rem; }
-    .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; }
-    .footer-logo { font-size: 20px; font-weight: 800; color: white; text-decoration: none; display: block; margin-bottom: .3rem; }
-    .footer-logo span { color: #5DB3FF; }
-    .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.45); }
-    .footer-links { display: flex; gap: 3rem; }
-    .footer-col h5 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,0.45); margin-bottom: 1rem; }
-    .footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,0.7); text-decoration: none; margin-bottom: .6rem; }
-    .footer-col a:hover { color: white; }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    footer { background: #0D1B3E; padding: 2rem; margin-top: 2rem; }
+    .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+    @media (max-width: 768px) {
+      .tabla-wrap { overflow-x: auto; }
+      thead th, tbody td { white-space: nowrap; }
+    }
   </style>
 </head>
 <body>
@@ -114,48 +127,63 @@
 
 <div class="page-header">
   <h1>Mis documentos</h1>
-  <p>Revisa el estado de todos tus trámites</p>
+  <p>Historial completo de tus trámites notariales</p>
 </div>
 
 <div class="page-content">
+
+  <!-- BIENVENIDA -->
   <div id="resumen-usuario"></div>
 
-  <div id="filtros-wrap" style="display:none;">
-    <div class="filtros-bar">
-      <button class="filtro-btn active" onclick="filtrarEstado('todos', this)">Todos</button>
-      <button class="filtro-btn" onclick="filtrarEstado('Pendiente', this)">⏳ Pendientes</button>
-      <button class="filtro-btn" onclick="filtrarEstado('En proceso', this)">🔄 En proceso</button>
-      <button class="filtro-btn" onclick="filtrarEstado('Completado', this)">✅ Completados</button>
-      <button class="filtro-btn" onclick="filtrarEstado('Rechazado', this)">❌ Rechazados</button>
-      <span class="filtros-count" id="filtros-count"></span>
+  <!-- KPIs CLICKEABLES -->
+  <div class="kpi-row" id="kpi-row" style="display:none;">
+    <div class="kpi-mini todos active" onclick="filtrarEstado('todos', this)">
+      <div class="kpi-mini-num" id="kpi-todos">0</div>
+      <div class="kpi-mini-label">📂 Todos</div>
+    </div>
+    <div class="kpi-mini pendiente" onclick="filtrarEstado('Pendiente', this)">
+      <div class="kpi-mini-num" id="kpi-pendiente">0</div>
+      <div class="kpi-mini-label">⏳ Pendientes</div>
+    </div>
+    <div class="kpi-mini proceso" onclick="filtrarEstado('En proceso', this)">
+      <div class="kpi-mini-num" id="kpi-proceso">0</div>
+      <div class="kpi-mini-label">🔄 En proceso</div>
+    </div>
+    <div class="kpi-mini completado" onclick="filtrarEstado('Completado', this)">
+      <div class="kpi-mini-num" id="kpi-completado">0</div>
+      <div class="kpi-mini-label">✅ Completados</div>
+    </div>
+    <div class="kpi-mini rechazado" onclick="filtrarEstado('Rechazado', this)">
+      <div class="kpi-mini-num" id="kpi-rechazado">0</div>
+      <div class="kpi-mini-label">❌ Rechazados</div>
     </div>
   </div>
 
-  <div id="mis-docs-contenido">
+  <!-- BARRA HERRAMIENTAS -->
+  <div class="toolbar" id="toolbar" style="display:none;">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="buscador" placeholder="Buscar por tipo, nombre, código..." oninput="aplicarFiltros()"/>
+    </div>
+    <div class="toolbar-right">
+      <select class="sort-select" id="ordenar" onchange="aplicarFiltros()">
+        <option value="fecha-desc">Más recientes primero</option>
+        <option value="fecha-asc">Más antiguos primero</option>
+        <option value="tipo-asc">Tipo A→Z</option>
+        <option value="estado-asc">Estado A→Z</option>
+      </select>
+      <span class="results-count" id="results-count"></span>
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <div id="contenido-principal">
     <div class="loading"><div class="spinner"></div>Cargando tus documentos...</div>
   </div>
+
 </div>
 
 <footer>
-  <div class="footer-top">
-    <div>
-      <a href="index.html" class="footer-logo">Notario<span>Go</span></a>
-      <div class="footer-tagline">Tus trámites notariales, en un clic.</div>
-    </div>
-    <div class="footer-links">
-      <div class="footer-col">
-        <h5>Plataforma</h5>
-        <a href="index.html">Inicio</a>
-        <a href="tramites.html">Trámites</a>
-        <a href="mis-documentos.html">Mis documentos</a>
-      </div>
-      <div class="footer-col">
-        <h5>Ayuda</h5>
-        <a href="ayuda.html">Preguntas frecuentes</a>
-        <a href="ayuda.html">Contacto</a>
-      </div>
-    </div>
-  </div>
   <div class="footer-bottom">
     <div class="footer-copy">© 2025 NotarioGO SpA · Santiago, Chile</div>
     <div class="footer-copy">Ley N° 19.799 sobre firma electrónica</div>
@@ -165,7 +193,11 @@
 <script src="js/jsonbin.js"></script>
 <script src="js/app.js"></script>
 <script>
-  let tramitesUsuario = [];
+  let tramitesAll = [];
+  let tramitesFiltrados = [];
+  let estadoActual = 'todos';
+  const POR_PAGINA = 10;
+  let paginaActual = 1;
 
   function estadoColor(estado) {
     const c = {
@@ -177,123 +209,180 @@
     return c[estado] || { bg:'#EEF2F9', text:'#3A4A6B' };
   }
 
-  function formatearFecha(iso) {
+  function formatFecha(iso) {
     const d = new Date(iso);
-    const fecha = d.toLocaleDateString('es-CL', { day:'2-digit', month:'long', year:'numeric' });
-    const hora = d.toLocaleTimeString('es-CL', { hour:'2-digit', minute:'2-digit' });
-    return fecha + ' · ' + hora;
+    return d.toLocaleDateString('es-CL', { day:'2-digit', month:'short', year:'numeric' });
   }
 
-  // Extraer tipo principal y subtipo del nombre
+  function formatHora(iso) {
+    return new Date(iso).toLocaleTimeString('es-CL', { hour:'2-digit', minute:'2-digit' });
+  }
+
   function parseTipo(tipo) {
-    const partes = tipo.split('—').map(s => s.trim());
-    return {
-      principal: partes[0] || tipo,
-      subtipo: partes[1] || ''
-    };
-  }
-
-  // Extraer nombre del otorgante del formulario si existe
-  function getNombreOtorgante(tramite) {
-    if (tramite.formulario?.nombre_otorgante) return tramite.formulario.nombre_otorgante;
-    return tramite.usuarioNombre || '—';
-  }
-
-  function getNombreApoderado(tramite) {
-    if (tramite.formulario?.nombre_apoderado) return tramite.formulario.nombre_apoderado;
-    return null;
+    const p = tipo.split('—').map(s => s.trim());
+    return { principal: p[0] || tipo, subtipo: p[1] || '' };
   }
 
   function copiarCodigo(codigo) {
-    navigator.clipboard.writeText(codigo).then(() => {
-      alert('Código copiado: ' + codigo);
-    }).catch(() => {
-      prompt('Copia este código:', codigo);
-    });
+    navigator.clipboard.writeText(codigo).catch(() => {});
+    const btn = event.currentTarget;
+    btn.textContent = '✅';
+    setTimeout(() => btn.textContent = '📋', 1500);
   }
 
-  function renderTramites(lista) {
-    const contenido = document.getElementById('mis-docs-contenido');
-    document.getElementById('filtros-count').textContent = `${lista.length} documento${lista.length !== 1 ? 's' : ''}`;
+  // ── FILTROS + BÚSQUEDA + ORDEN ──
+  function filtrarEstado(estado, kpi) {
+    estadoActual = estado;
+    paginaActual = 1;
+    document.querySelectorAll('.kpi-mini').forEach(k => k.classList.remove('active'));
+    kpi.classList.add('active');
+    aplicarFiltros();
+  }
 
-    if (lista.length === 0) {
+  function aplicarFiltros() {
+    const busqueda = document.getElementById('buscador').value.toLowerCase();
+    const orden = document.getElementById('ordenar').value;
+
+    let lista = tramitesAll.filter(t => {
+      const matchEstado = estadoActual === 'todos' || t.estado === estadoActual;
+      const hayBusqueda = !busqueda ||
+        t.tipo?.toLowerCase().includes(busqueda) ||
+        t.codigo?.toLowerCase().includes(busqueda) ||
+        t.formulario?.nombre_otorgante?.toLowerCase().includes(busqueda) ||
+        t.formulario?.nombre_apoderado?.toLowerCase().includes(busqueda);
+      return matchEstado && hayBusqueda;
+    });
+
+    // Ordenar
+    lista.sort((a,b) => {
+      if (orden === 'fecha-desc') return new Date(b.fecha) - new Date(a.fecha);
+      if (orden === 'fecha-asc')  return new Date(a.fecha) - new Date(b.fecha);
+      if (orden === 'tipo-asc')   return a.tipo.localeCompare(b.tipo);
+      if (orden === 'estado-asc') return a.estado.localeCompare(b.estado);
+      return 0;
+    });
+
+    tramitesFiltrados = lista;
+    paginaActual = 1;
+    renderTabla();
+  }
+
+  // ── RENDER TABLA ──
+  function renderTabla() {
+    const contenido = document.getElementById('contenido-principal');
+    const total = tramitesFiltrados.length;
+    const inicio = (paginaActual - 1) * POR_PAGINA;
+    const fin = inicio + POR_PAGINA;
+    const pagina = tramitesFiltrados.slice(inicio, fin);
+    const totalPags = Math.ceil(total / POR_PAGINA);
+
+    document.getElementById('results-count').textContent =
+      `${total} documento${total !== 1 ? 's' : ''}`;
+
+    if (total === 0) {
       contenido.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-icon">📄</div>
-          <h3>Sin resultados</h3>
-          <p>No tienes trámites con ese estado.</p>
-          <a href="tramites.html" class="btn-nuevo" style="display:inline-flex; margin:0 auto;">+ Nuevo trámite</a>
+        <div class="tabla-wrap">
+          <div class="empty-state">
+            <div class="empty-icon">🔍</div>
+            <h3>Sin resultados</h3>
+            <p>No se encontraron documentos con esos criterios.</p>
+          </div>
         </div>`;
       return;
     }
 
-    contenido.innerHTML = `<div class="doc-grid">${lista.map(t => {
+    const filas = pagina.map(t => {
       const col = estadoColor(t.estado);
       const { principal, subtipo } = parseTipo(t.tipo);
-      const otorgante = getNombreOtorgante(t);
-      const apoderado = getNombreApoderado(t);
+      const otorgante = t.formulario?.nombre_otorgante || t.usuarioNombre || '—';
+      const apoderado = t.formulario?.nombre_apoderado || null;
       const codigo = t.codigo || '—';
 
       return `
-        <div class="doc-card">
-          <div class="doc-card-top">
-            <div class="doc-tipo-wrap">
-              <div class="doc-emoji-circle">${t.emoji || '📋'}</div>
-              <div>
-                <div class="doc-tipo">${principal}</div>
-                <div class="doc-subtipo">${subtipo || principal}</div>
-              </div>
+        <tr>
+          <td class="td-codigo">
+            ${codigo}
+            ${codigo !== '—' ? `<button onclick="copiarCodigo('${codigo}')" title="Copiar">📋</button>` : ''}
+          </td>
+          <td>
+            <span class="td-emoji">${t.emoji || '📋'}</span>
+            <span class="td-tipo">${principal}</span>
+            ${subtipo ? `<div class="td-subtipo" style="margin-left:28px;">${subtipo}</div>` : ''}
+          </td>
+          <td>
+            <div class="td-nombre">
+              ${otorgante}
+              ${apoderado ? `<small>Apoderado: ${apoderado}</small>` : ''}
             </div>
+          </td>
+          <td>
             <span class="estado-pill" style="background:${col.bg}; color:${col.text};">${t.estado}</span>
-          </div>
+          </td>
+          <td class="td-fecha">
+            ${formatFecha(t.fecha)}
+            <small>${formatHora(t.fecha)}</small>
+          </td>
+        </tr>`;
+    }).join('');
 
-          <div class="doc-divider"></div>
+    // Paginación
+    let pags = '';
+    for (let i = 1; i <= totalPags; i++) {
+      pags += `<button class="pag-btn ${i === paginaActual ? 'active' : ''}" onclick="irPagina(${i})">${i}</button>`;
+    }
 
-          <div class="doc-personas">
-            <div class="doc-persona">
-              <span class="doc-persona-label">Otorgante</span>
-              <span class="doc-persona-nombre">${otorgante}</span>
-            </div>
-            ${apoderado ? `
-            <div class="doc-persona">
-              <span class="doc-persona-label">Apoderado</span>
-              <span class="doc-persona-nombre">${apoderado}</span>
-            </div>` : ''}
+    contenido.innerHTML = `
+      <div class="tabla-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th onclick="cambiarOrden('codigo')" class="${document.getElementById('ordenar').value.startsWith('codigo') ? 'sorted' : ''}">Código <span class="sort-icon">↕</span></th>
+              <th onclick="cambiarOrden('tipo')" class="${document.getElementById('ordenar').value === 'tipo-asc' ? 'sorted' : ''}">Tipo de trámite <span class="sort-icon">↕</span></th>
+              <th>Otorgante / Apoderado</th>
+              <th onclick="cambiarOrden('estado')" class="${document.getElementById('ordenar').value === 'estado-asc' ? 'sorted' : ''}">Estado <span class="sort-icon">↕</span></th>
+              <th onclick="cambiarOrden('fecha')" class="${document.getElementById('ordenar').value.startsWith('fecha') ? 'sorted' : ''}">Fecha y hora <span class="sort-icon">↕</span></th>
+            </tr>
+          </thead>
+          <tbody>${filas}</tbody>
+        </table>
+        <div class="paginacion">
+          <div class="pag-info">Mostrando ${inicio+1}–${Math.min(fin, total)} de ${total}</div>
+          <div class="pag-btns">
+            <button class="pag-btn" onclick="irPagina(${paginaActual - 1})" ${paginaActual === 1 ? 'disabled' : ''}>← Anterior</button>
+            ${pags}
+            <button class="pag-btn" onclick="irPagina(${paginaActual + 1})" ${paginaActual === totalPags ? 'disabled' : ''}>Siguiente →</button>
           </div>
-
-          <div class="doc-codigo">
-            <span class="doc-codigo-label">Código</span>
-            <span class="doc-codigo-val">${codigo}</span>
-            ${codigo !== '—' ? `<button class="doc-codigo-copy" onclick="copiarCodigo('${codigo}')" title="Copiar código">📋</button>` : ''}
-          </div>
-
-          <div class="doc-card-footer">
-            <span class="doc-fecha">📅 ${formatearFecha(t.fecha)}</span>
-          </div>
-        </div>`;
-    }).join('')}</div>`;
+        </div>
+      </div>`;
   }
 
-  function filtrarEstado(estado, btn) {
-    document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const lista = estado === 'todos'
-      ? tramitesUsuario
-      : tramitesUsuario.filter(t => t.estado === estado);
-    renderTramites(lista);
+  function irPagina(n) {
+    const totalPags = Math.ceil(tramitesFiltrados.length / POR_PAGINA);
+    if (n < 1 || n > totalPags) return;
+    paginaActual = n;
+    renderTabla();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  function cambiarOrden(col) {
+    const sel = document.getElementById('ordenar');
+    if (col === 'fecha') sel.value = sel.value === 'fecha-desc' ? 'fecha-asc' : 'fecha-desc';
+    else if (col === 'tipo') sel.value = 'tipo-asc';
+    else if (col === 'estado') sel.value = 'estado-asc';
+    aplicarFiltros();
+  }
+
+  // ── INIT ──
   document.addEventListener('DOMContentLoaded', async () => {
     const user = usuarioActual();
     if (!user) return window.location.href = 'login.html';
 
-    // Saludo
     document.getElementById('resumen-usuario').innerHTML = `
       <div class="resumen-card">
         <div>
           <p>Bienvenido de vuelta</p>
           <h2>${user.nombre}</h2>
-          <span>${user.email}</span>
+          <small>${user.email}</small>
         </div>
         <div class="resumen-btns">
           <a href="tramites.html" class="btn-nuevo">+ Nuevo trámite</a>
@@ -303,27 +392,37 @@
 
     try {
       const data = await JSONBIN.get('tramites');
-      tramitesUsuario = (data.tramites || [])
+      tramitesAll = (data.tramites || [])
         .filter(t => t.usuarioId === user.id)
         .sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
 
-      if (tramitesUsuario.length === 0) {
-        document.getElementById('mis-docs-contenido').innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">📄</div>
-            <h3>Aún no tienes trámites</h3>
-            <p>Inicia tu primer trámite notarial en minutos.</p>
-            <a href="tramites.html" class="btn-nuevo" style="display:inline-flex; margin:0 auto;">+ Iniciar trámite</a>
+      if (tramitesAll.length === 0) {
+        document.getElementById('contenido-principal').innerHTML = `
+          <div class="tabla-wrap">
+            <div class="empty-state">
+              <div class="empty-icon">📄</div>
+              <h3>Aún no tienes trámites</h3>
+              <p>Inicia tu primer trámite notarial en minutos.</p>
+              <a href="tramites.html" class="btn-nuevo" style="display:inline-flex; margin:0 auto;">+ Iniciar trámite</a>
+            </div>
           </div>`;
         return;
       }
 
-      document.getElementById('filtros-wrap').style.display = 'block';
-      document.getElementById('filtros-count').textContent = `${tramitesUsuario.length} documento${tramitesUsuario.length !== 1 ? 's' : ''}`;
-      renderTramites(tramitesUsuario);
+      // KPIs
+      document.getElementById('kpi-row').style.display = 'grid';
+      document.getElementById('toolbar').style.display = 'flex';
+      document.getElementById('kpi-todos').textContent      = tramitesAll.length;
+      document.getElementById('kpi-pendiente').textContent  = tramitesAll.filter(t => t.estado === 'Pendiente').length;
+      document.getElementById('kpi-proceso').textContent    = tramitesAll.filter(t => t.estado === 'En proceso').length;
+      document.getElementById('kpi-completado').textContent = tramitesAll.filter(t => t.estado === 'Completado').length;
+      document.getElementById('kpi-rechazado').textContent  = tramitesAll.filter(t => t.estado === 'Rechazado').length;
+
+      tramitesFiltrados = [...tramitesAll];
+      renderTabla();
 
     } catch(e) {
-      document.getElementById('mis-docs-contenido').innerHTML =
+      document.getElementById('contenido-principal').innerHTML =
         '<p style="color:red; text-align:center; padding:2rem;">Error al cargar. Intenta más tarde.</p>';
     }
   });
