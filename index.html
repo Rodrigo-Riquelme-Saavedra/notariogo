@@ -21,11 +21,19 @@
     .btn-ghost { color: #FFFFFF !important; border-color: rgba(255,255,255,0.4) !important; }
     .nav-logo-text { font-size: 22px; font-weight: 800; color: #0D1B3E; text-decoration: none; letter-spacing: -0.5px; }
     .nav-logo-text span { color: #3B8BFF; }
-    .hero-logo { width: 320px; margin-bottom: 1.5rem; display: block; filter: brightness(0) invert(1); }
+    .hero-logo-wrap {
+      background: white;
+      border-radius: 16px;
+      padding: 16px 24px;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    }
+    .hero-logo { width: 260px; display: block; }
   </style>
 </head>
 <body>
- 
+
 <nav>
   <a class="nav-logo-text" href="index.html">Notario<span>Go</span></a>
   <div class="nav-links">
@@ -39,11 +47,13 @@
     <a href="tramites.html" class="btn-primary">Iniciar trámite</a>
   </div>
 </nav>
- 
+
 <section class="hero">
   <div class="hero-grid">
     <div>
-      <img src="assets/Logo-NotarioGO.png" alt="NotarioGO" class="hero-logo"/>
+      <div class="hero-logo-wrap">
+        <img src="assets/Logo-NotarioGO.png" alt="NotarioGO" class="hero-logo"/>
+      </div>
       <div class="hero-badge">
         <span class="badge-dot"></span> Notaría 100% Digital · Chile
       </div>
@@ -89,7 +99,7 @@
     </div>
   </div>
 </section>
- 
+
 <div class="trust-bar">
   <div class="trust-item">
     <svg viewBox="0 0 18 18"><path d="M9 1 L17 5 V9 C17 13 13 16.5 9 17.5 C5 16.5 1 13 1 9 V5 Z"/><polyline points="5.5,9 8,11.5 12.5,6.5"/></svg>
@@ -108,7 +118,7 @@
     Válido legalmente en Chile
   </div>
 </div>
- 
+
 <section class="features">
   <div class="features-inner">
     <div class="section-tag">Por qué elegirnos</div>
@@ -148,7 +158,7 @@
     </div>
   </div>
 </section>
- 
+
 <section class="tramites">
   <div class="tramites-inner">
     <div class="section-tag">Catálogo de trámites</div>
@@ -164,7 +174,7 @@
     </div>
   </div>
 </section>
- 
+
 <section class="stats">
   <div class="stats-inner">
     <div><div class="stat-num">+12<span>K</span></div><div class="stat-desc">Trámites completados</div></div>
@@ -173,7 +183,7 @@
     <div><div class="stat-num">100<span>%</span></div><div class="stat-desc">Validez legal en Chile</div></div>
   </div>
 </section>
- 
+
 <section class="cta-section">
   <div class="cta-box">
     <div class="section-tag">Empieza ahora</div>
@@ -185,7 +195,7 @@
     </div>
   </div>
 </section>
- 
+
 <footer>
   <div class="footer-top">
     <div>
@@ -217,7 +227,7 @@
     <div class="footer-copy">Ley N° 19.799 sobre firma electrónica</div>
   </div>
 </footer>
- 
+
 <script src="js/app.js"></script>
 </body>
 </html>
