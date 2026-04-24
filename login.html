@@ -6,13 +6,68 @@
   <title>NotarioGO — Ingresar</title>
   <link rel="stylesheet" href="css/style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    .nav-logo-text { font-size: 22px; font-weight: 800; color: #0D1B3E; text-decoration: none; letter-spacing: -0.5px; }
+    .nav-logo-text span { color: #3B8BFF; }
+
+    .login-wrap {
+      min-height: calc(100vh - 68px);
+      display: flex; align-items: center; justify-content: center;
+      background: #F7F9FC; padding: 2rem;
+    }
+    .login-card {
+      background: white; border: 1.5px solid #EEF2F9;
+      border-radius: 20px; padding: 2.5rem;
+      width: 100%; max-width: 440px;
+      box-shadow: 0 8px 32px rgba(13,27,62,0.08);
+    }
+    .login-tabs {
+      display: flex; gap: .5rem; margin-bottom: 2rem;
+      background: #F7F9FC; border-radius: 10px; padding: 4px;
+    }
+    .tab-btn {
+      flex: 1; padding: 9px; border: none; border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px; font-weight: 700; cursor: pointer; transition: all .2s;
+    }
+    .tab-btn.active { background: white; color: #0D1B3E; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .tab-btn.inactive { background: transparent; color: #7888A8; }
+    .login-card h2 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #0D1B3E; margin-bottom: .4rem; }
+    .login-card .subtitle { font-size: 14px; color: #7888A8; margin-bottom: 1.75rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: #3A4A6B; margin-bottom: .4rem; }
+    .form-group input {
+      width: 100%; padding: 11px 14px;
+      border: 1.5px solid #C1CBDF; border-radius: 8px;
+      font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #0D1B3E; outline: none; transition: border-color .2s;
+      box-sizing: border-box;
+    }
+    .form-group input:focus { border-color: #1E6FE8; }
+    .btn-submit {
+      width: 100%; padding: 13px; background: #1E6FE8; color: white;
+      border: none; border-radius: 8px; font-size: 14px; font-weight: 700;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      margin-top: .5rem; transition: all .2s;
+      box-shadow: 0 4px 14px rgba(30,111,232,0.35);
+    }
+    .btn-submit:hover { background: #1458C4; transform: translateY(-1px); }
+    .form-divider { text-align: center; font-size: 13px; color: #7888A8; margin-top: 1.25rem; }
+    .form-link { color: #1E6FE8; text-decoration: none; font-weight: 600; }
+    .form-link:hover { text-decoration: underline; }
+    .alerta { padding: .75rem 1rem; border-radius: 8px; font-size: 13px; margin-bottom: 1rem; display: none; }
+    .alerta-error { background: #FEE2E2; color: #991B1B; border: 1px solid #FCA5A5; }
+    .alerta-success { background: #D1FAE5; color: #065F46; border: 1px solid #6EE7B7; }
+
+    footer { background: #0D1B3E !important; padding: 2rem !important; }
+    .footer-bottom { display: flex !important; justify-content: space-between !important; flex-wrap: wrap !important; gap: 1rem !important; }
+    .footer-copy { font-size: 12px !important; color: rgba(255,255,255,0.35) !important; }
+  </style>
 </head>
 <body>
 
 <nav>
-  <a class="nav-logo" href="index.html">
-    <img src="assets/Logo-NotarioGO.png" alt="NotarioGO"/>
-  </a>
+  <a class="nav-logo-text" href="index.html">Notario<span>Go</span></a>
   <div class="nav-links">
     <a href="index.html">Inicio</a>
     <a href="tramites.html">Trámites</a>
@@ -27,33 +82,117 @@
 <div class="login-wrap">
   <div class="login-card">
 
-    <!-- TABS -->
-    <div style="display:flex; gap:.5rem; margin-bottom:2rem; background:var(--gray-100); border-radius:10px; padding:4px;">
-      <button id="tab-login" onclick="showTab('login')"
-        style="flex:1; padding:8px; border:none; border-radius:8px; font-family:var(--font);
-               font-size:13px; font-weight:700; cursor:pointer; background:var(--white);
-               color:var(--navy); box-shadow:0 1px 4px rgba(0,0,0,0.08); transition:all .2s;">
-        Ingresar
-      </button>
-      <button id="tab-registro" onclick="showTab('registro')"
-        style="flex:1; padding:8px; border:none; border-radius:8px; font-family:var(--font);
-               font-size:13px; font-weight:700; cursor:pointer; background:transparent;
-               color:var(--gray-500); transition:all .2s;">
-        Crear cuenta
-      </button>
+    <div class="login-tabs">
+      <button id="tab-login" class="tab-btn active" onclick="showTab('login')">Ingresar</button>
+      <button id="tab-registro" class="tab-btn inactive" onclick="showTab('registro')">Crear cuenta</button>
     </div>
 
-    <!-- ALERTA -->
-    <div id="alerta" class="alert"></div>
+    <div id="alerta" class="alerta"></div>
 
-    <!-- FORM LOGIN -->
     <div id="form-login">
       <h2>Bienvenido de vuelta</h2>
-      <p>Ingresa tus datos para continuar</p>
+      <div class="subtitle">Ingresa tus datos para continuar</div>
       <div class="form-group">
         <label>Correo electrónico</label>
         <input type="email" id="login-email" placeholder="tucorreo@email.com"/>
       </div>
       <div class="form-group">
         <label>Contraseña</label>
-        <input
+        <input type="password" id="login-pass" placeholder="••••••••"/>
+      </div>
+      <button onclick="iniciarSesion()" class="btn-submit">Ingresar</button>
+      <div class="form-divider">
+        ¿No tienes cuenta? <a href="#" class="form-link" onclick="showTab('registro')">Regístrate gratis</a>
+      </div>
+    </div>
+
+    <div id="form-registro" style="display:none;">
+      <h2>Crea tu cuenta</h2>
+      <div class="subtitle">Gratis, sin tarjeta de crédito</div>
+      <div class="form-group">
+        <label>Nombre completo</label>
+        <input type="text" id="reg-nombre" placeholder="Juan Pérez"/>
+      </div>
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" id="reg-email" placeholder="tucorreo@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres"/>
+      </div>
+      <button onclick="registrar()" class="btn-submit">Crear cuenta gratis</button>
+      <div class="form-divider">
+        ¿Ya tienes cuenta? <a href="#" class="form-link" onclick="showTab('login')">Ingresar</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 NotarioGO SpA · Santiago, Chile</div>
+    <div class="footer-copy">Ley N° 19.799 sobre firma electrónica</div>
+  </div>
+</footer>
+
+<script src="js/jsonbin.js"></script>
+<script src="js/app.js"></script>
+<script>
+  function showTab(tab) {
+    const esLogin = tab === 'login';
+    document.getElementById('form-login').style.display    = esLogin ? 'block' : 'none';
+    document.getElementById('form-registro').style.display = esLogin ? 'none'  : 'block';
+    document.getElementById('tab-login').className    = 'tab-btn ' + (esLogin ? 'active' : 'inactive');
+    document.getElementById('tab-registro').className = 'tab-btn ' + (esLogin ? 'inactive' : 'active');
+    document.getElementById('alerta').style.display = 'none';
+  }
+
+  function mostrarAlerta(msg, tipo) {
+    const el = document.getElementById('alerta');
+    el.textContent = msg;
+    el.className = 'alerta alerta-' + tipo;
+    el.style.display = 'block';
+  }
+
+  async function iniciarSesion() {
+    const email = document.getElementById('login-email').value.trim();
+    const pass  = document.getElementById('login-pass').value.trim();
+    if (!email || !pass) return mostrarAlerta('Completa todos los campos.', 'error');
+    try {
+      const data = await JSONBIN.get('usuarios');
+      const usuario = data.usuarios.find(u => u.email === email && u.password === pass);
+      if (!usuario) return mostrarAlerta('Correo o contraseña incorrectos.', 'error');
+      localStorage.setItem('notariogo_user', JSON.stringify(usuario));
+      mostrarAlerta('¡Bienvenido ' + usuario.nombre + '! Redirigiendo...', 'success');
+      setTimeout(() => window.location.href = 'mis-documentos.html', 1500);
+    } catch(e) {
+      mostrarAlerta('Error de conexión. Intenta más tarde.', 'error');
+    }
+  }
+
+  async function registrar() {
+    const nombre = document.getElementById('reg-nombre').value.trim();
+    const email  = document.getElementById('reg-email').value.trim();
+    const pass   = document.getElementById('reg-pass').value.trim();
+    if (!nombre || !email || !pass) return mostrarAlerta('Completa todos los campos.', 'error');
+    if (pass.length < 6) return mostrarAlerta('La contraseña debe tener al menos 6 caracteres.', 'error');
+    try {
+      const data = await JSONBIN.get('usuarios');
+      const existe = data.usuarios.find(u => u.email === email);
+      if (existe) return mostrarAlerta('Ya existe una cuenta con ese correo.', 'error');
+      const nuevoUsuario = { id: Date.now(), nombre, email, password: pass, fechaRegistro: new Date().toISOString() };
+      data.usuarios.push(nuevoUsuario);
+      await JSONBIN.set('usuarios', data);
+      localStorage.setItem('notariogo_user', JSON.stringify(nuevoUsuario));
+      mostrarAlerta('¡Cuenta creada! Redirigiendo...', 'success');
+      setTimeout(() => window.location.href = 'mis-documentos.html', 1500);
+    } catch(e) {
+      mostrarAlerta('Error de conexión. Intenta más tarde.', 'error');
+    }
+  }
+</script>
+
+</body>
+</html>
