@@ -1,1 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NotarioGO — Trámites</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+</head>
+<body>
 
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="assets/Logo-NotarioGO.png" alt="NotarioGO"/>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="tramites.html" class="active">Trámites</a>
+    <a href="mis-documentos.html">Mis documentos</a>
+    <a href="ayuda.html">Ayuda</a>
+  </div>
+  <div class="nav-actions">
+    <a href="login.html" class="btn-outline">Ingresar / Cuenta</a>
+    <a href="tramites.html" class="btn-primary">Iniciar trámite</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Catálogo de trámites</h1>
+  <p>Selecciona el trámite que necesitas y comenzamos de inmediato</p>
+</div>
+
+<div class="page-content">
+
+  <!-- FILTRO -->
+  <div style="display:flex; gap:.75rem; flex-wrap:wrap; margin-bottom:2rem;">
+    <button onclick="filtrar('todos')" id="f-todos"
+      class="btn-primary" style="font-size:13px; padding:8px 18px;">
+      Todos
+    </button>
+    <button onclick="filtrar('documentos')" id="f-documentos"
+      class="btn-outline" style="font-size:13px; padding:8px 18px;">
+      Documentos
+    </button>
+    <button onclick="filtrar('poderes')" id="f-poderes"
+      class="btn-outline" style="font-size:13px; padding:8px 18px;">
+      Poderes
+    </button>
+    <button onclick="filtrar('contratos')" id="f-contratos"
+      class="btn-outline" style="font-size:13px; padding:8px 18px;">
+      Contratos
+    </button>
+  </div>
+
+  <!-- GRID TRÁMITES -->
+  <div id="tramites-grid" class="tramites-grid">
+
+    <div class="tram-card" data-cat="poderes">
+      <div class="tram-emoji">📋</div>
+      <h4>Poder simple</h4>
+      <p style="font-size:12px; color:var(--gray-500); line-height:1.6;">
+        Autoriza a otra persona a actuar en tu nombre para gestiones específicas.
+      </p>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:.5rem;">
+        <div class="tram-tag">Más solicitado</div>
+        <button onclick="iniciarTramite('Poder simple','📋')"
+          class="btn-primary" style="font-size:12px; padding:6px 14px;">
+          Iniciar →
+        </button>
+      </div>
+    </div>
+
+    <div class="tram-card" data-cat="poderes">
+      <div class="tram-emoji">⚖️</div>
+      <h4>Poder notarial</h4>
+      <p style="font-size:12px; color:var(--gray-500); line-height:1.6;">
+        Poder con firma notarial para actos jurídicos de mayor relevancia.
+      </p>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:.5rem;">
+        <div class="tram-tag">Popular</div>
+        <button onclick="iniciarTramite('Poder notarial','⚖️')"
+          class="btn-primary" style="font-size:12px; padding:6px 14px;">
+          Iniciar →
+        </button>
+      </div>
+    </div>
+
+    <div class="tram-card" data-cat="documentos">
+      <div class="tram-emoji">🏠</div>
+      <h4>Declaración jurada</h4>
+      <p style="font-size:12px; color:var(--gray-500); line-height:1.6;">
+        Declaración con valor legal ante organismos públicos o privados.
+      </p>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:.5rem;">
+        <div class="tram-tag">Rápido</div>
+        <button onclick="iniciarTramite('Declaración jurada','🏠')"
+          class="btn-primary" style="font-size:12px; padding:6px 14px;">
+          Iniciar →
+        </button>
+      </div>
+    </div>
+
+    <div class="tram-card" data-cat="documentos">
+      <div class="tram-emoji">✍️</div>
+      <h4>Autorización de firma</h4>
+      <p style="font-size:12px; color:var(--gray-500); line-height:1.6;">
+        Certifica que una firma es auténtica y fue realizada por la persona indicada.
+      </p>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:.5rem;">
+        <div class="tram-tag">Digital</div>
+        <button onclick="iniciarTramite('Autorización de firma','✍️')"
+          class="btn-primary" style="font-size:12px; padding:6px 14px;">
+          Iniciar →
+        </button>
+      </div>
+    </div>
+
+    <div class="tram-card" data-cat="documentos">
+      <div class="tram-emoji">📄</div>
+      <h4>Copia autorizada</h4>
+      <p style="font-size:12px; color:var(--gray-500); line-height:1.6;">
+        Copia fiel de un documento original con validez legal notarial.
+      </p>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:.5rem;">
+        <div class="tram-tag">24 hrs</div>
+        <button onclick="iniciarTramite('Copia autorizada','📄')"
+          class="btn-primary" style="font-size:12px; padding:6px 14px;">
+          Iniciar →
+        </button>
+      </div>
+    </div>
+
+    <div class="tram-card" data-cat="contratos">
+      <div class="tram-emoji">🤝</div>
+      <h4>Contrato de arriendo</h4>
+      <p style="font-size:12px; color:var(--gray-500); line-height:1.6;">
+        Contrato de arrendamiento con firma y validación notarial incluida.
+      </p>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:.5rem;">
+        <div class="tram-tag">Popular</div>
+        <button onclick="iniciarTramite('Contrato de arriendo','🤝')"
+          class="btn-primary" style="font-size:12px; padding:6px 14px;">
+          Iniciar →
+        </button>
+      </div>
+    </div>
+
+    <div class="tram-card" data-cat="contratos">
+      <div class="tram-emoji">🏛️</div>
+      <h4>Protocolización</h4>
+      <p style="font-size:12px; color:var(--gray-500); line-height:1.6;">
+        Incorporación de documentos privados al registro del
