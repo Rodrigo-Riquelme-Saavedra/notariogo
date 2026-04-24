@@ -34,7 +34,7 @@ nav {
   display: flex; align-items: center; justify-content: space-between;
   height: 68px;
 }
-.nav-logo img { height: 40px; }
+.nav-logo img { height: 52px; width: auto; }
 .nav-links { display: flex; align-items: center; gap: 2rem; }
 .nav-links a {
   text-decoration: none; font-size: 14px; font-weight: 600;
@@ -66,8 +66,8 @@ nav {
 
 /* ── HERO ── */
 .hero {
-  background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 55%, #1B4BAA 100%);
-  min-height: 88vh;
+  background: linear-gradient(135deg, #0D1B3E 0%, #1A2F5E 55%, #1B4BAA 100%);
+  min-height: 100vh;
   display: flex; align-items: center; justify-content: center;
   padding: 5rem 2rem 4rem;
   position: relative; overflow: hidden;
@@ -87,3 +87,15 @@ nav {
   background: rgba(59,139,255,0.15); border: 1px solid rgba(59,139,255,0.35);
   border-radius: 100px; padding: 6px 14px;
   font-size: 12px; font-weight: 700; color: #
+
+  /* ── FIXES HERO TEXTO ── */
+.hero h1 { color: #FFFFFF !important; }
+.hero-desc { color: rgba(255,255,255,0.85) !important; }
+.hero-badge { color: #7DB8FF !important; }
+.hero-card { background: rgba(255,255,255,0.12) !important; border: 1px solid rgba(255,255,255,0.25) !important; }
+.hero-card-title { color: #7DB8FF !important; }
+.step-info strong { color: #FFFFFF !important; }
+.step-info span { color: rgba(255,255,255,0.7) !important; }
+.step-num { background: #1E6FE8 !important; color: #FFFFFF !important; }
+.step { background: rgba(255,255,255,0.08) !important; border: 1px solid rgba(255,255,255,0.15) !important; }
+.btn-ghost { color: #FFFFFF !important; border-color: rgba(255,255,255,0.4) !important; }
