@@ -178,7 +178,10 @@
   }
 
   function formatearFecha(iso) {
-    return new Date(iso).toLocaleDateString('es-CL', { day:'2-digit', month:'long', year:'numeric' });
+    const d = new Date(iso);
+    const fecha = d.toLocaleDateString('es-CL', { day:'2-digit', month:'long', year:'numeric' });
+    const hora = d.toLocaleTimeString('es-CL', { hour:'2-digit', minute:'2-digit' });
+    return fecha + ' · ' + hora;
   }
 
   // Extraer tipo principal y subtipo del nombre
