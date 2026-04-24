@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NotarioGO — Poder Simple: Instituciones Públicas</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    .nav-logo-text { font-size: 22px; font-weight: 800; color: #0D1B3E; text-decoration: none; letter-spacing: -0.5px; }
+    .nav-logo-text span { color: #3B8BFF; }
+    body { background: #F7F9FC; }
+
+    .breadcrumb { background: white; border-bottom: 1px solid #EEF2F9; padding: .875rem 2rem; font-size: 13px; color: #7888A8; }
+    .breadcrumb a { color: #1E6FE8; text-decoration: none; font-weight: 600; }
+    .breadcrumb span { margin: 0 .5rem; }
+
+    .page-header { background: #0D1B3E; padding: 2.5rem 2rem; }
+    .page-header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 1.5rem; }
+    .page-header-icon { width: 56px; height: 56px; background: rgba(255,255,255,0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+    .page-header h1 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: white; margin-bottom: .25rem; }
+    .page-header p { color: rgba(255,255,255,0.6); font-size: 14px; }
+    .header-badge { background: rgba(255,184,0,0.2); border: 1px solid rgba(255,184,0,0.4); color: #FFB800; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 100px; text-transform: uppercase; letter-spacing: .05em; margin-top: .5rem; display: inline-block; }
+
+    .codigo-doc { background: #0D1B3E; color: white; padding: 1rem 2rem; display: flex; align-items: center; justify-content: center; gap: 1rem; font-family: 'Courier New', monospace; font-size: 15px; font-weight: 700; letter-spacing: .08em; border-top: 1px solid rgba(255,255,255,0.1); }
+    .codigo-doc span { color: #FFB800; }
+    .codigo-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; color: rgba(255,255,255,0.55); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+
+    .form-layout { max-width: 1200px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    @media (max-width: 900px) { .form-layout { grid-template-columns: 1fr; } }
+
+    .form-panel { background: white; border: 2px solid #EEF2F9; border-radius: 16px; padding: 2rem; box-shadow: 0 2px 8px rgba(13,27,62,0.06); }
+    .form-section { margin-bottom: 1.75rem; }
+    .form-section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #1E6FE8; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 2px solid #E6F0FF; display: flex; align-items: center; gap: 8px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-row.single { grid-template-columns: 1fr; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; color: #3A4A6B; margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .04em; }
+    .form-group input, .form-group select { width: 100%; padding: 10px 14px; border: 1.5px solid #C1CBDF; border-radius: 8px; font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; color: #0D1B3E; outline: none; transition: border-color .2s; box-sizing: border-box; background: white; }
+    .form-group input:focus, .form-group select:focus { border-color: #1E6FE8; box-shadow: 0 0 0 3px rgba(30,111,232,0.1); }
+    .form-group .hint { font-size: 11px; color: #7888A8; margin-top: .3rem; }
+    .form-group .error-msg { font-size: 11px; color: #EF4444; margin-top: .3rem; display: none; }
+    .form-group .valid-msg { font-size: 11px; color: #10B981; margin-top: .3rem; display: none; }
+    .form-group.has-error input, .form-group.has-error select { border-color: #EF4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.1); }
+    .form-group.has-error .error-msg { display: block; }
+    .form-group.is-valid input { border-color: #10B981; }
+    .form-group.is-valid .valid-msg { display: block; }
+    .rut-wrap { position: relative; }
+    .rut-wrap input { padding-right: 36px; }
+    .rut-icon { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; pointer-events: none; }
+
+    /* INSTITUCIÓN OTRO */
+    .institucion-otro { display: none; margin-top: .75rem; }
+    .institucion-otro input { width: 100%; padding: 10px 14px; border: 1.5px solid #C1CBDF; border-radius: 8px; font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; color: #0D1B3E; outline: none; transition: border-color .2s; box-sizing: border-box; }
+    .institucion-otro input:focus { border-color: #1E6FE8; box-shadow: 0 0 0 3px rgba(30,111,232,0.1); }
+
+    /* PRESETS */
+    .presets-wrap { display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .preset-btn { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; border: 2px solid #C1CBDF; background: white; color: #3A4A6B; transition: all .2s; }
+    .preset-btn:hover { border-color: #1E6FE8; color: #1E6FE8; background: #E6F0FF; }
+    .preset-btn.sel { border-color: #1E6FE8; background: #E6F0FF; color: #1E40AF; }
+
+    /* CHECKBOXES FACULTADES */
+    .facultades-grid { display: flex; flex-direction: column; gap: .6rem; }
+    .facultad-item { display: flex; align-items: center; gap: 10px; padding: .75rem 1rem; border: 1.5px solid #EEF2F9; border-radius: 10px; cursor: pointer; transition: all .2s; }
+    .facultad-item:hover { border-color: #C5D9FF; background: #F7F9FC; }
+    .facultad-item.checked { border-color: #1E6FE8; background: #E6F0FF; }
+    .facultad-item input[type=checkbox] { width: 18px; height: 18px; cursor: pointer; accent-color: #1E6FE8; flex-shrink: 0; }
+    .facultad-label { font-size: 14px; font-weight: 600; color: #0D1B3E; flex: 1; }
+    .facultad-emoji { font-size: 18px; }
+    .facultad-otros-input { width: 100%; padding: 8px 12px; border: 1.5px solid #C1CBDF; border-radius: 8px; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; color: #0D1B3E; outline: none; margin-top: .5rem; display: none; box-sizing: border-box; }
+    .facultad-otros-input:focus { border-color: #1E6FE8; }
+    .facultades-error { font-size: 12px; color: #EF4444; margin-top: .5rem; display: none; }
+    .facultades-preview { background: #F0F6FF; border: 1.5px solid #C5D9FF; border-radius: 10px; padding: .875rem 1rem; font-size: 13px; color: #1E40AF; font-style: italic; margin-top: .75rem; min-height: 44px; line-height: 1.6; display: none; }
+    .facultades-preview.visible { display: block; }
+
+    .form-actions { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .btn-limpiar { background: white; color: #7888A8; border: 1.5px solid #C1CBDF; border-radius: 8px; padding: 11px 20px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all .2s; }
+    .btn-limpiar:hover { border-color: #7888A8; }
+    .btn-guardar { background: #1E6FE8; color: white; border: none; border-radius: 8px; padding: 12px 24px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all .2s; box-shadow: 0 4px 14px rgba(30,111,232,0.35); flex: 1; }
+    .btn-guardar:hover { background: #1458C4; transform: translateY(-1px); }
+    .btn-guardar:disabled { background: #C1CBDF; box-shadow: none; cursor: not-allowed; transform: none; }
+
+    .preview-panel { position: sticky; top: 80px; }
+    .preview-card { background: white; border: 2px solid #EEF2F9; border-radius: 16px; padding: 2rem; box-shadow: 0 2px 8px rgba(13,27,62,0.06); }
+    .preview-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: .5rem; }
+    .preview-title { font-size: 14px; font-weight: 700; color: #0D1B3E; }
+    .preview-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 100px; }
+    .preview-badge.completo { background: #D1FAE5; color: #065F46; }
+    .preview-badge.incompleto { background: #FEF3C7; color: #92400E; }
+
+    .doc-legal { font-family: 'Times New Roman', Times, serif; font-size: 13.5px; line-height: 1.9; color: #1a1a1a; background: #FAFAFA; border: 1px solid #E0E0E0; border-radius: 8px; padding: 1.5rem; min-height: 400px; }
+    .doc-legal .doc-codigo { font-family: 'Courier New', monospace; font-size: 11px; color: #7888A8; text-align: right; margin-bottom: 1rem; letter-spacing: .05em; }
+    .doc-legal .doc-titulo { text-align: center; font-weight: bold; font-size: 15px; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 1.5rem; text-decoration: underline; }
+    .doc-legal .doc-cuerpo { text-align: justify; }
+    .doc-legal .campo-vacio { background: #FEF3C7; border-bottom: 1px dashed #F59E0B; color: #92400E; padding: 0 3px; border-radius: 2px; font-style: italic; font-size: 12px; }
+    .doc-legal .campo-ok { color: #1a1a1a; font-weight: 600; }
+    .doc-legal .doc-firma { margin-top: 2.5rem; text-align: center; }
+
+    .progreso-wrap { margin-bottom: 1.5rem; }
+    .progreso-label { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #7888A8; margin-bottom: .5rem; }
+    .progreso-bar { height: 6px; background: #EEF2F9; border-radius: 100px; overflow: hidden; }
+    .progreso-fill { height: 100%; background: linear-gradient(90deg, #1E6FE8, #3B8BFF); border-radius: 100px; transition: width .3s; }
+
+    .doc-acciones { display: flex; gap: .75rem; margin-top: 1rem; flex-wrap: wrap; }
+    .btn-imprimir { background: #0D1B3E; color: white; border: none; border-radius: 8px; padding: 10px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all .2s; }
+    .btn-imprimir:hover { background: #1A2F5E; }
+    .btn-imprimir:disabled { background: #C1CBDF; cursor: not-allowed; }
+    .btn-enviar { background: #10B981; color: white; border: none; border-radius: 8px; padding: 10px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all .2s; flex: 1; }
+    .btn-enviar:hover { background: #059669; }
+    .btn-enviar:disabled { background: #C1CBDF; cursor: not-allowed; }
+
+    footer { background: #0D1B3E; padding: 2rem; margin-top: 3rem; }
+    .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+    @media print {
+      nav, .breadcrumb, .form-panel, .page-header, .codigo-doc, .progreso-wrap, .doc-acciones, footer, .preview-header { display: none !important; }
+      .form-layout { display: block; padding: 0; }
+      .preview-panel { position: static; }
+      .preview-card { border: none; padding: 0; box-shadow: none; }
+      .doc-legal { border: none; background: white; font-size: 12pt; padding: 1cm; min-height: unset; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo-text" href="index.html">Notario<span>Go</span></a>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="tramites.html" class="active">Trámites</a>
+    <a href="mis-documentos.html">Mis documentos</a>
+    <a href="ayuda.html">Ayuda</a>
+  </div>
+  <div class="nav-actions">
+    <a href="login.html" class="btn-outline">Ingresar / Cuenta</a>
+    <a href="tramites.html" class="btn-primary">Iniciar trámite</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="tramites.html">Trámites</a>
+  <span>›</span> Poderes
+  <span>›</span> Poder simple
+  <span>›</span> Instituciones públicas
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-header-icon">🏛️</div>
+    <div>
+      <h1>Poder Simple — Instituciones Públicas</h1>
+      <p>Autoriza gestiones ante organismos del Estado y servicios públicos</p>
+      <span class="header-badge">⚡ Listo en minutos</span>
+    </div>
+  </div>
+</div>
+
+<div class="codigo-doc">
+  <div class="codigo-label">Código del documento</div>
+  <span id="codigo-display">Generando...</span>
+</div>
+
+<div class="form-layout">
+
+  <!-- FORMULARIO -->
+  <div class="form-panel">
+
+    <div class="progreso-wrap">
+      <div class="progreso-label">
+        <span>Progreso del formulario</span>
+        <span id="progreso-pct">0%</span>
+      </div>
+      <div class="progreso-bar"><div class="progreso-fill" id="progreso-fill" style="width:0%"></div></div>
+    </div>
+
+    <!-- OTORGANTE -->
+    <div class="form-section">
+      <div class="form-section-title">👤 Datos del otorgante</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre completo *</label>
+          <input type="text" id="nombre_otorgante" placeholder="Ej: María González Pérez" oninput="actualizar()"/>
+        </div>
+        <div class="form-group" id="g-rut_otorgante">
+          <label>RUT *</label>
+          <div class="rut-wrap">
+            <input type="text" id="rut_otorgante" placeholder="Ej: 12.345.678-9" oninput="onRUT(this,'g-rut_otorgante'); actualizar()" maxlength="12"/>
+            <span class="rut-icon" id="icon-rut_otorgante"></span>
+          </div>
+          <div class="error-msg" id="err-rut_otorgante">RUT inválido — verifica el dígito verificador</div>
+          <div class="valid-msg" id="ok-rut_otorgante">✓ RUT válido</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nacionalidad *</label>
+          <select id="nacionalidad_otorgante" onchange="actualizar()">
+            <option value="">Seleccionar...</option>
+            <option value="chilena">Chilena</option>
+            <option value="argentina">Argentina</option>
+            <option value="peruana">Peruana</option>
+            <option value="colombiana">Colombiana</option>
+            <option value="venezolana">Venezolana</option>
+            <option value="boliviana">Boliviana</option>
+            <option value="española">Española</option>
+            <option value="otra">Otra</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Estado civil *</label>
+          <select id="estado_civil_otorgante" onchange="actualizar()">
+            <option value="">Seleccionar...</option>
+            <option value="soltero(a)">Soltero(a)</option>
+            <option value="casado(a)">Casado(a)</option>
+            <option value="divorciado(a)">Divorciado(a)</option>
+            <option value="viudo(a)">Viudo(a)</option>
+            <option value="conviviente civil">Conviviente civil</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Profesión u oficio *</label>
+          <input type="text" id="profesion_otorgante" placeholder="Ej: Ingeniero, Comerciante" oninput="actualizar()"/>
+        </div>
+        <div class="form-group">
+          <label>Comuna *</label>
+          <input type="text" id="comuna_otorgante" placeholder="Ej: Santiago, Providencia" oninput="actualizar()"/>
+        </div>
+      </div>
+      <div class="form-row single">
+        <div class="form-group">
+          <label>Domicilio completo *</label>
+          <input type="text" id="domicilio_otorgante" placeholder="Ej: Av. Providencia 1234, Depto. 5" oninput="actualizar()"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- APODERADO -->
+    <div class="form-section">
+      <div class="form-section-title">👤 Datos del apoderado</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre completo *</label>
+          <input type="text" id="nombre_apoderado" placeholder="Ej: Juan Pérez Soto" oninput="actualizar()"/>
+        </div>
+        <div class="form-group" id="g-rut_apoderado">
+          <label>RUT *</label>
+          <div class="rut-wrap">
+            <input type="text" id="rut_apoderado" placeholder="Ej: 9.876.543-2" oninput="onRUT(this,'g-rut_apoderado'); actualizar()" maxlength="12"/>
+            <span class="rut-icon" id="icon-rut_apoderado"></span>
+          </div>
+          <div class="error-msg" id="err-rut_apoderado">RUT inválido — verifica el dígito verificador</div>
+          <div class="valid-msg" id="ok-rut_apoderado">✓ RUT válido</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nacionalidad *</label>
+          <select id="nacionalidad_apoderado" onchange="actualizar()">
+            <option value="">Seleccionar...</option>
+            <option value="chilena">Chilena</option>
+            <option value="argentina">Argentina</option>
+            <option value="peruana">Peruana</option>
+            <option value="colombiana">Colombiana</option>
+            <option value="venezolana">Venezolana</option>
+            <option value="boliviana">Boliviana</option>
+            <option value="española">Española</option>
+            <option value="otra">Otra</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Estado civil *</label>
+          <select id="estado_civil_apoderado" onchange="actualizar()">
+            <option value="">Seleccionar...</option>
+            <option value="soltero(a)">Soltero(a)</option>
+            <option value="casado(a)">Casado(a)</option>
+            <option value="divorciado(a)">Divorciado(a)</option>
+            <option value="viudo(a)">Viudo(a)</option>
+            <option value="conviviente civil">Conviviente civil</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Profesión u oficio *</label>
+          <input type="text" id="profesion_apoderado" placeholder="Ej: Técnico, Administrativo" oninput="actualizar()"/>
+        </div>
+        <div class="form-group">
+          <label>Domicilio *</label>
+          <input type="text" id="domicilio_apoderado" placeholder="Ej: Calle Los Aromos 456" oninput="actualizar()"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATOS DEL TRÁMITE -->
+    <div class="form-section">
+      <div class="form-section-title">🏛️ Datos del trámite</div>
+
+      <!-- PRESETS -->
+      <div style="margin-bottom:1rem;">
+        <div style="font-size:12px; font-weight:700; color:#3A4A6B; text-transform:uppercase; letter-spacing:.04em; margin-bottom:.6rem;">Plantillas rápidas</div>
+        <div class="presets-wrap">
+          <button class="preset-btn" id="preset-certificado" onclick="aplicarPreset('certificado')">📄 Certificados</button>
+          <button class="preset-btn" id="preset-licencia" onclick="aplicarPreset('licencia')">🚗 Licencia conducir</button>
+          <button class="preset-btn" id="preset-prevision" onclick="aplicarPreset('prevision')">👵 Trámite previsional</button>
+          <button class="preset-btn" id="preset-municipal" onclick="aplicarPreset('municipal')">🏛️ Municipal</button>
+        </div>
+      </div>
+
+      <!-- INSTITUCIÓN -->
+      <div class="form-row single">
+        <div class="form-group" id="g-institucion">
+          <label>Institución pública *</label>
+          <select id="institucion" onchange="onInstitucion(); actualizar()">
+            <option value="">Seleccionar institución...</option>
+            <option value="el Registro Civil e Identificación">Registro Civil</option>
+            <option value="la Municipalidad correspondiente">Municipalidad</option>
+            <option value="el SII (Servicio de Impuestos Internos)">SII</option>
+            <option value="la AFP correspondiente">AFP</option>
+            <option value="COMPIN (Comisión de Medicina Preventiva)">COMPIN</option>
+            <option value="SERVEL (Servicio Electoral)">SERVEL</option>
+            <option value="la Tesorería General de la República">Tesorería General</option>
+            <option value="el Ministerio de Salud (MINSAL)">MINSAL</option>
+            <option value="la SUSESO">SUSESO</option>
+            <option value="ChileAtiende">ChileAtiende</option>
+            <option value="otro">Otra institución...</option>
+          </select>
+          <div class="institucion-otro" id="institucion-otro-wrap">
+            <input type="text" id="institucion_otro" placeholder="Escribe el nombre de la institución" oninput="actualizar()"/>
+          </div>
+          <div class="error-msg" id="err-institucion">Selecciona una institución</div>
+        </div>
+      </div>
+
+      <!-- DETALLE -->
+      <div class="form-row single">
+        <div class="form-group" id="g-detalle_tramite">
+          <label>Detalle del trámite *</label>
+          <input type="text" id="detalle_tramite" list="detalles-sugeridos" placeholder="Ej: obtención de certificado de nacimiento" oninput="actualizar()"/>
+          <datalist id="detalles-sugeridos">
+            <option value="obtención de certificado de nacimiento">
+            <option value="obtención de certificado de matrimonio">
+            <option value="obtención de certificado de defunción">
+            <option value="renovación de licencia de conducir">
+            <option value="actualización de datos previsionales">
+            <option value="obtención de certificado de afiliación AFP">
+            <option value="tramitación de subsidio habitacional">
+            <option value="obtención de permiso de circulación">
+            <option value="inscripción en registro electoral">
+            <option value="obtención de certificado de residencia">
+            <option value="tramitación de pensión de alimentos">
+          </datalist>
+          <div class="hint">Describe el trámite específico a realizar</div>
+          <div class="error-msg" id="err-detalle">Este campo es obligatorio</div>
+        </div>
+      </div>
+
+      <!-- FACULTADES -->
+      <div style="font-size:12px; font-weight:700; color:#3A4A6B; text-transform:uppercase; letter-spacing:.04em; margin-bottom:.6rem; margin-top:.5rem;">
+        Facultades a otorgar * <span style="color:#EF4444;">(al menos una)</span>
+      </div>
+      <div class="facultades-grid">
+        <label class="facultad-item" onclick="toggleFacultad(this)">
+          <input type="checkbox" id="f-solicitar" value="solicitar certificados" onchange="actualizar()"/>
+          <span class="facultad-emoji">📄</span>
+          <span class="facultad-label">Solicitar certificados</span>
+        </label>
+        <label class="facultad-item" onclick="toggleFacultad(this)">
+          <input type="checkbox" id="f-retirar" value="retirar documentos" onchange="actualizar()"/>
+          <span class="facultad-emoji">📥</span>
+          <span class="facultad-label">Retirar documentos</span>
+        </label>
+        <label class="facultad-item" onclick="toggleFacultad(this)">
+          <input type="checkbox" id="f-firmar" value="firmar las solicitudes necesarias" onchange="actualizar()"/>
+          <span class="facultad-emoji">✍️</span>
+          <span class="facultad-label">Firmar solicitudes</span>
+        </label>
+        <label class="facultad-item" onclick="toggleFacultad(this)">
+          <input type="checkbox" id="f-ingresar" value="ingresar solicitudes y documentos" onchange="actualizar()"/>
+          <span class="facultad-emoji">📤</span>
+          <span class="facultad-label">Ingresar solicitudes</span>
+        </label>
+        <label class="facultad-item" onclick="toggleFacultad(this)">
+          <input type="checkbox" id="f-representar" value="representarme ante dicha institución y sus funcionarios" onchange="actualizar()"/>
+          <span class="facultad-emoji">🤝</span>
+          <span class="facultad-label">Representar ante funcionarios</span>
+        </label>
+        <label class="facultad-item" onclick="toggleFacultad(this)">
+          <input type="checkbox" id="f-pagar" value="realizar pagos y cancelar derechos" onchange="actualizar()"/>
+          <span class="facultad-emoji">💳</span>
+          <span class="facultad-label">Realizar pagos</span>
+        </label>
+        <label class="facultad-item" id="item-otros" onclick="toggleFacultad(this)">
+          <input type="checkbox" id="f-otros" value="" onchange="toggleOtros(); actualizar()"/>
+          <span class="facultad-emoji">✏️</span>
+          <span class="facultad-label">Otros (especificar)</span>
+        </label>
+        <input type="text" class="facultad-otros-input" id="otros-texto" placeholder="Describe la facultad adicional..." oninput="actualizarOtros(); actualizar()"/>
+      </div>
+      <div class="facultades-error" id="facultades-error">Debes seleccionar al menos una facultad</div>
+      <div class="facultades-preview" id="facultades-preview"></div>
+    </div>
+
+    <!-- METADATA -->
+    <div class="form-section">
+      <div class="form-section-title">📍 Lugar y fecha</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ciudad *</label>
+          <input type="text" id="ciudad" placeholder="Ej: Santiago" oninput="actualizar()"/>
+        </div>
+        <div class="form-group">
+          <label>Fecha del documento *</label>
+          <input type="date" id="fecha" oninput="actualizar()"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-limpiar" onclick="limpiarFormulario()">🗑 Limpiar</button>
+      <button class="btn-guardar" id="btn-guardar" onclick="guardarTramite()" disabled>✅ Guardar y enviar trámite</button>
+    </div>
+  </div>
+
+  <!-- VISTA PREVIA -->
+  <div class="preview-panel">
+    <div class="preview-card">
+      <div class="preview-header">
+        <div class="preview-title">📄 Vista previa del documento</div>
+        <div class="preview-badge incompleto" id="preview-badge">Incompleto</div>
+      </div>
+      <div class="doc-legal">
+        <div class="doc-codigo" id="doc-codigo-preview"></div>
+        <div class="doc-titulo">PODER SIMPLE</div>
+        <div class="doc-cuerpo" id="doc-cuerpo"></div>
+        <div class="doc-firma" id="doc-firma" style="display:none;">
+          <div style="border-top: 1px solid #333; width: 200px; margin: 0 auto .5rem;"></div>
+          <div id="firma-nombre" style="font-weight:bold;"></div>
+          <div id="firma-rut" style="font-size:12px; color:#555;"></div>
+        </div>
+      </div>
+      <div class="doc-acciones">
+        <button class="btn-imprimir" id="btn-imprimir" onclick="window.print()" disabled>🖨 Imprimir</button>
+        <button class="btn-enviar" id="btn-enviar" onclick="guardarTramite()" disabled>📤 Enviar al notario</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 NotarioGO SpA · Santiago, Chile</div>
+    <div class="footer-copy">Ley N° 19.799 sobre firma electrónica</div>
+  </div>
+</footer>
+
+<script src="js/jsonbin.js"></script>
+<script src="js/app.js"></script>
+<script>
+
+  // ── PRESETS ──
+  const PRESETS_DATA = {
+    certificado: {
+      institucion: 'el Registro Civil e Identificación',
+      detalle: 'obtención de certificado de nacimiento',
+      facultades: ['f-solicitar','f-retirar','f-firmar']
+    },
+    licencia: {
+      institucion: 'la Municipalidad correspondiente',
+      detalle: 'renovación de licencia de conducir',
+      facultades: ['f-solicitar','f-retirar','f-firmar','f-pagar']
+    },
+    prevision: {
+      institucion: 'la AFP correspondiente',
+      detalle: 'actualización de datos previsionales',
+      facultades: ['f-solicitar','f-firmar','f-representar']
+    },
+    municipal: {
+      institucion: 'la Municipalidad correspondiente',
+      detalle: 'tramitación de permiso municipal',
+      facultades: ['f-solicitar','f-ingresar','f-firmar','f-pagar']
+    }
+  };
+
+  function aplicarPreset(tipo) {
+    const p = PRESETS_DATA[tipo];
+
+    // Institución
+    const sel = document.getElementById('institucion');
+    sel.value = p.institucion;
+    document.getElementById('institucion-otro-wrap').style.display = 'none';
+
+    // Detalle
+    document.getElementById('detalle_tramite').value = p.detalle;
+
+    // Limpiar facultades
+    ['f-solicitar','f-retirar','f-firmar','f-ingresar','f-representar','f-pagar','f-otros'].forEach(id => {
+      const cb = document.getElementById(id);
+      cb.checked = false;
+      cb.closest('.facultad-item').classList.remove('checked');
+    });
+    document.getElementById('otros-texto').style.display = 'none';
+    document.getElementById('otros-texto').value = '';
+
+    // Aplicar facultades del preset
+    p.facultades.forEach(id => {
+      const cb = document.getElementById(id);
+      cb.checked = true;
+      cb.closest('.facultad-item').classList.add('checked');
+    });
+
+    // Marcar preset activo
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('sel'));
+    document.getElementById('preset-' + tipo).classList.add('sel');
+
+    actualizar();
+  }
+
+  function onInstitucion() {
+    const val = document.getElementById('institucion').value;
+    const otroWrap = document.getElementById('institucion-otro-wrap');
+    otroWrap.style.display = val === 'otro' ? 'block' : 'none';
+    if (val !== 'otro') document.getElementById('institucion_otro').value = '';
+  }
+
+  function getInstitucion() {
+    const sel = document.getElementById('institucion').value;
+    if (sel === 'otro') return document.getElementById('institucion_otro').value.trim();
+    return sel;
+  }
+
+  function toggleFacultad(label) {
+    setTimeout(() => {
+      const cb = label.querySelector('input[type=checkbox]');
+      label.classList.toggle('checked', cb.checked);
+      actualizar();
+    }, 0);
+  }
+
+  function toggleOtros() {
+    const cb = document.getElementById('f-otros');
+    const input = document.getElementById('otros-texto');
+    input.style.display = cb.checked ? 'block' : 'none';
+    if (!cb.checked) input.value = '';
+  }
+
+  function actualizarOtros() {
+    document.getElementById('f-otros').value = document.getElementById('otros-texto').value.trim();
+  }
+
+  // ── GENERAR TEXTO FACULTADES ──
+  function generarFacultades() {
+    const ids = ['f-solicitar','f-retirar','f-firmar','f-ingresar','f-representar','f-pagar','f-otros'];
+    const sel = ids
+      .map(id => document.getElementById(id))
+      .filter(cb => cb.checked && cb.value.trim() !== '')
+      .map(cb => cb.value.trim());
+    if (sel.length === 0) return '';
+    if (sel.length === 1) return sel[0] + ' para dichos efectos';
+    const ultimo = sel.pop();
+    return sel.join(', ') + ' y ' + ultimo + ' para dichos efectos';
+  }
+
+  // ── CÓDIGO ÚNICO ──
+  let codigoDoc = '';
+  async function generarCodigo() {
+    const fecha = new Date().toISOString().split('T')[0].replace(/-/g,'');
+    try {
+      const data = await JSONBIN.get('tramites');
+      const total = (data.tramites || []).length + 1;
+      return `NOTAGO-${fecha}-${String(total).padStart(7,'0')}`;
+    } catch(e) {
+      return `NOTAGO-${fecha}-${String(Date.now()).slice(-7)}`;
+    }
+  }
+  generarCodigo().then(c => {
+    codigoDoc = c;
+    document.getElementById('codigo-display').textContent = c;
+    document.getElementById('doc-codigo-preview').textContent = c;
+  });
+
+  // ── VALIDACIÓN RUT ──
+  function calcularDV(rut) {
+    let suma = 0, multiplo = 2;
+    for (let i = rut.length - 1; i >= 0; i--) {
+      suma += parseInt(rut[i]) * multiplo;
+      multiplo = multiplo < 7 ? multiplo + 1 : 2;
+    }
+    const r = suma % 11;
+    return r === 0 ? '0' : r === 1 ? 'k' : String(11 - r);
+  }
+  function validarRUT(rut) {
+    const l = rut.replace(/[.\-\s]/g,'').toLowerCase();
+    if (l.length < 2) return false;
+    return /^\d+$/.test(l.slice(0,-1)) && calcularDV(l.slice(0,-1)) === l.slice(-1);
+  }
+  function formatRUTStr(rut) {
+    const l = rut.replace(/[^0-9kK]/g,'');
+    if (l.length < 2) return l;
+    return l.slice(0,-1).replace(/\B(?=(\d{3})+(?!\d))/g,'.') + '-' + l.slice(-1);
+  }
+  function onRUT(input, grupoId) {
+    input.value = formatRUTStr(input.value.replace(/[^0-9kK]/g,''));
+    const id = grupoId.replace('g-','');
+    const grupo = document.getElementById(grupoId);
+    const errEl = document.getElementById('err-' + id);
+    const okEl  = document.getElementById('ok-'  + id);
+    const iconEl = document.getElementById('icon-'+ id);
+    if (input.value.length < 3) {
+      grupo.classList.remove('has-error','is-valid');
+      if(errEl) errEl.style.display='none';
+      if(okEl) okEl.style.display='none';
+      if(iconEl) iconEl.textContent='';
+      return;
+    }
+    const ok = validarRUT(input.value);
+    grupo.classList.toggle('has-error', !ok);
+    grupo.classList.toggle('is-valid', ok);
+    if(errEl) errEl.style.display = ok ? 'none' : 'block';
+    if(okEl)  okEl.style.display  = ok ? 'block' : 'none';
+    if(iconEl) iconEl.textContent = ok ? '✅' : '❌';
+  }
+
+  // ── CAMPOS ──
+  const CAMPOS_TEXTO = [
+    'nombre_otorgante','nacionalidad_otorgante','estado_civil_otorgante',
+    'profesion_otorgante','domicilio_otorgante','comuna_otorgante',
+    'nombre_apoderado','nacionalidad_apoderado','estado_civil_apoderado',
+    'profesion_apoderado','domicilio_apoderado','detalle_tramite','ciudad','fecha'
+  ];
+  const CAMPOS_RUT = ['rut_otorgante','rut_apoderado'];
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
+    actualizar();
+  });
+
+  function v(id) { return document.getElementById(id)?.value?.trim() || ''; }
+  function campo(id, etiqueta) {
+    const val = id === 'institucion' ? getInstitucion() : v(id);
+    return val ? `<span class="campo-ok">${val}</span>` : `<span class="campo-vacio">[${etiqueta}]</span>`;
+  }
+  function formatFecha(iso) {
+    if (!iso) return null;
+    const [y,m,d] = iso.split('-');
+    const M = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    return `${parseInt(d)} de ${M[parseInt(m)-1]} de ${y}`;
+  }
+
+  function actualizar() {
+    const inst = getInstitucion();
+    const facultades = generarFacultades();
+    const hayFac = facultades !== '';
+    const detalle = v('detalle_tramite');
+
+    // Preview facultades
+    const fprev = document.getElementById('facultades-preview');
+    if (hayFac && inst && detalle) {
+      fprev.classList.add('visible');
+      fprev.innerHTML = `📝 <em>"…realice gestiones ante <strong>${inst}</strong>, pudiendo especialmente <strong>${facultades}</strong>, en relación con <strong>${detalle}</strong>."</em>`;
+    } else {
+      fprev.classList.remove('visible');
+    }
+
+    const fechaFmt = v('fecha') ? formatFecha(v('fecha')) : null;
+    const fechaHTML = fechaFmt ? `<span class="campo-ok">${fechaFmt}</span>` : `<span class="campo-vacio">[fecha]</span>`;
+    const facHTML = hayFac ? `<span class="campo-ok">${facultades}</span>` : `<span class="campo-vacio">[selecciona facultades]</span>`;
+    const detHTML = detalle ? `<span class="campo-ok">${detalle}</span>` : `<span class="campo-vacio">[detalle del trámite]</span>`;
+    const instHTML = inst ? `<span class="campo-ok">${inst}</span>` : `<span class="campo-vacio">[institución]</span>`;
+
+    document.getElementById('doc-cuerpo').innerHTML = `
+      <p>Don (Doña) ${campo('nombre_otorgante','nombre otorgante')},
+      nacionalidad ${campo('nacionalidad_otorgante','nacionalidad')},
+      estado civil ${campo('estado_civil_otorgante','estado civil')},
+      profesión u oficio ${campo('profesion_otorgante','profesión')},
+      cédula de identidad N° ${campo('rut_otorgante','RUT')},
+      domiciliado en ${campo('domicilio_otorgante','domicilio')},
+      comuna de ${campo('comuna_otorgante','comuna')},</p>
+      <p style="margin-top:.75rem;">viene en otorgar poder a don (doña) ${campo('nombre_apoderado','nombre apoderado')},
+      nacionalidad ${campo('nacionalidad_apoderado','nacionalidad')},
+      estado civil ${campo('estado_civil_apoderado','estado civil')},
+      profesión u oficio ${campo('profesion_apoderado','profesión')},
+      cédula de identidad N° ${campo('rut_apoderado','RUT')},
+      domiciliado en ${campo('domicilio_apoderado','domicilio')},</p>
+      <p style="margin-top:.75rem;">para que en mi nombre y representación realice gestiones ante
+      ${instHTML}, pudiendo especialmente ${facHTML},
+      en relación con ${detHTML}.</p>
+      <p style="margin-top:.75rem;">En ${campo('ciudad','ciudad')}, a ${fechaHTML}.</p>`;
+
+    const nom = v('nombre_otorgante');
+    if (nom) {
+      document.getElementById('doc-firma').style.display = 'block';
+      document.getElementById('firma-nombre').textContent = nom.toUpperCase();
+      document.getElementById('firma-rut').textContent = 'C.I. ' + (v('rut_otorgante') || '________________');
+    } else {
+      document.getElementById('doc-firma').style.display = 'none';
+    }
+
+    // Progreso
+    const lTxt = CAMPOS_TEXTO.filter(id => v(id) !== '').length;
+    const lRUT = CAMPOS_RUT.filter(id => v(id) && validarRUT(v(id))).length;
+    const lInst = inst ? 1 : 0;
+    const lFac = hayFac ? 1 : 0;
+    const total = CAMPOS_TEXTO.length + CAMPOS_RUT.length + 2; // +inst +fac
+    const llenos = lTxt + lRUT + lInst + lFac;
+    const pct = Math.round((llenos / total) * 100);
+    document.getElementById('progreso-fill').style.width = pct + '%';
+    document.getElementById('progreso-pct').textContent = pct + '%';
+
+    const completo = llenos === total;
+    const badge = document.getElementById('preview-badge');
+    badge.textContent = completo ? '✅ Completo' : `${llenos}/${total} campos`;
+    badge.className = 'preview-badge ' + (completo ? 'completo' : 'incompleto');
+    document.getElementById('btn-guardar').disabled = !completo;
+    document.getElementById('btn-imprimir').disabled = !completo;
+    document.getElementById('btn-enviar').disabled = !completo;
+  }
+
+  function limpiarFormulario() {
+    if (!confirm('¿Seguro que quieres limpiar todos los campos?')) return;
+    CAMPOS_TEXTO.forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+    CAMPOS_RUT.forEach(id => {
+      document.getElementById(id).value='';
+      const g = document.getElementById('g-'+id);
+      if(g) g.classList.remove('has-error','is-valid');
+      const ic = document.getElementById('icon-'+id);
+      if(ic) ic.textContent='';
+    });
+    document.getElementById('institucion').value='';
+    document.getElementById('institucion-otro-wrap').style.display='none';
+    document.getElementById('institucion_otro').value='';
+    ['f-solicitar','f-retirar','f-firmar','f-ingresar','f-representar','f-pagar','f-otros'].forEach(id => {
+      const cb = document.getElementById(id);
+      cb.checked=false;
+      cb.closest('.facultad-item').classList.remove('checked');
+    });
+    document.getElementById('otros-texto').style.display='none';
+    document.getElementById('otros-texto').value='';
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('sel'));
+    document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
+    actualizar();
+  }
+
+  async function guardarTramite() {
+    const user = usuarioActual();
+    if (!user) return window.location.href = 'login.html';
+    const btnG = document.getElementById('btn-guardar');
+    const btnE = document.getElementById('btn-enviar');
+    btnG.disabled=true; btnG.textContent='⏳ Guardando...'; btnE.disabled=true;
+    try {
+      const data = await JSONBIN.get('tramites');
+      const tramite = {
+        id: Date.now(),
+        codigo: codigoDoc,
+        usuarioId: user.id,
+        usuarioNombre: user.nombre,
+        usuarioEmail: user.email,
+        tipo: 'Poder simple — Instituciones públicas',
+        emoji: '🏛️',
+        estado: 'Pendiente',
+        fecha: new Date().toISOString(),
+        formulario: {
+          nombre_otorgante: v('nombre_otorgante'), rut_otorgante: v('rut_otorgante'),
+          nacionalidad_otorgante: v('nacionalidad_otorgante'), estado_civil_otorgante: v('estado_civil_otorgante'),
+          profesion_otorgante: v('profesion_otorgante'), domicilio_otorgante: v('domicilio_otorgante'),
+          comuna_otorgante: v('comuna_otorgante'), nombre_apoderado: v('nombre_apoderado'),
+          rut_apoderado: v('rut_apoderado'), nacionalidad_apoderado: v('nacionalidad_apoderado'),
+          estado_civil_apoderado: v('estado_civil_apoderado'), profesion_apoderado: v('profesion_apoderado'),
+          domicilio_apoderado: v('domicilio_apoderado'), institucion: getInstitucion(),
+          detalle_tramite: v('detalle_tramite'), facultades: generarFacultades(),
+          ciudad: v('ciudad'), fecha: v('fecha')
+        }
+      };
+      data.tramites.push(tramite);
+      await JSONBIN.set('tramites', data);
+      alert(`✅ Trámite enviado correctamente.\nCódigo: ${codigoDoc}\n\nGuarda este código para seguimiento.`);
+      window.location.href = 'mis-documentos.html';
+    } catch(e) {
+      alert('Error al guardar. Intenta más tarde.');
+      btnG.disabled=false; btnG.textContent='✅ Guardar y enviar trámite'; btnE.disabled=false;
+    }
+  }
+
+</script>
+</body>
+</html>
