@@ -20,4 +20,196 @@
     <a href="ayuda.html" class="active">Ayuda</a>
   </div>
   <div class="nav-actions">
-    <a href="login.html" class
+    <a href="login.html" class="btn-outline">Ingresar / Cuenta</a>
+    <a href="tramites.html" class="btn-primary">Iniciar trámite</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Centro de ayuda</h1>
+  <p>Todo lo que necesitas saber para usar NotarioGO</p>
+</div>
+
+<div class="page-content">
+
+  <!-- CÓMO FUNCIONA -->
+  <div style="margin-bottom:3rem;">
+    <div class="section-tag">Cómo funciona</div>
+    <h2 class="section-title">Proceso paso a paso</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-top:1.5rem;">
+      <div style="background:var(--white); border:1px solid var(--gray-100); border-radius:16px; padding:1.5rem;">
+        <div style="width:40px; height:40px; background:var(--blue); border-radius:10px;
+                    display:flex; align-items:center; justify-content:center;
+                    color:white; font-weight:800; font-size:16px; margin-bottom:1rem;">1</div>
+        <h3 style="font-size:15px; font-weight:700; color:var(--navy); margin-bottom:.5rem;">Crea tu cuenta</h3>
+        <p style="font-size:13px; color:var(--gray-500); line-height:1.6;">
+          Regístrate gratis con tu correo. Solo toma 1 minuto y no necesitas tarjeta de crédito.
+        </p>
+      </div>
+      <div style="background:var(--white); border:1px solid var(--gray-100); border-radius:16px; padding:1.5rem;">
+        <div style="width:40px; height:40px; background:var(--blue); border-radius:10px;
+                    display:flex; align-items:center; justify-content:center;
+                    color:white; font-weight:800; font-size:16px; margin-bottom:1rem;">2</div>
+        <h3 style="font-size:15px; font-weight:700; color:var(--navy); margin-bottom:.5rem;">Elige tu trámite</h3>
+        <p style="font-size:13px; color:var(--gray-500); line-height:1.6;">
+          Selecciona el tipo de trámite que necesitas del catálogo disponible.
+        </p>
+      </div>
+      <div style="background:var(--white); border:1px solid var(--gray-100); border-radius:16px; padding:1.5rem;">
+        <div style="width:40px; height:40px; background:var(--blue); border-radius:10px;
+                    display:flex; align-items:center; justify-content:center;
+                    color:white; font-weight:800; font-size:16px; margin-bottom:1rem;">3</div>
+        <h3 style="font-size:15px; font-weight:700; color:var(--navy); margin-bottom:.5rem;">Sube tus documentos</h3>
+        <p style="font-size:13px; color:var(--gray-500); line-height:1.6;">
+          Adjunta los archivos requeridos en formato PDF, JPG o PNG desde tu dispositivo.
+        </p>
+      </div>
+      <div style="background:var(--white); border:1px solid var(--gray-100); border-radius:16px; padding:1.5rem;">
+        <div style="width:40px; height:40px; background:var(--blue); border-radius:10px;
+                    display:flex; align-items:center; justify-content:center;
+                    color:white; font-weight:800; font-size:16px; margin-bottom:1rem;">4</div>
+        <h3 style="font-size:15px; font-weight:700; color:var(--navy); margin-bottom:.5rem;">Recibe tu documento</h3>
+        <p style="font-size:13px; color:var(--gray-500); line-height:1.6;">
+          En menos de 24 horas recibes tu documento notarizado con validez legal en Chile.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREGUNTAS FRECUENTES -->
+  <div style="margin-bottom:3rem;">
+    <div class="section-tag">Preguntas frecuentes</div>
+    <h2 class="section-title">¿Tienes dudas?</h2>
+    <div style="display:flex; flex-direction:column; gap:.75rem; margin-top:1.5rem;" id="faqs">
+
+      <div class="faq-item" style="border:1px solid var(--gray-100); border-radius:12px; overflow:hidden;">
+        <button onclick="toggleFaq(this)"
+          style="width:100%; text-align:left; padding:1rem 1.25rem; background:var(--white);
+                 border:none; cursor:pointer; font-family:var(--font); font-size:14px;
+                 font-weight:700; color:var(--navy); display:flex; justify-content:space-between; align-items:center;">
+          ¿Los documentos tienen validez legal en Chile?
+          <span style="font-size:20px; color:var(--blue); transition:transform .2s;">+</span>
+        </button>
+        <div class="faq-resp" style="display:none; padding:0 1.25rem 1rem; font-size:13px; color:var(--gray-500); line-height:1.7;">
+          Sí. Todos los documentos procesados por NotarioGO cumplen con la Ley N° 19.799 sobre documentos electrónicos y firma electrónica, teniendo plena validez legal en todo el territorio chileno.
+        </div>
+      </div>
+
+      <div class="faq-item" style="border:1px solid var(--gray-100); border-radius:12px; overflow:hidden;">
+        <button onclick="toggleFaq(this)"
+          style="width:100%; text-align:left; padding:1rem 1.25rem; background:var(--white);
+                 border:none; cursor:pointer; font-family:var(--font); font-size:14px;
+                 font-weight:700; color:var(--navy); display:flex; justify-content:space-between; align-items:center;">
+          ¿Cuánto tiempo demora un trámite?
+          <span style="font-size:20px; color:var(--blue); transition:transform .2s;">+</span>
+        </button>
+        <div class="faq-resp" style="display:none; padding:0 1.25rem 1rem; font-size:13px; color:var(--gray-500); line-height:1.7;">
+          La mayoría de los trámites se completan en menos de 24 horas hábiles. Trámites simples como poderes o declaraciones juradas pueden estar listos en menos de 2 horas.
+        </div>
+      </div>
+
+      <div class="faq-item" style="border:1px solid var(--gray-100); border-radius:12px; overflow:hidden;">
+        <button onclick="toggleFaq(this)"
+          style="width:100%; text-align:left; padding:1rem 1.25rem; background:var(--white);
+                 border:none; cursor:pointer; font-family:var(--font); font-size:14px;
+                 font-weight:700; color:var(--navy); display:flex; justify-content:space-between; align-items:center;">
+          ¿Necesito ClaveÚnica para usar NotarioGO?
+          <span style="font-size:20px; color:var(--blue); transition:transform .2s;">+</span>
+        </button>
+        <div class="faq-resp" style="display:none; padding:0 1.25rem 1rem; font-size:13px; color:var(--gray-500); line-height:1.7;">
+          Para algunos trámites que requieren firma electrónica avanzada sí necesitarás ClaveÚnica o eToken. Para trámites básicos basta con tu correo y contraseña de NotarioGO.
+        </div>
+      </div>
+
+      <div class="faq-item" style="border:1px solid var(--gray-100); border-radius:12px; overflow:hidden;">
+        <button onclick="toggleFaq(this)"
+          style="width:100%; text-align:left; padding:1rem 1.25rem; background:var(--white);
+                 border:none; cursor:pointer; font-family:var(--font); font-size:14px;
+                 font-weight:700; color:var(--navy); display:flex; justify-content:space-between; align-items:center;">
+          ¿Mis documentos están seguros?
+          <span style="font-size:20px; color:var(--blue); transition:transform .2s;">+</span>
+        </button>
+        <div class="faq-resp" style="display:none; padding:0 1.25rem 1rem; font-size:13px; color:var(--gray-500); line-height:1.7;">
+          Sí. Utilizamos cifrado SSL de 256 bits y almacenamiento seguro. Tus documentos solo son accesibles por ti y por el notario asignado a tu trámite.
+        </div>
+      </div>
+
+      <div class="faq-item" style="border:1px solid var(--gray-100); border-radius:12px; overflow:hidden;">
+        <button onclick="toggleFaq(this)"
+          style="width:100%; text-align:left; padding:1rem 1.25rem; background:var(--white);
+                 border:none; cursor:pointer; font-family:var(--font); font-size:14px;
+                 font-weight:700; color:var(--navy); display:flex; justify-content:space-between; align-items:center;">
+          ¿Puedo usar NotarioGO desde el celular?
+          <span style="font-size:20px; color:var(--blue); transition:transform .2s;">+</span>
+        </button>
+        <div class="faq-resp" style="display:none; padding:0 1.25rem 1rem; font-size:13px; color:var(--gray-500); line-height:1.7;">
+          Sí, NotarioGO está optimizado para funcionar en cualquier dispositivo — computador, tablet o celular — desde cualquier navegador moderno.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONTACTO -->
+  <div style="background:var(--navy); border-radius:20px; padding:2.5rem; text-align:center;">
+    <h2 style="font-family:var(--serif); color:white; font-size:1.8rem; margin-bottom:.75rem;">
+      ¿Aún tienes dudas?
+    </h2>
+    <p style="color:rgba(255,255,255,0.6); font-size:15px; margin-bottom:2rem; max-width:400px; margin-left:auto; margin-right:auto;">
+      Nuestro equipo está disponible para ayudarte en cada paso del proceso.
+    </p>
+    <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+      <a href="mailto:contacto@notariogo.cl" class="btn-hero"
+        style="font-size:14px; padding:12px 24px;">
+        ✉️ Escribirnos
+      </a>
+      <a href="tramites.html" class="btn-ghost"
+        style="font-size:14px; padding:11px 24px;">
+        Ver trámites
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="index.html" class="footer-logo">Notario<span>Go</span></a>
+      <div class="footer-tagline">Tus trámites notariales, en un clic.</div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h5>Plataforma</h5>
+        <a href="index.html">Inicio</a>
+        <a href="tramites.html">Trámites</a>
+        <a href="mis-documentos.html">Mis documentos</a>
+      </div>
+      <div class="footer-col">
+        <h5>Ayuda</h5>
+        <a href="ayuda.html">Preguntas frecuentes</a>
+        <a href="ayuda.html">Contacto</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 NotarioGO SpA · Santiago, Chile</div>
+    <div class="footer-copy">Ley N° 19.799 sobre firma electrónica</div>
+  </div>
+</footer>
+
+<script src="js/jsonbin.js"></script>
+<script src="js/app.js"></script>
+<script>
+  function toggleFaq(btn) {
+    const resp = btn.nextElementSibling;
+    const icon = btn.querySelector('span');
+    const abierto = resp.style.display === 'block';
+    resp.style.display = abierto ? 'none' : 'block';
+    icon.textContent = abierto ? '+' : '−';
+    icon.style.transform = abierto ? 'rotate(0deg)' : 'rotate(0deg)';
+  }
+</script>
+
+</body>
+</html>
