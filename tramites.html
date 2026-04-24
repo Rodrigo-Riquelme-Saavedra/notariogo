@@ -9,111 +9,58 @@
   <style>
     .nav-logo-text { font-size: 22px; font-weight: 800; color: #0D1B3E; text-decoration: none; letter-spacing: -0.5px; }
     .nav-logo-text span { color: #3B8BFF; }
-
     .page-header { background: #0D1B3E; padding: 3rem 2rem; text-align: center; }
     .page-header h1 { font-family: 'DM Serif Display', serif; font-size: 2.4rem; color: white; margin-bottom: .5rem; }
     .page-header p { color: rgba(255,255,255,0.6); font-size: 15px; }
-
     .page-content { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
 
-    /* FILTROS CATEGORÍA */
     .cat-filtros { display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 2.5rem; justify-content: center; }
-    .cat-btn {
-      display: flex; align-items: center; gap: 8px;
-      padding: 10px 20px; border-radius: 10px; font-size: 14px; font-weight: 700;
-      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
-      border: 2px solid #C1CBDF; background: white; color: #3A4A6B;
-      transition: all .2s;
-    }
+    .cat-btn { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; border: 2px solid #C1CBDF; background: white; color: #3A4A6B; transition: all .2s; }
     .cat-btn:hover { border-color: #1E6FE8; color: #1E6FE8; background: #E6F0FF; }
     .cat-btn.active { border-color: #1E6FE8; background: #1E6FE8; color: white; box-shadow: 0 4px 14px rgba(30,111,232,0.35); }
     .cat-emoji { font-size: 18px; }
 
-    /* SECCIÓN CATEGORÍA */
     .cat-seccion { margin-bottom: 2rem; }
-    .cat-header {
-      display: flex; align-items: center; gap: 12px;
-      padding: 1.25rem 1.5rem; background: white;
-      border: 2px solid #C1CBDF; border-radius: 14px;
-      cursor: pointer; transition: all .2s; user-select: none;
-      box-shadow: 0 2px 8px rgba(13,27,62,0.06);
-    }
+    .cat-header { display: flex; align-items: center; gap: 12px; padding: 1.25rem 1.5rem; background: white; border: 2px solid #C1CBDF; border-radius: 14px; cursor: pointer; transition: all .2s; user-select: none; box-shadow: 0 2px 8px rgba(13,27,62,0.06); }
     .cat-header:hover { border-color: #1E6FE8; background: #F0F6FF; }
     .cat-header.abierto { border-color: #1E6FE8; border-bottom-left-radius: 0; border-bottom-right-radius: 0; background: #1E6FE8; }
     .cat-header.abierto .cat-header-titulo { color: white; }
     .cat-header.abierto .cat-header-sub { color: rgba(255,255,255,0.7); }
     .cat-header.abierto .cat-arrow { color: white; transform: rotate(180deg); }
+    .cat-header.abierto .cat-count { background: rgba(255,255,255,0.2); color: white; }
     .cat-header-emoji { font-size: 28px; }
     .cat-header-info { flex: 1; }
     .cat-header-titulo { font-size: 16px; font-weight: 700; color: #0D1B3E; }
     .cat-header-sub { font-size: 13px; color: #7888A8; margin-top: 2px; }
     .cat-arrow { font-size: 18px; color: #7888A8; transition: transform .3s; }
     .cat-count { background: #E6F0FF; color: #1E6FE8; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 100px; }
-    .cat-header.abierto .cat-count { background: rgba(255,255,255,0.2); color: white; }
 
-    /* SUBMENÚ */
-    .cat-body {
-      border: 2px solid #1E6FE8; border-top: none;
-      border-bottom-left-radius: 14px; border-bottom-right-radius: 14px;
-      background: white; overflow: hidden;
-      display: none;
-    }
+    .cat-body { border: 2px solid #1E6FE8; border-top: none; border-bottom-left-radius: 14px; border-bottom-right-radius: 14px; background: white; overflow: hidden; display: none; }
     .cat-body.abierto { display: block; }
 
-    /* GRUPO DENTRO DEL SUBMENÚ */
     .sub-grupo { border-bottom: 1px solid #EEF2F9; }
     .sub-grupo:last-child { border-bottom: none; }
-    .sub-grupo-header {
-      display: flex; align-items: center; gap: 10px;
-      padding: 1rem 1.5rem; background: #F7F9FC;
-      cursor: pointer; transition: background .2s;
-      border-bottom: 1px solid #EEF2F9;
-    }
+    .sub-grupo-header { display: flex; align-items: center; gap: 10px; padding: 1rem 1.5rem; background: #F7F9FC; cursor: pointer; transition: background .2s; border-bottom: 1px solid #EEF2F9; }
     .sub-grupo-header:hover { background: #EEF2F9; }
+    .sub-grupo-header.abierto { background: #EEF2F9; border-bottom-color: #C1CBDF; }
     .sub-grupo-titulo { font-size: 14px; font-weight: 700; color: #0D1B3E; flex: 1; }
     .sub-grupo-emoji { font-size: 20px; }
     .sub-arrow { font-size: 14px; color: #7888A8; transition: transform .2s; }
     .sub-arrow.abierto { transform: rotate(180deg); }
 
-    /* ITEMS HOJA */
     .sub-items { display: none; }
     .sub-items.abierto { display: block; }
-    .sub-item {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: .875rem 1.5rem .875rem 3rem;
-      border-bottom: 1px solid #F7F9FC; transition: background .15s;
-    }
+
+    .sub-item { display: flex; align-items: center; justify-content: space-between; padding: .875rem 1.5rem .875rem 3rem; border-bottom: 1px solid #F7F9FC; transition: background .15s; gap: 1rem; }
     .sub-item:last-child { border-bottom: none; }
     .sub-item:hover { background: #F0F6FF; }
     .sub-item-info { flex: 1; }
     .sub-item-nombre { font-size: 14px; font-weight: 600; color: #0D1B3E; margin-bottom: 2px; }
     .sub-item-desc { font-size: 12px; color: #7888A8; line-height: 1.5; }
-    .sub-item-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #1E6FE8; background: #E6F0FF; padding: 3px 8px; border-radius: 6px; margin-right: 1rem; white-space: nowrap; }
-    .btn-iniciar {
-      background: #1E6FE8; color: white; border: none; border-radius: 8px;
-      padding: 8px 18px; font-size: 13px; font-weight: 700;
-      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
-      white-space: nowrap; transition: all .2s;
-      box-shadow: 0 2px 8px rgba(30,111,232,0.25);
-    }
+    .sub-item-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #1E6FE8; background: #E6F0FF; padding: 3px 8px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
+    .btn-iniciar { background: #1E6FE8; color: white; border: none; border-radius: 8px; padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; white-space: nowrap; transition: all .2s; box-shadow: 0 2px 8px rgba(30,111,232,0.25); flex-shrink: 0; }
     .btn-iniciar:hover { background: #1458C4; transform: translateY(-1px); }
 
-    /* OTRAS CATEGORÍAS (grid simple) */
-    .otras-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.25rem; }
-    .otra-card {
-      background: white; border: 2px solid #C1CBDF; border-radius: 14px;
-      padding: 1.5rem; transition: all .2s;
-      box-shadow: 0 2px 8px rgba(13,27,62,0.06);
-      display: flex; flex-direction: column; gap: .6rem;
-    }
-    .otra-card:hover { border-color: #1E6FE8; background: #F0F6FF; transform: translateY(-2px); }
-    .otra-card-emoji { font-size: 30px; }
-    .otra-card h4 { font-size: 15px; font-weight: 700; color: #0D1B3E; }
-    .otra-card p { font-size: 13px; color: #7888A8; line-height: 1.6; }
-    .otra-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: .5rem; border-top: 1px solid #EEF2F9; padding-top: .75rem; }
-    .otra-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #1E6FE8; }
-
-    /* FOOTER */
     footer { background: #0D1B3E; padding: 3rem 2rem 2rem; }
     .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; }
     .footer-logo { font-size: 20px; font-weight: 800; color: white; text-decoration: none; display: block; margin-bottom: .3rem; }
@@ -125,7 +72,6 @@
     .footer-col a:hover { color: white; }
     .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.35); }
-
     .hidden { display: none !important; }
   </style>
 </head>
@@ -152,18 +98,15 @@
 
 <div class="page-content">
 
-  <!-- FILTROS CATEGORÍA -->
   <div class="cat-filtros">
-    <button class="cat-btn active" onclick="mostrarCat('todos')"><span class="cat-emoji">📂</span> Todos</button>
-    <button class="cat-btn" onclick="mostrarCat('poderes')"><span class="cat-emoji">📋</span> Poderes</button>
-    <button class="cat-btn" onclick="mostrarCat('declaraciones')"><span class="cat-emoji">🏛️</span> Declaraciones</button>
-    <button class="cat-btn" onclick="mostrarCat('contratos')"><span class="cat-emoji">🤝</span> Contratos</button>
-    <button class="cat-btn" onclick="mostrarCat('documentos')"><span class="cat-emoji">📄</span> Documentos</button>
+    <button class="cat-btn active" onclick="mostrarCat('todos', this)"><span class="cat-emoji">📂</span> Todos</button>
+    <button class="cat-btn" onclick="mostrarCat('poderes', this)"><span class="cat-emoji">📋</span> Poderes</button>
+    <button class="cat-btn" onclick="mostrarCat('declaraciones', this)"><span class="cat-emoji">🏛️</span> Declaraciones</button>
+    <button class="cat-btn" onclick="mostrarCat('contratos', this)"><span class="cat-emoji">🤝</span> Contratos</button>
+    <button class="cat-btn" onclick="mostrarCat('documentos', this)"><span class="cat-emoji">📄</span> Documentos</button>
   </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- CATEGORÍA: PODERES -->
-  <!-- ═══════════════════════════════════════ -->
+  <!-- PODERES -->
   <div class="cat-seccion" data-cat="poderes">
     <div class="cat-header" onclick="toggleCat(this)">
       <span class="cat-header-emoji">📋</span>
@@ -171,12 +114,11 @@
         <div class="cat-header-titulo">Poderes</div>
         <div class="cat-header-sub">Poder simple, notarial y carta poder</div>
       </div>
-      <span class="cat-count">10 trámites</span>
+      <span class="cat-count">12 trámites</span>
       <span class="cat-arrow">▼</span>
     </div>
     <div class="cat-body">
 
-      <!-- Poder simple -->
       <div class="sub-grupo">
         <div class="sub-grupo-header" onclick="toggleSubGrupo(this)">
           <span class="sub-grupo-emoji">📋</span>
@@ -185,65 +127,43 @@
         </div>
         <div class="sub-items">
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Bancario</div>
-              <div class="sub-item-desc">Autoriza gestiones en bancos e instituciones financieras</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Bancario</div><div class="sub-item-desc">Autoriza gestiones en bancos e instituciones financieras</div></div>
             <span class="sub-item-tag">Popular</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Poder simple — Bancario','📋')">Iniciar →</button>
           </div>
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Retiro de documentos</div>
-              <div class="sub-item-desc">Autoriza el retiro de documentos en organismos públicos o privados</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Retiro de documentos</div><div class="sub-item-desc">Autoriza el retiro de documentos en organismos públicos o privados</div></div>
             <span class="sub-item-tag">Rápido</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Poder simple — Retiro de documentos','📋')">Iniciar →</button>
           </div>
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Instituciones públicas</div>
-              <div class="sub-item-desc">Gestiones ante SII, Registro Civil, municipios y otros organismos</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Instituciones públicas</div><div class="sub-item-desc">Gestiones ante SII, Registro Civil, municipios y otros organismos</div></div>
             <span class="sub-item-tag">Frecuente</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Poder simple — Instituciones públicas','📋')">Iniciar →</button>
           </div>
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Vehículo</div>
-              <div class="sub-item-desc">Autoriza trámites relacionados con vehículos motorizados</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Vehículo</div><div class="sub-item-desc">Autoriza trámites relacionados con vehículos motorizados</div></div>
             <span class="sub-item-tag">24 hrs</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Poder simple — Vehículo','📋')">Iniciar →</button>
           </div>
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Encomienda</div>
-              <div class="sub-item-desc">Autoriza el retiro de encomiendas y paquetes</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Encomienda</div><div class="sub-item-desc">Autoriza el retiro de encomiendas y paquetes</div></div>
             <span class="sub-item-tag">Rápido</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Poder simple — Encomienda','📋')">Iniciar →</button>
           </div>
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Legal específico</div>
-              <div class="sub-item-desc">Para gestiones legales con un alcance determinado</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Legal específico</div><div class="sub-item-desc">Para gestiones legales con un alcance determinado</div></div>
             <span class="sub-item-tag">Legal</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Poder simple — Legal específico','📋')">Iniciar →</button>
           </div>
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Personalizado</div>
-              <div class="sub-item-desc">Define tú mismo el alcance y las facultades del poder</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Personalizado</div><div class="sub-item-desc">Define tú mismo el alcance y las facultades del poder</div></div>
             <span class="sub-item-tag">Flexible</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Poder simple — Personalizado','📋')">Iniciar →</button>
           </div>
         </div>
       </div>
 
-      <!-- Poder notarial -->
       <div class="sub-grupo">
         <div class="sub-grupo-header" onclick="toggleSubGrupo(this)">
           <span class="sub-grupo-emoji">⚖️</span>
@@ -252,33 +172,23 @@
         </div>
         <div class="sub-items">
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">General amplio</div>
-              <div class="sub-item-desc">Facultades amplias para actuar en nombre del mandante</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">General amplio</div><div class="sub-item-desc">Facultades amplias para actuar en nombre del mandante</div></div>
             <span class="sub-item-tag">Notarial</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Poder notarial — General amplio','⚖️')">Iniciar →</button>
           </div>
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Administración de bienes</div>
-              <div class="sub-item-desc">Autoriza la administración de propiedades y activos</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Administración de bienes</div><div class="sub-item-desc">Autoriza la administración de propiedades y activos</div></div>
             <span class="sub-item-tag">Notarial</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Poder notarial — Administración de bienes','⚖️')">Iniciar →</button>
           </div>
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Representación judicial</div>
-              <div class="sub-item-desc">Autoriza representación ante tribunales y juzgados</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Representación judicial</div><div class="sub-item-desc">Autoriza representación ante tribunales y juzgados</div></div>
             <span class="sub-item-tag">Judicial</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Poder notarial — Representación judicial','⚖️')">Iniciar →</button>
           </div>
         </div>
       </div>
 
-      <!-- Carta poder -->
       <div class="sub-grupo">
         <div class="sub-grupo-header" onclick="toggleSubGrupo(this)">
           <span class="sub-grupo-emoji">📝</span>
@@ -287,18 +197,12 @@
         </div>
         <div class="sub-items">
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Retiro simple</div>
-              <div class="sub-item-desc">Carta para retiro de documentos o encomiendas puntuales</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Retiro simple</div><div class="sub-item-desc">Carta para retiro de documentos o encomiendas puntuales</div></div>
             <span class="sub-item-tag">Simple</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Carta poder — Retiro simple','📝')">Iniciar →</button>
           </div>
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Autorización puntual</div>
-              <div class="sub-item-desc">Para gestiones específicas y acotadas en el tiempo</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Autorización puntual</div><div class="sub-item-desc">Para gestiones específicas y acotadas en el tiempo</div></div>
             <span class="sub-item-tag">Puntual</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Carta poder — Autorización puntual','📝')">Iniciar →</button>
           </div>
@@ -308,9 +212,7 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- CATEGORÍA: DECLARACIONES -->
-  <!-- ═══════════════════════════════════════ -->
+  <!-- DECLARACIONES -->
   <div class="cat-seccion" data-cat="declaraciones">
     <div class="cat-header" onclick="toggleCat(this)">
       <span class="cat-header-emoji">🏛️</span>
@@ -325,26 +227,17 @@
       <div class="sub-grupo">
         <div class="sub-items abierto">
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Declaración jurada simple</div>
-              <div class="sub-item-desc">Declaración con valor legal ante organismos públicos o privados</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Declaración jurada simple</div><div class="sub-item-desc">Declaración con valor legal ante organismos públicos o privados</div></div>
             <span class="sub-item-tag">Rápido</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Declaración jurada simple','🏛️')">Iniciar →</button>
           </div>
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Declaración jurada notarial</div>
-              <div class="sub-item-desc">Con firma y validación notarial para mayor respaldo legal</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Declaración jurada notarial</div><div class="sub-item-desc">Con firma y validación notarial para mayor respaldo legal</div></div>
             <span class="sub-item-tag">Notarial</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Declaración jurada notarial','🏛️')">Iniciar →</button>
           </div>
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Autorización de firma</div>
-              <div class="sub-item-desc">Certifica que una firma es auténtica y fue realizada por la persona indicada</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Autorización de firma</div><div class="sub-item-desc">Certifica que una firma es auténtica y fue realizada por la persona indicada</div></div>
             <span class="sub-item-tag">Digital</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Autorización de firma','✍️')">Iniciar →</button>
           </div>
@@ -353,9 +246,7 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- CATEGORÍA: CONTRATOS -->
-  <!-- ═══════════════════════════════════════ -->
+  <!-- CONTRATOS -->
   <div class="cat-seccion" data-cat="contratos">
     <div class="cat-header" onclick="toggleCat(this)">
       <span class="cat-header-emoji">🤝</span>
@@ -370,18 +261,12 @@
       <div class="sub-grupo">
         <div class="sub-items abierto">
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Contrato de arriendo</div>
-              <div class="sub-item-desc">Contrato de arrendamiento con firma y validación notarial incluida</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Contrato de arriendo</div><div class="sub-item-desc">Contrato de arrendamiento con firma y validación notarial incluida</div></div>
             <span class="sub-item-tag">Popular</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Contrato de arriendo','🤝')">Iniciar →</button>
           </div>
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Protocolización</div>
-              <div class="sub-item-desc">Incorporación de documentos privados al registro del notario</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Protocolización</div><div class="sub-item-desc">Incorporación de documentos privados al registro del notario</div></div>
             <span class="sub-item-tag">Legal</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Protocolización','🏛️')">Iniciar →</button>
           </div>
@@ -390,9 +275,7 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- CATEGORÍA: DOCUMENTOS -->
-  <!-- ═══════════════════════════════════════ -->
+  <!-- DOCUMENTOS -->
   <div class="cat-seccion" data-cat="documentos">
     <div class="cat-header" onclick="toggleCat(this)">
       <span class="cat-header-emoji">📄</span>
@@ -407,18 +290,12 @@
       <div class="sub-grupo">
         <div class="sub-items abierto">
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Copia autorizada</div>
-              <div class="sub-item-desc">Copia fiel de un documento original con validez legal notarial</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Copia autorizada</div><div class="sub-item-desc">Copia fiel de un documento original con validez legal notarial</div></div>
             <span class="sub-item-tag">24 hrs</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Copia autorizada','📄')">Iniciar →</button>
           </div>
           <div class="sub-item">
-            <div class="sub-item-info">
-              <div class="sub-item-nombre">Verificación de identidad</div>
-              <div class="sub-item-desc">Acredita tu identidad ante terceros con respaldo notarial</div>
-            </div>
+            <div class="sub-item-info"><div class="sub-item-nombre">Verificación de identidad</div><div class="sub-item-desc">Acredita tu identidad ante terceros con respaldo notarial</div></div>
             <span class="sub-item-tag">Nuevo</span>
             <button class="btn-iniciar" onclick="iniciarTramite('Verificación de identidad','🪪')">Iniciar →</button>
           </div>
@@ -458,34 +335,61 @@
 <script src="js/jsonbin.js"></script>
 <script src="js/app.js"></script>
 <script>
-  // ── TOGGLE CATEGORÍA PRINCIPAL ──
+
+  // ── ACORDEÓN CATEGORÍA PRINCIPAL ──
   function toggleCat(header) {
     const body = header.nextElementSibling;
     const estaAbierto = header.classList.contains('abierto');
-    header.classList.toggle('abierto', !estaAbierto);
-    body.classList.toggle('abierto', !estaAbierto);
+
+    // Cerrar todos primero
+    document.querySelectorAll('.cat-header.abierto').forEach(h => {
+      h.classList.remove('abierto');
+      h.nextElementSibling.classList.remove('abierto');
+    });
+
+    // Si estaba cerrado, abrirlo
+    if (!estaAbierto) {
+      header.classList.add('abierto');
+      body.classList.add('abierto');
+      // Cerrar todos los subgrupos al abrir categoría
+      body.querySelectorAll('.sub-items.abierto').forEach(s => s.classList.remove('abierto'));
+      body.querySelectorAll('.sub-arrow.abierto').forEach(a => a.classList.remove('abierto'));
+      body.querySelectorAll('.sub-grupo-header.abierto').forEach(h => h.classList.remove('abierto'));
+    }
   }
 
-  // ── TOGGLE SUBGRUPO ──
+  // ── ACORDEÓN SUBGRUPO (solo uno abierto a la vez dentro de la categoría) ──
   function toggleSubGrupo(header) {
     const items = header.nextElementSibling;
     const arrow = header.querySelector('.sub-arrow');
     const estaAbierto = items.classList.contains('abierto');
-    items.classList.toggle('abierto', !estaAbierto);
-    arrow.classList.toggle('abierto', !estaAbierto);
+
+    // Cerrar todos los subgrupos de esta categoría
+    const catBody = header.closest('.cat-body');
+    catBody.querySelectorAll('.sub-grupo-header').forEach(h => {
+      h.classList.remove('abierto');
+      h.querySelector('.sub-arrow').classList.remove('abierto');
+    });
+    catBody.querySelectorAll('.sub-items').forEach(s => s.classList.remove('abierto'));
+
+    // Si estaba cerrado, abrirlo
+    if (!estaAbierto) {
+      header.classList.add('abierto');
+      arrow.classList.add('abierto');
+      items.classList.add('abierto');
+    }
   }
 
   // ── FILTRO POR CATEGORÍA ──
-  function mostrarCat(cat) {
+  function mostrarCat(cat, btn) {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    event.currentTarget.classList.add('active');
+    btn.classList.add('active');
 
     document.querySelectorAll('.cat-seccion').forEach(s => {
       if (cat === 'todos' || s.dataset.cat === cat) {
         s.classList.remove('hidden');
       } else {
         s.classList.add('hidden');
-        // cerrar si estaba abierto
         const header = s.querySelector('.cat-header');
         const body = s.querySelector('.cat-body');
         header.classList.remove('abierto');
@@ -493,6 +397,7 @@
       }
     });
   }
+
 </script>
 
 </body>
