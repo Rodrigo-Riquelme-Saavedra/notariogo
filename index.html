@@ -4,44 +4,23 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NotarioGO — Tus trámites notariales, en un clic</title>
-  <link rel="stylesheet" href="css/style.css?v=2"/>
+  <link rel="stylesheet" href="css/style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
-nav { background: rgba(255,255,255,0.97) !important; }
-  nav img { height: 64px !important; width: auto !important; padding: 4px 0; }
-  .step { display: flex !important; align-items: center !important; gap: 1rem !important;
-    background: rgba(255,255,255,0.08) !important;
-    border-radius: 12px !important; padding: .875rem 1rem !important;
-    border: 1px solid rgba(255,255,255,0.15) !important; }
-  .step-num { width: 32px !important; height: 32px !important;
-    border-radius: 8px !important; background: #1E6FE8 !important;
-    display: flex !important; align-items: center !important;
-    justify-content: center !important; font-size: 13px !important;
-    font-weight: 800 !important; color: white !important; flex-shrink: 0 !important; }
-  .step-info { flex: 1 !important; }
-  .step-info strong { display: block !important; font-size: 13px !important;
-    font-weight: 700 !important; color: white !important; }
-  .step-info span { font-size: 12px !important; color: rgba(255,255,255,0.7) !important; }
-  .hero-card { padding: 1.5rem !important; border-radius: 16px !important; }
-  .hero-steps { display: flex !important; flex-direction: column !important; gap: .75rem !important; }
   <style>
-  .hero h1 { color: #FFFFFF !important; }
-  .hero-desc { color: rgba(255,255,255,0.85) !important; }
-  .hero-badge { color: #7DB8FF !important; }
-  .hero-card {
-    background: rgba(255,255,255,0.12) !important;
-    border: 1px solid rgba(255,255,255,0.25) !important;
-  }
-  .hero-card-title { color: #7DB8FF !important; }
-  .step-info strong { color: #FFFFFF !important; }
-  .step-info span { color: rgba(255,255,255,0.7) !important; }
-  .step-num { background: #1E6FE8 !important; color: #FFFFFF !important; }
-  .step {
-    background: rgba(255,255,255,0.08) !important;
-    border: 1px solid rgba(255,255,255,0.15) !important;
-  }
-  .btn-ghost { color: #FFFFFF !important; }
-  nav img { height: 52px !important; width: auto !important; }
-</style>
+    .hero h1 { color: #FFFFFF !important; }
+    .hero-desc { color: rgba(255,255,255,0.85) !important; }
+    .hero-badge { color: #7DB8FF !important; }
+    .hero-card { background: rgba(255,255,255,0.12) !important; border: 1px solid rgba(255,255,255,0.25) !important; border-radius: 16px !important; padding: 1.5rem !important; }
+    .hero-card-title { color: #7DB8FF !important; }
+    .hero-steps { display: flex !important; flex-direction: column !important; gap: .75rem !important; }
+    .step { display: flex !important; align-items: center !important; gap: 1rem !important; background: rgba(255,255,255,0.08) !important; border-radius: 12px !important; padding: .875rem 1rem !important; border: 1px solid rgba(255,255,255,0.15) !important; }
+    .step-num { width: 32px !important; height: 32px !important; border-radius: 8px !important; background: #1E6FE8 !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 13px !important; font-weight: 800 !important; color: white !important; flex-shrink: 0 !important; }
+    .step-info { flex: 1 !important; }
+    .step-info strong { display: block !important; font-size: 13px !important; font-weight: 700 !important; color: white !important; }
+    .step-info span { font-size: 12px !important; color: rgba(255,255,255,0.7) !important; }
+    .btn-ghost { color: #FFFFFF !important; border-color: rgba(255,255,255,0.4) !important; }
+    nav img { height: 64px !important; width: auto !important; }
+  </style>
 </head>
 <body>
 
@@ -61,7 +40,6 @@ nav { background: rgba(255,255,255,0.97) !important; }
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-grid">
     <div>
@@ -111,7 +89,6 @@ nav { background: rgba(255,255,255,0.97) !important; }
   </div>
 </section>
 
-<!-- TRUST BAR -->
 <div class="trust-bar">
   <div class="trust-item">
     <svg viewBox="0 0 18 18"><path d="M9 1 L17 5 V9 C17 13 13 16.5 9 17.5 C5 16.5 1 13 1 9 V5 Z"/><polyline points="5.5,9 8,11.5 12.5,6.5"/></svg>
@@ -131,7 +108,6 @@ nav { background: rgba(255,255,255,0.97) !important; }
   </div>
 </div>
 
-<!-- FEATURES -->
 <section class="features">
   <div class="features-inner">
     <div class="section-tag">Por qué elegirnos</div>
@@ -141,4 +117,106 @@ nav { background: rgba(255,255,255,0.97) !important; }
       <div class="feat-card">
         <div class="feat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12l3 3 5-5"/></svg></div>
         <h3>Notaría digital, sin filas</h3>
-        <p>Realiza todos tus trámites notariales desde tu computador o celul
+        <p>Realiza todos tus trámites notariales desde tu computador o celular, sin salir de casa ni esperar turnos.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3>Disponible 24/7</h3>
+        <p>Nuestra plataforma nunca cierra. Puedes iniciar o continuar tu trámite en cualquier momento del día o la noche.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+        <h3>Firma desde donde estés</h3>
+        <p>Usa tu ClaveÚnica o eToken para firmar electrónicamente con plena validez legal en todo Chile.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg></div>
+        <h3>Documentos siempre seguros</h3>
+        <p>Todos tus documentos quedan almacenados en tu cuenta con cifrado de nivel bancario.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h3>Atención personalizada</h3>
+        <p>¿Tienes dudas? Nuestro equipo está disponible vía chat para orientarte en cada paso.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Seguridad certificada</h3>
+        <p>Cumplimos con la Ley N° 19.799 sobre documentos y firma electrónica en Chile.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tramites">
+  <div class="tramites-inner">
+    <div class="section-tag">Catálogo de trámites</div>
+    <h2 class="section-title">¿Qué necesitas hacer hoy?</h2>
+    <p class="section-sub">Selecciona el trámite que necesitas y comenzamos de inmediato.</p>
+    <div class="tramites-grid">
+      <a href="tramites.html" class="tram-card"><div class="tram-emoji">📋</div><h4>Poder simple o notarial</h4><div class="tram-tag">Más solicitado</div></a>
+      <a href="tramites.html" class="tram-card"><div class="tram-emoji">🏠</div><h4>Declaración jurada</h4><div class="tram-tag">Rápido</div></a>
+      <a href="tramites.html" class="tram-card"><div class="tram-emoji">✍️</div><h4>Autorización de firma</h4><div class="tram-tag">Digital</div></a>
+      <a href="tramites.html" class="tram-card"><div class="tram-emoji">📄</div><h4>Copia autorizada</h4><div class="tram-tag">24 hrs</div></a>
+      <a href="tramites.html" class="tram-card"><div class="tram-emoji">🤝</div><h4>Contrato de arriendo</h4><div class="tram-tag">Popular</div></a>
+      <a href="tramites.html" class="tram-card"><div class="tram-emoji">🏛️</div><h4>Protocolización</h4><div class="tram-tag">Legal</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stats-inner">
+    <div><div class="stat-num">+12<span>K</span></div><div class="stat-desc">Trámites completados</div></div>
+    <div><div class="stat-num">98<span>%</span></div><div class="stat-desc">Satisfacción de clientes</div></div>
+    <div><div class="stat-num">&lt;24<span>h</span></div><div class="stat-desc">Tiempo promedio de respuesta</div></div>
+    <div><div class="stat-num">100<span>%</span></div><div class="stat-desc">Validez legal en Chile</div></div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-box">
+    <div class="section-tag">Empieza ahora</div>
+    <h2 class="section-title">Tu primer trámite,<br/>sin complicaciones</h2>
+    <p>Crea tu cuenta gratis, sube tu documento y recibe tu notarización en menos de 24 horas. Sin sorpresas, sin letras chicas.</p>
+    <div class="cta-btns">
+      <a href="login.html" class="btn-hero">Crear cuenta gratis</a>
+      <a href="tramites.html" class="btn-outline">Ver trámites</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="index.html" class="footer-logo">Notario<span>Go</span></a>
+      <div class="footer-tagline">Tus trámites notariales, en un clic.</div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h5>Plataforma</h5>
+        <a href="index.html">Inicio</a>
+        <a href="tramites.html">Trámites</a>
+        <a href="mis-documentos.html">Mis documentos</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="#">Términos de uso</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Ley 19.799</a>
+      </div>
+      <div class="footer-col">
+        <h5>Ayuda</h5>
+        <a href="ayuda.html">Preguntas frecuentes</a>
+        <a href="ayuda.html">Contacto</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 NotarioGO SpA · Todos los derechos reservados · Santiago, Chile</div>
+    <div class="footer-copy">Ley N° 19.799 sobre firma electrónica</div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
