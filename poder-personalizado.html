@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NotarioGO — Poder Simple: Personalizado</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    .nav-logo-text { font-size: 22px; font-weight: 800; color: #0D1B3E; text-decoration: none; letter-spacing: -0.5px; }
+    .nav-logo-text span { color: #3B8BFF; }
+    body { background: #F7F9FC; }
+
+    .breadcrumb { background: white; border-bottom: 1px solid #EEF2F9; padding: .875rem 2rem; font-size: 13px; color: #7888A8; }
+    .breadcrumb a { color: #1E6FE8; text-decoration: none; font-weight: 600; }
+    .breadcrumb span { margin: 0 .5rem; }
+
+    .page-header { background: #0D1B3E; padding: 2.5rem 2rem; }
+    .page-header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 1.5rem; }
+    .page-header-icon { width: 56px; height: 56px; background: rgba(255,255,255,0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+    .page-header h1 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: white; margin-bottom: .25rem; }
+    .page-header p { color: rgba(255,255,255,0.6); font-size: 14px; }
+    .header-badge { background: rgba(255,184,0,0.2); border: 1px solid rgba(255,184,0,0.4); color: #FFB800; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 100px; text-transform: uppercase; letter-spacing: .05em; margin-top: .5rem; display: inline-block; }
+
+    .codigo-doc { background: #0D1B3E; color: white; padding: 1rem 2rem; display: flex; align-items: center; justify-content: center; gap: 1rem; font-family: 'Courier New', monospace; font-size: 15px; font-weight: 700; letter-spacing: .08em; border-top: 1px solid rgba(255,255,255,0.1); }
+    .codigo-doc span { color: #FFB800; }
+    .codigo-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; color: rgba(255,255,255,0.55); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+
+    .form-layout { max-width: 1200px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    @media (max-width: 900px) { .form-layout { grid-template-columns: 1fr; } }
+
+    .form-panel { background: white; border: 2px solid #EEF2F9; border-radius: 16px; padding: 2rem; box-shadow: 0 2px 8px rgba(13,27,62,0.06); }
+    .form-section { margin-bottom: 1.75rem; }
+    .form-section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #1E6FE8; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 2px solid #E6F0FF; display: flex; align-items: center; gap: 8px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-row.single { grid-template-columns: 1fr; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; color: #3A4A6B; margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .04em; }
+    .form-group input, .form-group select { width: 100%; padding: 10px 14px; border: 1.5px solid #C1CBDF; border-radius: 8px; font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; color: #0D1B3E; outline: none; transition: border-color .2s; box-sizing: border-box; background: white; }
+    .form-group input:focus, .form-group select:focus { border-color: #1E6FE8; box-shadow: 0 0 0 3px rgba(30,111,232,0.1); }
+    .form-group .hint { font-size: 11px; color: #7888A8; margin-top: .3rem; }
+    .form-group .error-msg { font-size: 11px; color: #EF4444; margin-top: .3rem; display: none; }
+    .form-group .valid-msg { font-size: 11px; color: #10B981; margin-top: .3rem; display: none; }
+    .form-group.has-error input { border-color: #EF4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.1); }
+    .form-group.has-error .error-msg { display: block; }
+    .form-group.is-valid input { border-color: #10B981; }
+    .form-group.is-valid .valid-msg { display: block; }
+
+    /* RUT */
+    .rut-wrap { position: relative; }
+    .rut-wrap input { padding-right: 36px; }
+    .rut-icon { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; pointer-events: none; }
+
+    /* ALERTA SUAVE */
+    .alerta-suave { background: #FEF3C7; border: 1.5px solid #F59E0B; border-radius: 10px; padding: .875rem 1rem; font-size: 13px; color: #92400E; margin-bottom: 1.25rem; display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+    .alerta-suave span { font-size: 18px; flex-shrink: 0; }
+
+    /* CAMPOS PERSONALIZADOS */
+    .campo-guiado { margin-bottom: 1.25rem; }
+    .campo-guiado-label { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #0D1B3E; margin-bottom: .5rem; }
+    .campo-guiado-num { width: 26px; height: 26px; border-radius: 50%; background: #1E6FE8; color: white; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .campo-guiado input { width: 100%; padding: 11px 14px; border: 1.5px solid #C1CBDF; border-radius: 8px; font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; color: #0D1B3E; outline: none; transition: border-color .2s; box-sizing: border-box; }
+    .campo-guiado input:focus { border-color: #1E6FE8; box-shadow: 0 0 0 3px rgba(30,111,232,0.1); }
+    .campo-guiado .campo-hint { font-size: 11px; color: #7888A8; margin-top: .3rem; }
+    .campo-guiado .campo-counter { font-size: 11px; color: #C1CBDF; margin-top: .3rem; text-align: right; }
+    .campo-guiado .campo-counter.ok { color: #10B981; }
+    .campo-guiado .campo-counter.warn { color: #F59E0B; }
+    .campo-guiado .campo-counter.err { color: #EF4444; }
+    .campo-guiado .campo-error { font-size: 11px; color: #EF4444; margin-top: .3rem; display: none; }
+    .campo-guiado.has-error input { border-color: #EF4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.1); }
+    .campo-guiado.has-error .campo-error { display: block; }
+    .campo-guiado.is-valid input { border-color: #10B981; }
+    .campo-guiado.is-warn input { border-color: #F59E0B; box-shadow: 0 0 0 3px rgba(245,158,11,0.1); }
+
+    /* ADVERTENCIA TEXTO GENÉRICO */
+    .warn-generico { background: #FEF3C7; border: 1px solid #F59E0B; border-radius: 8px; padding: .625rem .875rem; font-size: 12px; color: #92400E; margin-top: .5rem; display: none; }
+    .warn-generico.visible { display: block; }
+
+    /* PREVIEW RESULTADO */
+    .resultado-preview { background: #F0F6FF; border: 1.5px solid #C5D9FF; border-radius: 12px; padding: 1rem 1.25rem; margin-top: 1rem; font-size: 13px; color: #1E40AF; font-style: italic; line-height: 1.8; display: none; }
+    .resultado-preview.visible { display: block; }
+    .resultado-preview strong { font-style: normal; }
+
+    /* EJEMPLOS */
+    .ejemplos-wrap { margin-top: .75rem; }
+    .ejemplos-label { font-size: 11px; font-weight: 700; color: #7888A8; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .5rem; }
+    .ejemplos-grid { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .ejemplo-chip { padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid #C1CBDF; background: white; color: #3A4A6B; transition: all .2s; }
+    .ejemplo-chip:hover { border-color: #1E6FE8; color: #1E6FE8; background: #E6F0FF; }
+
+    .form-actions { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .btn-limpiar { background: white; color: #7888A8; border: 1.5px solid #C1CBDF; border-radius: 8px; padding: 11px 20px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all .2s; }
+    .btn-limpiar:hover { border-color: #7888A8; }
+    .btn-guardar { background: #1E6FE8; color: white; border: none; border-radius: 8px; padding: 12px 24px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all .2s; box-shadow: 0 4px 14px rgba(30,111,232,0.35); flex: 1; }
+    .btn-guardar:hover { background: #1458C4; transform: translateY(-1px); }
+    .btn-guardar:disabled { background: #C1CBDF; box-shadow: none; cursor: not-allowed; transform: none; }
+
+    .preview-panel { position: sticky; top: 80px; }
+    .preview-card { background: white; border: 2px solid #EEF2F9; border-radius: 16px; padding: 2rem; box-shadow: 0 2px 8px rgba(13,27,62,0.06); }
+    .preview-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: .5rem; }
+    .preview-title { font-size: 14px; font-weight: 700; color: #0D1B3E; }
+    .preview-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 100px; }
+    .preview-badge.completo { background: #D1FAE5; color: #065F46; }
+    .preview-badge.incompleto { background: #FEF3C7; color: #92400E; }
+
+    .doc-legal { font-family: 'Times New Roman', Times, serif; font-size: 13.5px; line-height: 1.9; color: #1a1a1a; background: #FAFAFA; border: 1px solid #E0E0E0; border-radius: 8px; padding: 1.5rem; min-height: 420px; }
+    .doc-legal .doc-codigo { font-family: 'Courier New', monospace; font-size: 11px; color: #7888A8; text-align: right; margin-bottom: 1rem; }
+    .doc-legal .doc-titulo { text-align: center; font-weight: bold; font-size: 15px; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 1.5rem; text-decoration: underline; }
+    .doc-legal .doc-cuerpo { text-align: justify; }
+    .doc-legal .campo-vacio { background: #FEF3C7; border-bottom: 1px dashed #F59E0B; color: #92400E; padding: 0 3px; border-radius: 2px; font-style: italic; font-size: 12px; }
+    .doc-legal .campo-ok { color: #1a1a1a; font-weight: 600; }
+    .doc-legal .doc-firma { margin-top: 2.5rem; text-align: center; }
+
+    .progreso-wrap { margin-bottom: 1.5rem; }
+    .progreso-label { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #7888A8; margin-bottom: .5rem; }
+    .progreso-bar { height: 6px; background: #EEF2F9; border-radius: 100px; overflow: hidden; }
+    .progreso-fill { height: 100%; background: linear-gradient(90deg, #1E6FE8, #3B8BFF); border-radius: 100px; transition: width .3s; }
+
+    .doc-acciones { display: flex; gap: .75rem; margin-top: 1rem; }
+    .btn-imprimir { background: #0D1B3E; color: white; border: none; border-radius: 8px; padding: 10px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all .2s; }
+    .btn-imprimir:disabled { background: #C1CBDF; cursor: not-allowed; }
+    .btn-enviar { background: #10B981; color: white; border: none; border-radius: 8px; padding: 10px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all .2s; flex: 1; }
+    .btn-enviar:disabled { background: #C1CBDF; cursor: not-allowed; }
+
+    footer { background: #0D1B3E; padding: 2rem; margin-top: 3rem; }
+    .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+    @media print {
+      nav, .breadcrumb, .form-panel, .page-header, .codigo-doc, .progreso-wrap, .doc-acciones, footer, .preview-header { display: none !important; }
+      .form-layout { display: block; padding: 0; }
+      .preview-panel { position: static; }
+      .preview-card { border: none; padding: 0; box-shadow: none; }
+      .doc-legal { border: none; background: white; font-size: 12pt; padding: 1cm; min-height: unset; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo-text" href="index.html">Notario<span>Go</span></a>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="tramites.html" class="active">Trámites</a>
+    <a href="mis-documentos.html">Mis documentos</a>
+    <a href="ayuda.html">Ayuda</a>
+  </div>
+  <div class="nav-actions">
+    <a href="login.html" class="btn-outline">Ingresar / Cuenta</a>
+    <a href="tramites.html" class="btn-primary">Iniciar trámite</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="tramites.html">Trámites</a>
+  <span>›</span> Poderes
+  <span>›</span> Poder simple
+  <span>›</span> Otro / Personalizado
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-header-icon">✏️</div>
+    <div>
+      <h1>Poder Simple — Otro / Personalizado</h1>
+      <p>Define el alcance exacto del poder de forma específica y controlada</p>
+      <span class="header-badge">⚡ Listo en minutos</span>
+    </div>
+  </div>
+</div>
+
+<div class="codigo-doc">
+  <div class="codigo-label">Código del documento</div>
+  <span id="codigo-display">Generando...</span>
+</div>
+
+<div class="form-layout">
+
+  <!-- FORMULARIO -->
+  <div class="form-panel">
+
+    <div class="progreso-wrap">
+      <div class="progreso-label">
+        <span>Progreso del formulario</span>
+        <span id="progreso-pct">0%</span>
+      </div>
+      <div class="progreso-bar"><div class="progreso-fill" id="progreso-fill" style="width:0%"></div></div>
+    </div>
+
+    <!-- ALERTA SUAVE -->
+    <div class="alerta-suave">
+      <span>💡</span>
+      <div>Describe el poder de forma <strong>específica</strong>. Evita frases generales como <em>"hacer cualquier trámite"</em> o <em>"gestionar todo"</em>. Un poder bien redactado tiene más validez legal y evita rechazos.</div>
+    </div>
+
+    <!-- OTORGANTE -->
+    <div class="form-section">
+      <div class="form-section-title">👤 Datos del otorgante</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre completo *</label>
+          <input type="text" id="nombre_otorgante" placeholder="Ej: María González Pérez" oninput="actualizar()"/>
+        </div>
+        <div class="form-group" id="g-rut_otorgante">
+          <label>RUT *</label>
+          <div class="rut-wrap">
+            <input type="text" id="rut_otorgante" placeholder="Ej: 12.345.678-9" oninput="onRUT(this,'g-rut_otorgante'); actualizar()" maxlength="12"/>
+            <span class="rut-icon" id="icon-rut_otorgante"></span>
+          </div>
+          <div class="error-msg" id="err-rut_otorgante">RUT inválido — verifica el dígito verificador</div>
+          <div class="valid-msg" id="ok-rut_otorgante">✓ RUT válido</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nacionalidad *</label>
+          <select id="nacionalidad_otorgante" onchange="actualizar()">
+            <option value="">Seleccionar...</option>
+            <option value="chilena">Chilena</option>
+            <option value="argentina">Argentina</option>
+            <option value="peruana">Peruana</option>
+            <option value="colombiana">Colombiana</option>
+            <option value="venezolana">Venezolana</option>
+            <option value="boliviana">Boliviana</option>
+            <option value="española">Española</option>
+            <option value="otra">Otra</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Estado civil *</label>
+          <select id="estado_civil_otorgante" onchange="actualizar()">
+            <option value="">Seleccionar...</option>
+            <option value="soltero(a)">Soltero(a)</option>
+            <option value="casado(a)">Casado(a)</option>
+            <option value="divorciado(a)">Divorciado(a)</option>
+            <option value="viudo(a)">Viudo(a)</option>
+            <option value="conviviente civil">Conviviente civil</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Profesión u oficio *</label>
+          <input type="text" id="profesion_otorgante" placeholder="Ej: Ingeniero, Comerciante" oninput="actualizar()"/>
+        </div>
+        <div class="form-group">
+          <label>Comuna *</label>
+          <input type="text" id="comuna_otorgante" placeholder="Ej: Santiago" oninput="actualizar()"/>
+        </div>
+      </div>
+      <div class="form-row single">
+        <div class="form-group">
+          <label>Domicilio completo *</label>
+          <input type="text" id="domicilio_otorgante" placeholder="Ej: Av. Providencia 1234, Depto. 5" oninput="actualizar()"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- APODERADO -->
+    <div class="form-section">
+      <div class="form-section-title">👤 Datos del apoderado</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre completo *</label>
+          <input type="text" id="nombre_apoderado" placeholder="Ej: Juan Pérez Soto" oninput="actualizar()"/>
+        </div>
+        <div class="form-group" id="g-rut_apoderado">
+          <label>RUT *</label>
+          <div class="rut-wrap">
+            <input type="text" id="rut_apoderado" placeholder="Ej: 9.876.543-2" oninput="onRUT(this,'g-rut_apoderado'); actualizar()" maxlength="12"/>
+            <span class="rut-icon" id="icon-rut_apoderado"></span>
+          </div>
+          <div class="error-msg" id="err-rut_apoderado">RUT inválido — verifica el dígito verificador</div>
+          <div class="valid-msg" id="ok-rut_apoderado">✓ RUT válido</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nacionalidad *</label>
+          <select id="nacionalidad_apoderado" onchange="actualizar()">
+            <option value="">Seleccionar...</option>
+            <option value="chilena">Chilena</option>
+            <option value="argentina">Argentina</option>
+            <option value="peruana">Peruana</option>
+            <option value="colombiana">Colombiana</option>
+            <option value="venezolana">Venezolana</option>
+            <option value="boliviana">Boliviana</option>
+            <option value="española">Española</option>
+            <option value="otra">Otra</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Estado civil *</label>
+          <select id="estado_civil_apoderado" onchange="actualizar()">
+            <option value="">Seleccionar...</option>
+            <option value="soltero(a)">Soltero(a)</option>
+            <option value="casado(a)">Casado(a)</option>
+            <option value="divorciado(a)">Divorciado(a)</option>
+            <option value="viudo(a)">Viudo(a)</option>
+            <option value="conviviente civil">Conviviente civil</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Profesión u oficio *</label>
+          <input type="text" id="profesion_apoderado" placeholder="Ej: Técnico, Administrativo" oninput="actualizar()"/>
+        </div>
+        <div class="form-group">
+          <label>Domicilio *</label>
+          <input type="text" id="domicilio_apoderado" placeholder="Ej: Calle Los Aromos 456" oninput="actualizar()"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERSONALIZACIÓN CONTROLADA -->
+    <div class="form-section">
+      <div class="form-section-title">✏️ Definición del poder</div>
+
+      <!-- CAMPO 1: ACCIÓN -->
+      <div class="campo-guiado" id="cg-accion">
+        <div class="campo-guiado-label">
+          <div class="campo-guiado-num">1</div>
+          ¿Qué hará el apoderado? *
+        </div>
+        <input type="text" id="accion_personalizada"
+          placeholder="Ej: retire y gestione la entrega de documentación"
+          oninput="validarCampo('accion_personalizada'); actualizar()"/>
+        <div class="campo-hint">Describe la acción específica con un verbo claro</div>
+        <div class="warn-generico" id="warn-accion">⚠️ Esta descripción es muy genérica. Sé más específico para que el poder tenga validez.</div>
+        <div class="campo-counter" id="counter-accion">0 / mín. 10 caracteres</div>
+        <div class="campo-error" id="err-accion">Mínimo 10 caracteres. Sé específico.</div>
+
+        <!-- Ejemplos -->
+        <div class="ejemplos-wrap">
+          <div class="ejemplos-label">Ejemplos rápidos</div>
+          <div class="ejemplos-grid">
+            <span class="ejemplo-chip" onclick="setEjemplo('accion_personalizada', 'retire y gestione la entrega de documentación')">retire documentación</span>
+            <span class="ejemplo-chip" onclick="setEjemplo('accion_personalizada', 'celebre y firme contratos en mi nombre')">firme contratos</span>
+            <span class="ejemplo-chip" onclick="setEjemplo('accion_personalizada', 'realice gestiones de cobranza y pago')">gestione cobros</span>
+            <span class="ejemplo-chip" onclick="setEjemplo('accion_personalizada', 'suscriba y administre servicios a mi nombre')">suscriba servicios</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAMPO 2: ANTE QUIÉN -->
+      <div class="campo-guiado" id="cg-institucion">
+        <div class="campo-guiado-label">
+          <div class="campo-guiado-num">2</div>
+          ¿Ante quién o dónde? *
+        </div>
+        <input type="text" id="institucion_o_persona"
+          placeholder="Ej: la Universidad de Chile, el banco, la empresa ABC"
+          oninput="validarCampo('institucion_o_persona'); actualizar()"/>
+        <div class="campo-hint">Institución, empresa o persona ante quien actuará el apoderado</div>
+        <div class="campo-counter" id="counter-institucion">0 / mín. 10 caracteres</div>
+        <div class="campo-error" id="err-institucion">Mínimo 10 caracteres. Especifica el lugar o persona.</div>
+
+        <div class="ejemplos-wrap">
+          <div class="ejemplos-label">Ejemplos rápidos</div>
+          <div class="ejemplos-grid">
+            <span class="ejemplo-chip" onclick="setEjemplo('institucion_o_persona', 'la Universidad de Chile')">Universidad de Chile</span>
+            <span class="ejemplo-chip" onclick="setEjemplo('institucion_o_persona', 'la empresa contratante')">Empresa contratante</span>
+            <span class="ejemplo-chip" onclick="setEjemplo('institucion_o_persona', 'el Conservador de Bienes Raíces')">Conservador de B.R.</span>
+            <span class="ejemplo-chip" onclick="setEjemplo('institucion_o_persona', 'cualquier institución pública o privada relacionada')">Inst. relacionada</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAMPO 3: DETALLE -->
+      <div class="campo-guiado" id="cg-detalle">
+        <div class="campo-guiado-label">
+          <div class="campo-guiado-num">3</div>
+          ¿Respecto de qué trámite o documento? *
+        </div>
+        <input type="text" id="detalle_tramite"
+          placeholder="Ej: mi certificado de título profesional, el contrato N°123"
+          oninput="validarCampo('detalle_tramite'); actualizar()"/>
+        <div class="campo-hint">El objeto o asunto específico del poder</div>
+        <div class="warn-generico" id="warn-detalle">⚠️ Describe el trámite de forma más específica para evitar ambigüedades.</div>
+        <div class="campo-counter" id="counter-detalle">0 / mín. 10 caracteres</div>
+        <div class="campo-error" id="err-detalle">Mínimo 10 caracteres. Sé específico.</div>
+
+        <div class="ejemplos-wrap">
+          <div class="ejemplos-label">Ejemplos rápidos</div>
+          <div class="ejemplos-grid">
+            <span class="ejemplo-chip" onclick="setEjemplo('detalle_tramite', 'mi certificado de título profesional')">Certificado de título</span>
+            <span class="ejemplo-chip" onclick="setEjemplo('detalle_tramite', 'el contrato de prestación de servicios')">Contrato de servicios</span>
+            <span class="ejemplo-chip" onclick="setEjemplo('detalle_tramite', 'mi postulación al subsidio habitacional')">Subsidio habitacional</span>
+            <span class="ejemplo-chip" onclick="setEjemplo('detalle_tramite', 'la inscripción de la propiedad ubicada en')">Inscripción propiedad</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PREVIEW RESULTADO -->
+      <div class="resultado-preview" id="resultado-preview">
+        📝 <em>"…para que en mi nombre y representación <strong id="prev-accion"></strong>, ante <strong id="prev-inst"></strong>, respecto de <strong id="prev-det"></strong>, pudiendo firmar los documentos y realizar las gestiones necesarias para el cumplimiento de este mandato."</em>
+      </div>
+    </div>
+
+    <!-- METADATA -->
+    <div class="form-section">
+      <div class="form-section-title">📍 Lugar y fecha</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ciudad *</label>
+          <input type="text" id="ciudad" placeholder="Ej: Santiago" oninput="actualizar()"/>
+        </div>
+        <div class="form-group">
+          <label>Fecha del documento *</label>
+          <input type="date" id="fecha" oninput="actualizar()"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-limpiar" onclick="limpiarFormulario()">🗑 Limpiar</button>
+      <button class="btn-guardar" id="btn-guardar" onclick="guardarTramite()" disabled>✅ Guardar y enviar trámite</button>
+    </div>
+  </div>
+
+  <!-- VISTA PREVIA -->
+  <div class="preview-panel">
+    <div class="preview-card">
+      <div class="preview-header">
+        <div class="preview-title">📄 Vista previa del documento</div>
+        <div class="preview-badge incompleto" id="preview-badge">Incompleto</div>
+      </div>
+      <div class="doc-legal">
+        <div class="doc-codigo" id="doc-codigo-preview"></div>
+        <div class="doc-titulo">PODER SIMPLE</div>
+        <div class="doc-cuerpo" id="doc-cuerpo"></div>
+        <div class="doc-firma" id="doc-firma" style="display:none;">
+          <div style="border-top: 1px solid #333; width: 200px; margin: 0 auto .5rem;"></div>
+          <div id="firma-nombre" style="font-weight:bold;"></div>
+          <div id="firma-rut" style="font-size:12px; color:#555;"></div>
+        </div>
+      </div>
+      <div class="doc-acciones">
+        <button class="btn-imprimir" id="btn-imprimir" onclick="window.print()" disabled>🖨 Imprimir</button>
+        <button class="btn-enviar" id="btn-enviar" onclick="guardarTramite()" disabled>📤 Enviar al notario</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 NotarioGO SpA · Santiago, Chile</div>
+    <div class="footer-copy">Ley N° 19.799 sobre firma electrónica</div>
+  </div>
+</footer>
+
+<script src="js/jsonbin.js"></script>
+<script src="js/app.js"></script>
+<script>
+
+  // ── CÓDIGO ÚNICO ──
+  let codigoDoc = '';
+  async function generarCodigo() {
+    const fecha = new Date().toISOString().split('T')[0].replace(/-/g,'');
+    try {
+      const data = await JSONBIN.get('tramites');
+      return `NOTAGO-${fecha}-${String((data.tramites||[]).length+1).padStart(7,'0')}`;
+    } catch(e) {
+      return `NOTAGO-${fecha}-${String(Date.now()).slice(-7)}`;
+    }
+  }
+  generarCodigo().then(c => {
+    codigoDoc = c;
+    document.getElementById('codigo-display').textContent = c;
+    document.getElementById('doc-codigo-preview').textContent = c;
+  });
+
+  // ── TEXTOS GENÉRICOS A DETECTAR ──
+  const TEXTOS_GENERICOS = [
+    'hacer trámites','hacer cualquier trámite','gestionar todo','cualquier gestión',
+    'lo que sea','todo lo necesario','hacer todo','gestionar todo lo relacionado',
+    'realizar gestiones','cualquier cosa','todo','gestionar'
+  ];
+
+  function esGenerico(texto) {
+    const t = texto.toLowerCase().trim();
+    return TEXTOS_GENERICOS.some(g => t === g || t.startsWith(g + ' ') || t.endsWith(' ' + g));
+  }
+
+  // ── VALIDACIÓN CAMPO GUIADO ──
+  function validarCampo(id) {
+    const input = document.getElementById(id);
+    const val = input.value.trim();
+    const len = val.length;
+    const cgId = id === 'accion_personalizada' ? 'cg-accion' :
+                 id === 'institucion_o_persona' ? 'cg-institucion' : 'cg-detalle';
+    const cg = document.getElementById(cgId);
+    const counter = document.getElementById('counter-' + (id === 'accion_personalizada' ? 'accion' : id === 'institucion_o_persona' ? 'institucion' : 'detalle'));
+    const errEl = document.getElementById('err-' + (id === 'accion_personalizada' ? 'accion' : id === 'institucion_o_persona' ? 'institucion' : 'detalle'));
+    const warnId = id === 'accion_personalizada' ? 'warn-accion' : id === 'detalle_tramite' ? 'warn-detalle' : null;
+
+    // Counter
+    counter.textContent = `${len} caracteres`;
+    counter.className = 'campo-counter ' + (len === 0 ? '' : len < 10 ? 'err' : len < 20 ? 'warn' : 'ok');
+
+    // Estado
+    cg.classList.remove('has-error','is-valid','is-warn');
+    if (len === 0) { if(errEl) errEl.style.display='none'; return false; }
+
+    if (len < 10) {
+      cg.classList.add('has-error');
+      if(errEl) errEl.style.display='block';
+      if(warnId) document.getElementById(warnId).classList.remove('visible');
+      return false;
+    }
+
+    if(errEl) errEl.style.display='none';
+
+    // Detectar genérico
+    if (warnId && esGenerico(val)) {
+      cg.classList.add('is-warn');
+      document.getElementById(warnId).classList.add('visible');
+      return false; // bloquear si es genérico
+    } else if (warnId) {
+      document.getElementById(warnId).classList.remove('visible');
+    }
+
+    cg.classList.add('is-valid');
+    return true;
+  }
+
+  function setEjemplo(id, texto) {
+    document.getElementById(id).value = texto;
+    validarCampo(id);
+    actualizar();
+  }
+
+  // ── VALIDACIÓN RUT ──
+  function calcularDV(rut) {
+    let suma = 0, m = 2;
+    for (let i = rut.length-1; i >= 0; i--) { suma += parseInt(rut[i])*m; m = m<7?m+1:2; }
+    const r = suma%11;
+    return r===0?'0':r===1?'k':String(11-r);
+  }
+  function validarRUT(rut) {
+    const l = rut.replace(/[.\-\s]/g,'').toLowerCase();
+    if (l.length<2) return false;
+    return /^\d+$/.test(l.slice(0,-1)) && calcularDV(l.slice(0,-1))===l.slice(-1);
+  }
+  function formatRUT(rut) {
+    const l = rut.replace(/[^0-9kK]/g,'');
+    if (l.length<2) return l;
+    return l.slice(0,-1).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+'-'+l.slice(-1);
+  }
+  function onRUT(input, gId) {
+    input.value = formatRUT(input.value.replace(/[^0-9kK]/g,''));
+    const id = gId.replace('g-','');
+    const g = document.getElementById(gId);
+    const err = document.getElementById('err-'+id);
+    const ok  = document.getElementById('ok-' +id);
+    const ic  = document.getElementById('icon-'+id);
+    if (input.value.length<3) {
+      g.classList.remove('has-error','is-valid');
+      if(err) err.style.display='none'; if(ok) ok.style.display='none'; if(ic) ic.textContent='';
+      return;
+    }
+    const valid = validarRUT(input.value);
+    g.classList.toggle('has-error',!valid); g.classList.toggle('is-valid',valid);
+    if(err) err.style.display=valid?'none':'block';
+    if(ok)  ok.style.display =valid?'block':'none';
+    if(ic)  ic.textContent   =valid?'✅':'❌';
+  }
+
+  // ── CAMPOS ──
+  const CAMPOS_TEXTO = [
+    'nombre_otorgante','nacionalidad_otorgante','estado_civil_otorgante',
+    'profesion_otorgante','domicilio_otorgante','comuna_otorgante',
+    'nombre_apoderado','nacionalidad_apoderado','estado_civil_apoderado',
+    'profesion_apoderado','domicilio_apoderado','ciudad','fecha'
+  ];
+  const CAMPOS_RUT = ['rut_otorgante','rut_apoderado'];
+  const CAMPOS_PERSONALIZADOS = ['accion_personalizada','institucion_o_persona','detalle_tramite'];
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
+    actualizar();
+  });
+
+  function v(id) { return document.getElementById(id)?.value?.trim() || ''; }
+  function campo(id, etiqueta) {
+    const val = v(id);
+    return val ? `<span class="campo-ok">${val}</span>` : `<span class="campo-vacio">[${etiqueta}]</span>`;
+  }
+  function formatFecha(iso) {
+    if (!iso) return null;
+    const [y,m,d] = iso.split('-');
+    const M = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    return `${parseInt(d)} de ${M[parseInt(m)-1]} de ${y}`;
+  }
+
+  function camposPersonalizadosOk() {
+    return CAMPOS_PERSONALIZADOS.every(id => {
+      const val = v(id);
+      if (val.length < 10) return false;
+      if (id === 'accion_personalizada' && esGenerico(val)) return false;
+      if (id === 'detalle_tramite' && esGenerico(val)) return false;
+      return true;
+    });
+  }
+
+  function actualizar() {
+    const accion = v('accion_personalizada');
+    const inst   = v('institucion_o_persona');
+    const det    = v('detalle_tramite');
+
+    // Preview resultado
+    const prev = document.getElementById('resultado-preview');
+    if (accion.length >= 10 && inst.length >= 10 && det.length >= 10 && !esGenerico(accion) && !esGenerico(det)) {
+      prev.classList.add('visible');
+      document.getElementById('prev-accion').textContent = accion;
+      document.getElementById('prev-inst').textContent   = inst;
+      document.getElementById('prev-det').textContent    = det;
+    } else {
+      prev.classList.remove('visible');
+    }
+
+    // Documento
+    const fechaFmt = v('fecha') ? formatFecha(v('fecha')) : null;
+    const fechaHTML = fechaFmt ? `<span class="campo-ok">${fechaFmt}</span>` : `<span class="campo-vacio">[fecha]</span>`;
+    const accionHTML = (accion.length>=10&&!esGenerico(accion)) ? `<span class="campo-ok">${accion}</span>` : `<span class="campo-vacio">[¿qué hará el apoderado?]</span>`;
+    const instHTML   = inst.length>=10 ? `<span class="campo-ok">${inst}</span>` : `<span class="campo-vacio">[¿ante quién o dónde?]</span>`;
+    const detHTML    = (det.length>=10&&!esGenerico(det)) ? `<span class="campo-ok">${det}</span>` : `<span class="campo-vacio">[¿respecto de qué?]</span>`;
+
+    document.getElementById('doc-cuerpo').innerHTML = `
+      <p>Don (Doña) ${campo('nombre_otorgante','nombre otorgante')},
+      nacionalidad ${campo('nacionalidad_otorgante','nacionalidad')},
+      estado civil ${campo('estado_civil_otorgante','estado civil')},
+      profesión u oficio ${campo('profesion_otorgante','profesión')},
+      cédula de identidad N° ${campo('rut_otorgante','RUT')},
+      domiciliado en ${campo('domicilio_otorgante','domicilio')},
+      comuna de ${campo('comuna_otorgante','comuna')},</p>
+      <p style="margin-top:.75rem;">viene en otorgar poder a don (doña) ${campo('nombre_apoderado','nombre apoderado')},
+      nacionalidad ${campo('nacionalidad_apoderado','nacionalidad')},
+      estado civil ${campo('estado_civil_apoderado','estado civil')},
+      profesión u oficio ${campo('profesion_apoderado','profesión')},
+      cédula de identidad N° ${campo('rut_apoderado','RUT')},
+      domiciliado en ${campo('domicilio_apoderado','domicilio')},</p>
+      <p style="margin-top:.75rem;">para que en mi nombre y representación ${accionHTML},
+      ante ${instHTML}, respecto de ${detHTML},
+      pudiendo firmar los documentos y realizar las gestiones necesarias
+      para el cumplimiento de este mandato.</p>
+      <p style="margin-top:.75rem;">En ${campo('ciudad','ciudad')}, a ${fechaHTML}.</p>`;
+
+    // Firma
+    const nom = v('nombre_otorgante');
+    if (nom) {
+      document.getElementById('doc-firma').style.display = 'block';
+      document.getElementById('firma-nombre').textContent = nom.toUpperCase();
+      document.getElementById('firma-rut').textContent = 'C.I. ' + (v('rut_otorgante') || '________________');
+    } else {
+      document.getElementById('doc-firma').style.display = 'none';
+    }
+
+    // Progreso
+    const lTxt  = CAMPOS_TEXTO.filter(id => v(id)!=='').length;
+    const lRUT  = CAMPOS_RUT.filter(id => v(id) && validarRUT(v(id))).length;
+    const lPers = camposPersonalizadosOk() ? 3 : CAMPOS_PERSONALIZADOS.filter(id => {
+      const val = v(id); return val.length>=10 && !esGenerico(val);
+    }).length;
+    const total  = CAMPOS_TEXTO.length + CAMPOS_RUT.length + 3;
+    const llenos = lTxt + lRUT + lPers;
+    const pct = Math.round((llenos/total)*100);
+    document.getElementById('progreso-fill').style.width = pct+'%';
+    document.getElementById('progreso-pct').textContent = pct+'%';
+
+    const completo = lTxt===CAMPOS_TEXTO.length && lRUT===2 && camposPersonalizadosOk();
+    const badge = document.getElementById('preview-badge');
+    badge.textContent = completo ? '✅ Completo' : `${llenos}/${total} campos`;
+    badge.className = 'preview-badge '+(completo?'completo':'incompleto');
+    document.getElementById('btn-guardar').disabled = !completo;
+    document.getElementById('btn-imprimir').disabled = !completo;
+    document.getElementById('btn-enviar').disabled = !completo;
+  }
+
+  function limpiarFormulario() {
+    if (!confirm('¿Seguro que quieres limpiar todos los campos?')) return;
+    CAMPOS_TEXTO.forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+    CAMPOS_RUT.forEach(id => {
+      document.getElementById(id).value='';
+      const g=document.getElementById('g-'+id); if(g) g.classList.remove('has-error','is-valid');
+      const ic=document.getElementById('icon-'+id); if(ic) ic.textContent='';
+    });
+    CAMPOS_PERSONALIZADOS.forEach(id => {
+      document.getElementById(id).value='';
+      validarCampo(id);
+    });
+    document.getElementById('resultado-preview').classList.remove('visible');
+    document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
+    actualizar();
+  }
+
+  async function guardarTramite() {
+    const user = usuarioActual();
+    if (!user) return window.location.href = 'login.html';
+    const btnG = document.getElementById('btn-guardar');
+    const btnE = document.getElementById('btn-enviar');
+    btnG.disabled=true; btnG.textContent='⏳ Guardando...'; btnE.disabled=true;
+    try {
+      const data = await JSONBIN.get('tramites');
+      const tramite = {
+        id: Date.now(), codigo: codigoDoc,
+        usuarioId: user.id, usuarioNombre: user.nombre, usuarioEmail: user.email,
+        tipo: 'Poder simple — Personalizado', emoji: '✏️',
+        estado: 'Pendiente', fecha: new Date().toISOString(),
+        formulario: {
+          nombre_otorgante: v('nombre_otorgante'), rut_otorgante: v('rut_otorgante'),
+          nacionalidad_otorgante: v('nacionalidad_otorgante'), estado_civil_otorgante: v('estado_civil_otorgante'),
+          profesion_otorgante: v('profesion_otorgante'), domicilio_otorgante: v('domicilio_otorgante'),
+          comuna_otorgante: v('comuna_otorgante'), nombre_apoderado: v('nombre_apoderado'),
+          rut_apoderado: v('rut_apoderado'), nacionalidad_apoderado: v('nacionalidad_apoderado'),
+          estado_civil_apoderado: v('estado_civil_apoderado'), profesion_apoderado: v('profesion_apoderado'),
+          domicilio_apoderado: v('domicilio_apoderado'), accion_personalizada: v('accion_personalizada'),
+          institucion_o_persona: v('institucion_o_persona'), detalle_tramite: v('detalle_tramite'),
+          ciudad: v('ciudad'), fecha: v('fecha')
+        }
+      };
+      data.tramites.push(tramite);
+      await JSONBIN.set('tramites', data);
+      alert(`✅ Trámite enviado correctamente.\nCódigo: ${codigoDoc}\n\nGuarda este código para seguimiento.`);
+      window.location.href = 'mis-documentos.html';
+    } catch(e) {
+      alert('Error al guardar. Intenta más tarde.');
+      btnG.disabled=false; btnG.textContent='✅ Guardar y enviar trámite'; btnE.disabled=false;
+    }
+  }
+
+</script>
+</body>
+</html>
