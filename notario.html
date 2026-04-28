@@ -99,6 +99,19 @@
     .btn-modal-cancel{background:white;color:#7888A8;border:1.5px solid #C1CBDF;border-radius:10px;padding:11px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
     .btn-modal-cancel:hover{border-color:#7888A8}
 
+    /* DOCUMENTO LEGAL EN MODAL */
+    .modal-doc{font-family:'Times New Roman',Times,serif;font-size:13px;line-height:1.9;color:#1a1a1a;background:#FAFAFA;border:1px solid #E0E0E0;border-radius:8px;padding:1.5rem;max-height:420px;overflow-y:auto;margin-bottom:1.25rem}
+    .modal-doc .doc-titulo{text-align:center;font-weight:bold;font-size:14px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.25rem;text-decoration:underline}
+    .modal-doc .doc-codigo-modal{font-family:'Courier New',monospace;font-size:11px;color:#7888A8;text-align:right;margin-bottom:.75rem}
+    .modal-doc .doc-cuerpo-modal{text-align:justify}
+    .modal-doc .doc-firma-modal{margin-top:1.5rem;text-align:center;border-top:1px solid #ccc;padding-top:1rem;font-size:12px}
+    .modal-doc .notario-sello-modal{margin-top:.75rem;border-top:1px dashed #ccc;padding-top:.75rem;text-align:center;font-size:11px;color:#555;font-style:italic}
+    .modal-doc .clausula{margin-bottom:.75rem}
+    .modal-doc .clausula-num{font-weight:bold;text-transform:uppercase}
+    .modal-doc .doc-firmas-modal{display:grid;grid-template-columns:1fr 1fr;gap:2rem;text-align:center;margin-top:1.5rem}
+    .modal-doc .firma-col .linea{border-top:1px solid #333;width:140px;margin:0 auto .4rem}
+    .modal-doc .firma-col .rol{font-size:11px;color:#555;font-style:italic}
+
     /* EMAIL BADGE */
     .email-enviado{display:none;background:#D1FAE5;border:1px solid #10B981;border-radius:8px;padding:.5rem .875rem;font-size:12px;color:#065F46;font-weight:600;align-items:center;gap:6px;margin-top:.75rem}
     .email-enviado.visible{display:flex}
@@ -242,8 +255,13 @@
       <button class="modal-close" onclick="cerrarModal()">✕</button>
     </div>
 
-    <!-- Info del trámite -->
-    <div class="modal-info" id="modal-info"></div>
+    <!-- Documento legal renderizado -->
+    <div class="modal-doc" id="modal-doc">
+      <div class="doc-codigo-modal" id="modal-doc-codigo"></div>
+      <div class="doc-titulo" id="modal-doc-titulo"></div>
+      <div class="doc-cuerpo-modal" id="modal-doc-cuerpo"></div>
+      <div id="modal-doc-firma"></div>
+    </div>
 
     <!-- Comentario/Observación -->
     <label class="modal-label">Comentarios u observaciones (opcional)</label>
@@ -459,24 +477,216 @@
   function abrirModal(tramite) {
     tramiteActual = tramite;
     document.getElementById('modal-titulo').textContent = `${tramite.emoji||'📋'} ${tramite.tipo}`;
-    document.getElementById('modal-codigo-display').textContent = `Código: ${tramite.codigo||'—'}`;
+    document.getElementById('modal-codigo-display').textContent = `Código: ${tramite.codigo||'—'} · ${tramite.usuarioNombre} · ${formatFecha(tramite.fecha)}`;
     document.getElementById('modal-comentario').value = tramite.comentario_notario || '';
     document.getElementById('email-enviado').classList.remove('visible');
 
-    // Info
-    const f = tramite.formulario || {};
-    const otorgante = f.nombre_otorgante||f.nombre_mandante||f.nombre_declarante||f.nombre_firmante||f.nombre_compareciente||f.nombre_arrendador||f.nombre_solicitante||f.nombre_persona||tramite.usuarioNombre||'—';
-    const apoderado = f.nombre_apoderado||f.nombre_mandatario||f.nombre_autorizado||null;
-    document.getElementById('modal-info').innerHTML = `
-      <div class="modal-info-row"><span class="modal-info-label">Usuario</span><span class="modal-info-val">${tramite.usuarioNombre} (${tramite.usuarioEmail})</span></div>
-      <div class="modal-info-row"><span class="modal-info-label">Fecha</span><span class="modal-info-val">${formatFecha(tramite.fecha)}</span></div>
-      <div class="modal-info-row"><span class="modal-info-label">Estado actual</span><span class="modal-info-val">${tramite.estado}</span></div>
-      <div class="modal-info-row"><span class="modal-info-label">Otorgante</span><span class="modal-info-val">${otorgante}</span></div>
-      ${apoderado?`<div class="modal-info-row"><span class="modal-info-label">Apoderado</span><span class="modal-info-val">${apoderado}</span></div>`:''}
-      ${tramite.comentario_notario?`<div class="modal-info-row"><span class="modal-info-label">Obs. previas</span><span class="modal-info-val">${tramite.comentario_notario}</span></div>`:''}
-    `;
+    // Renderizar documento legal
+    renderDocumentoModal(tramite);
+
     document.getElementById('modal-overlay').classList.add('visible');
     document.body.style.overflow='hidden';
+  }
+
+  function fv(val, etiqueta) {
+    return val ? `<strong>${val}</strong>` : `<em style="color:#92400E;background:#FEF3C7;padding:0 3px;border-radius:2px">[${etiqueta}]</em>`;
+  }
+
+  function ffecha(iso) {
+    if (!iso) return null;
+    const [y,m,d] = iso.split('-');
+    const M = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    return `${parseInt(d)} de ${M[parseInt(m)-1]} de ${y}`;
+  }
+
+  function renderDocumentoModal(t) {
+    const f = t.formulario || {};
+    const codigo = t.codigo || '—';
+    const tipo = t.tipo || '';
+
+    document.getElementById('modal-doc-codigo').textContent = codigo;
+
+    // Detectar tipo y construir documento correspondiente
+    let titulo = '', cuerpo = '', firma = '';
+
+    // ── PODERES SIMPLES ──
+    if (tipo.includes('Poder simple') || tipo.includes('Poder Simple')) {
+      titulo = 'PODER SIMPLE';
+      const otorgante = f.nombre_otorgante||'';
+      const apoderado = f.nombre_apoderado||'';
+      const fechaDoc = f.fecha ? ffecha(f.fecha) : '';
+      const ciudad = f.ciudad||'';
+
+      let parrafo3 = '';
+      // Bancario
+      if (tipo.includes('Bancario') || f.banco) {
+        parrafo3 = `para que en mi nombre y representación realice gestiones ante ${fv(f.banco,'banco')}, pudiendo especialmente ${fv(f.facultades,'facultades')}.`;
+      }
+      // Retiro documentos
+      else if (tipo.includes('Retiro') && !tipo.includes('Vehículo') && !tipo.includes('Encomienda')) {
+        parrafo3 = `para que en mi nombre y representación proceda al retiro de ${fv(f.objeto_retiro,'objeto')}, desde ${fv(f.lugar_retiro,'lugar')}, pudiendo firmar los documentos necesarios para dichos efectos.`;
+      }
+      // Instituciones
+      else if (tipo.includes('Instituciones') || f.institucion) {
+        parrafo3 = `para que en mi nombre y representación realice gestiones ante ${fv(f.institucion||f.institucion_legal,'institución')}, pudiendo especialmente ${fv(f.facultades,'facultades')}, en relación con ${fv(f.detalle_tramite,'detalle')}.`;
+      }
+      // Vehículo
+      else if (tipo.includes('Vehículo') || f.patente) {
+        parrafo3 = `para que en mi nombre y representación proceda al retiro del vehículo de mi propiedad, correspondiente a ${fv(f.tipo_vehiculo,'tipo')} marca ${fv(f.marca,'marca')}, modelo ${fv(f.modelo,'modelo')}, año ${fv(f.anio,'año')}, patente <strong style="font-family:monospace">${f.patente||'[patente]'}</strong>, desde ${fv(f.lugar_retiro,'lugar de retiro')}, pudiendo firmar los documentos necesarios para dichos efectos.`;
+      }
+      // Encomienda
+      else if (tipo.includes('Encomienda') || f.empresa) {
+        parrafo3 = `para que en mi nombre y representación proceda al retiro de la encomienda enviada a mi nombre a través de ${fv(f.empresa,'empresa')}, correspondiente al envío N° <strong style="font-family:monospace">${f.numero_envio||'[N° envío]'}</strong>, pudiendo firmar los documentos necesarios para dichos efectos.`;
+      }
+      // Legal específico
+      else if (tipo.includes('Legal') || f.institucion_legal) {
+        parrafo3 = `para que en mi nombre y representación me represente ante ${fv(f.institucion_legal,'institución')}, a fin de ${fv(f.accion_principal,'acción')}, en relación con ${fv(f.detalle_caso,'detalle')}, pudiendo para ello presentar solicitudes, efectuar gestiones, firmar documentos y realizar todas las actuaciones necesarias.`;
+      }
+      // Personalizado
+      else if (tipo.includes('Personalizado') || f.accion_personalizada) {
+        parrafo3 = `para que en mi nombre y representación ${fv(f.accion_personalizada,'acción')}, ante ${fv(f.institucion_o_persona,'institución')}, respecto de ${fv(f.detalle_tramite,'detalle')}, pudiendo firmar los documentos y realizar las gestiones necesarias.`;
+      }
+
+      cuerpo = `
+        <p>Don (Doña) ${fv(otorgante,'nombre otorgante')}, nacionalidad ${fv(f.nacionalidad_otorgante,'nacionalidad')}, estado civil ${fv(f.estado_civil_otorgante,'estado civil')}, profesión u oficio ${fv(f.profesion_otorgante,'profesión')}, cédula de identidad N° ${fv(f.rut_otorgante,'RUT')}, domiciliado en ${fv(f.domicilio_otorgante,'domicilio')}, comuna de ${fv(f.comuna_otorgante,'comuna')},</p>
+        <p style="margin-top:.75rem">viene en otorgar poder a don (doña) ${fv(apoderado,'nombre apoderado')}, nacionalidad ${fv(f.nacionalidad_apoderado,'nacionalidad')}, estado civil ${fv(f.estado_civil_apoderado,'estado civil')}, profesión u oficio ${fv(f.profesion_apoderado,'profesión')}, cédula de identidad N° ${fv(f.rut_apoderado,'RUT')}, domiciliado en ${fv(f.domicilio_apoderado,'domicilio')},</p>
+        <p style="margin-top:.75rem">${parrafo3}</p>
+        <p style="margin-top:.75rem">En ${fv(ciudad,'ciudad')}, a ${fv(fechaDoc,'fecha')}.</p>`;
+      firma = `<div class="doc-firma-modal">${fv(otorgante,'nombre')}<br><span style="font-size:11px;color:#555">C.I. ${f.rut_otorgante||'________________'}</span></div>`;
+    }
+
+    // ── PODER NOTARIAL ──
+    else if (tipo.includes('Poder notarial') || tipo.includes('Poder Notarial')) {
+      titulo = tipo.includes('Administración') ? 'PODER NOTARIAL PARA ADMINISTRACIÓN DE BIENES'
+             : tipo.includes('judicial') ? 'PODER NOTARIAL PARA REPRESENTACIÓN JUDICIAL'
+             : 'PODER NOTARIAL';
+      const fechaDoc = f.fecha ? ffecha(f.fecha) : '';
+      let p3 = '';
+      if (tipo.includes('Administración')) {
+        p3 = `para que administre mis bienes, pudiendo especialmente ${fv(f.facultades,'facultades')}, y en general ejecutar todos los actos necesarios para la adecuada administración de los mismos.`;
+      } else if (tipo.includes('judicial')) {
+        p3 = `para que lo represente judicialmente ante ${fv(f.tribunal,'tribunal')}, en toda clase de gestiones, pudiendo especialmente ${fv(f.facultades,'facultades')}, con todas las facultades del artículo 7° del Código de Procedimiento Civil.`;
+      } else {
+        p3 = `para que lo represente con las más amplias facultades de administración, pudiendo especialmente ${fv(f.facultades,'facultades')}, y en general ejecutar todos los actos y celebrar todos los contratos necesarios.`;
+      }
+      cuerpo = `
+        <p>En ${fv(f.ciudad,'ciudad')}, a ${fv(fechaDoc,'fecha')}, comparece don (doña) ${fv(f.nombre_mandante,'nombre mandante')}, nacionalidad ${fv(f.nacionalidad_mandante,'nacionalidad')}, estado civil ${fv(f.estado_civil_mandante,'estado civil')}, profesión u oficio ${fv(f.profesion_mandante,'profesión')}, cédula de identidad N° ${fv(f.rut_mandante,'RUT')}, domiciliado en ${fv(f.domicilio_mandante,'domicilio')}, comuna de ${fv(f.comuna_mandante,'comuna')},</p>
+        <p style="margin-top:.75rem">quien confiere poder a don (doña) ${fv(f.nombre_mandatario,'nombre mandatario')}, nacionalidad ${fv(f.nacionalidad_mandatario,'nacionalidad')}, estado civil ${fv(f.estado_civil_mandatario,'estado civil')}, profesión u oficio ${fv(f.profesion_mandatario,'profesión')}, cédula de identidad N° ${fv(f.rut_mandatario,'RUT')}, domiciliado en ${fv(f.domicilio_mandatario,'domicilio')},</p>
+        <p style="margin-top:.75rem">${p3}</p>
+        <p style="margin-top:.75rem">El presente poder se otorga por tiempo ${fv(f.vigencia,'vigencia')}.</p>`;
+      firma = `<div class="doc-firma-modal">${fv(f.nombre_mandante,'nombre')}<br><span style="font-size:11px;color:#555">C.I. ${f.rut_mandante||'________________'} · MANDANTE</span><div class="notario-sello-modal">AUTORIZADA ANTE MÍ NOTARIO PÚBLICO</div></div>`;
+    }
+
+    // ── DECLARACIONES ──
+    else if (tipo.includes('Declaración') || tipo.includes('Declaracion')) {
+      titulo = tipo.includes('notarial') ? 'DECLARACIÓN JURADA NOTARIAL' : 'DECLARACIÓN JURADA SIMPLE';
+      const fechaDoc = f.fecha ? ffecha(f.fecha) : '';
+      const decl = f.declaracion || [f.hecho, f.contexto && `en relación con ${f.contexto}`, f.finalidad && `para efectos de ${f.finalidad}`].filter(Boolean).join(', ');
+      if (tipo.includes('notarial')) {
+        cuerpo = `
+          <p>En ${fv(f.ciudad,'ciudad')}, a ${fv(fechaDoc,'fecha')}, ante mí, Notario Público, comparece don (doña) ${fv(f.nombre_declarante,'nombre')}, nacionalidad ${fv(f.nacionalidad_declarante,'nacionalidad')}, estado civil ${fv(f.estado_civil_declarante,'estado civil')}, profesión u oficio ${fv(f.profesion_declarante,'profesión')}, cédula de identidad N° ${fv(f.rut_declarante,'RUT')}, domiciliado en ${fv(f.domicilio_declarante,'domicilio')}, comuna de ${fv(f.comuna_declarante,'comuna')},</p>
+          <p style="margin-top:.75rem"><strong>quien declara bajo juramento lo siguiente:</strong></p>
+          <p style="margin-top:.5rem;padding-left:1rem;border-left:3px solid #C5D9FF">${fv(decl,'declaración')}</p>
+          <p style="margin-top:.75rem">La presente declaración se extiende para ser presentada ante ${fv(f.institucion_destino,'institución')}, para los fines que estime pertinentes.</p>`;
+      } else {
+        cuerpo = `
+          <p>Yo, ${fv(f.nombre_declarante,'nombre')}, nacionalidad ${fv(f.nacionalidad_declarante,'nacionalidad')}, estado civil ${fv(f.estado_civil_declarante,'estado civil')}, profesión u oficio ${fv(f.profesion_declarante,'profesión')}, cédula de identidad N° ${fv(f.rut_declarante,'RUT')}, domiciliado en ${fv(f.domicilio_declarante,'domicilio')}, comuna de ${fv(f.comuna_declarante,'comuna')},</p>
+          <p style="margin-top:.75rem"><strong>declaro bajo juramento que</strong> ${fv(decl,'declaración')}.</p>
+          <p style="margin-top:.75rem">Formulo la presente declaración para ser presentada ante ${fv(f.institucion_destino,'institución')}, para los fines que estime pertinentes.</p>
+          <p style="margin-top:.75rem">En ${fv(f.ciudad,'ciudad')}, a ${fv(fechaDoc,'fecha')}.</p>`;
+      }
+      firma = `<div class="doc-firma-modal">${fv(f.nombre_declarante,'nombre')}<br><span style="font-size:11px;color:#555">C.I. ${f.rut_declarante||'________________'} · DECLARANTE</span><div class="notario-sello-modal">AUTORIZADA ANTE MÍ NOTARIO PÚBLICO</div></div>`;
+    }
+
+    // ── AUTORIZACIÓN DE FIRMA ──
+    else if (tipo.includes('Autorización de firma') || tipo.includes('Autorizacion de firma')) {
+      titulo = 'AUTORIZACIÓN DE FIRMA';
+      const fechaDoc = f.fecha ? ffecha(f.fecha) : '';
+      cuerpo = `
+        <p>En ${fv(f.ciudad,'ciudad')}, a ${fv(fechaDoc,'fecha')}, ante mí, Notario Público, comparece don (doña) ${fv(f.nombre_firmante,'nombre')}, cédula de identidad N° ${fv(f.rut_firmante,'RUT')}, quien acredita su identidad con la cédula antes indicada y expone que firma el documento que antecede en mi presencia.</p>
+        <p style="margin-top:.75rem">En consecuencia, autorizo la firma que antecede por haber sido puesta en mi presencia por el compareciente.</p>`;
+      firma = `<div class="doc-firma-modal">${fv(f.nombre_firmante,'nombre')}<br><span style="font-size:11px;color:#555">C.I. ${f.rut_firmante||'________________'} · COMPARECIENTE</span><div class="notario-sello-modal">AUTORIZADA ANTE MÍ NOTARIO PÚBLICO</div></div>`;
+    }
+
+    // ── CARTA PODER ──
+    else if (tipo.includes('Carta poder') || tipo.includes('Carta Poder')) {
+      titulo = 'CARTA PODER';
+      const fechaDoc = f.fecha ? ffecha(f.fecha) : '';
+      let p2 = '';
+      if (f.objeto_retiro) {
+        p2 = `para que en mi nombre y representación proceda a retirar ${fv(f.objeto_retiro,'objeto')} desde ${fv(f.lugar_retiro,'lugar')}.`;
+      } else {
+        p2 = `para que en mi nombre y representación ${fv(f.accion,'acción')}, ante ${fv(f.institucion_o_persona,'institución')}, respecto de ${fv(f.detalle,'detalle')}.`;
+      }
+      cuerpo = `
+        <p>Yo, ${fv(f.nombre_otorgante,'nombre otorgante')}, cédula de identidad N° ${fv(f.rut_otorgante,'RUT')}, domiciliado(a) en ${fv(f.domicilio_otorgante,'domicilio')},</p>
+        <p style="margin-top:.75rem">vengo en autorizar a don (doña) ${fv(f.nombre_autorizado,'nombre autorizado')}, cédula de identidad N° ${fv(f.rut_autorizado,'RUT')}, ${p2}</p>
+        <p style="margin-top:.75rem">Se deja constancia que el autorizado podrá firmar los documentos necesarios para el cumplimiento de este encargo.</p>
+        <p style="margin-top:.75rem">En ${fv(f.ciudad,'ciudad')}, a ${fv(fechaDoc,'fecha')}.</p>`;
+      firma = `<div class="doc-firma-modal">${fv(f.nombre_otorgante,'nombre')}<br><span style="font-size:11px;color:#555">C.I. ${f.rut_otorgante||'________________'}</span></div>`;
+    }
+
+    // ── CONTRATO ARRIENDO ──
+    else if (tipo.includes('Contrato') || tipo.includes('arriendo')) {
+      titulo = 'CONTRATO DE ARRIENDO';
+      const fechaDoc = f.fecha ? ffecha(f.fecha) : '';
+      const fInicio = f.fecha_inicio ? ffecha(f.fecha_inicio) : '[fecha inicio]';
+      const monto = f.monto_arriendo ? '$'+parseInt(f.monto_arriendo).toLocaleString('es-CL') : '[monto]';
+      const garantia = f.monto_garantia ? '$'+parseInt(f.monto_garantia).toLocaleString('es-CL') : '[garantía]';
+      cuerpo = `
+        <p>En ${fv(f.ciudad,'ciudad')}, a ${fv(fechaDoc,'fecha')}, entre don (doña) ${fv(f.nombre_arrendador,'arrendador')}, cédula de identidad N° ${fv(f.rut_arrendador,'RUT')}, domiciliado en ${fv(f.domicilio_arrendador,'domicilio')}, en adelante el <strong>"ARRENDADOR"</strong>, y don (doña) ${fv(f.nombre_arrendatario,'arrendatario')}, cédula de identidad N° ${fv(f.rut_arrendatario,'RUT')}, domiciliado en ${fv(f.domicilio_arrendatario,'domicilio')}, en adelante el <strong>"ARRENDATARIO"</strong>.</p>
+        <div class="clausula" style="margin-top:.75rem"><span class="clausula-num">PRIMERO: PROPIEDAD</span> El arrendador da en arriendo el inmueble ubicado en ${fv(f.direccion_propiedad,'dirección')}, comuna de ${fv(f.comuna_propiedad,'comuna')}.</div>
+        <div class="clausula"><span class="clausula-num">SEGUNDO: DESTINO</span> El inmueble se destinará a ${fv(f.destino_propiedad,'destino')}.</div>
+        <div class="clausula"><span class="clausula-num">TERCERO: RENTA</span> La renta mensual será de <strong>${monto}</strong>, pagadera dentro de los primeros ${fv(f.dia_pago,'día')} días de cada mes.</div>
+        <div class="clausula"><span class="clausula-num">CUARTO: DURACIÓN</span> El contrato tendrá una duración de ${fv(f.duracion_contrato,'duración')}, comenzando el ${fv(fInicio,'fecha inicio')}.</div>
+        <div class="clausula"><span class="clausula-num">QUINTO: GARANTÍA</span> El arrendatario entrega la suma de <strong>${garantia}</strong> en garantía.</div>`;
+      firma = `<div class="doc-firmas-modal"><div class="firma-col"><div class="linea"></div><div>${f.nombre_arrendador||'________________'}</div><div class="rol">ARRENDADOR</div></div><div class="firma-col"><div class="linea"></div><div>${f.nombre_arrendatario||'________________'}</div><div class="rol">ARRENDATARIO</div></div></div>`;
+    }
+
+    // ── PROTOCOLIZACIÓN ──
+    else if (tipo.includes('Protocolización') || tipo.includes('Protocolizacion')) {
+      titulo = 'ACTA DE PROTOCOLIZACIÓN';
+      const fechaDoc = f.fecha ? ffecha(f.fecha) : '';
+      cuerpo = `
+        <p>En ${fv(f.ciudad,'ciudad')}, a ${fv(fechaDoc,'fecha')}, ante mí, Notario Público, comparece don (doña) ${fv(f.nombre_compareciente,'nombre')}, cédula de identidad N° ${fv(f.rut_compareciente,'RUT')}, domiciliado en ${fv(f.domicilio_compareciente,'domicilio')},</p>
+        <p style="margin-top:.75rem">quien solicita la protocolización del documento que se acompaña, consistente en ${fv(f.descripcion_documento,'descripción')}, el cual pasa a formar parte del registro de instrumentos públicos a mi cargo.</p>
+        <p style="margin-top:.75rem;text-align:center;font-family:monospace;font-size:13px;font-weight:700;background:#F0F6FF;padding:.5rem;border-radius:6px">Repertorio N° ${f.numero_repertorio||'[N° repertorio]'}</p>`;
+      firma = `<div class="doc-firma-modal">${fv(f.nombre_compareciente,'nombre')}<br><span style="font-size:11px;color:#555">COMPARECIENTE</span><div class="notario-sello-modal">AUTORIZADA ANTE MÍ NOTARIO PÚBLICO</div></div>`;
+    }
+
+    // ── COPIA AUTORIZADA ──
+    else if (tipo.includes('Copia')) {
+      titulo = 'COPIA AUTORIZADA';
+      const fechaDoc = f.fecha ? ffecha(f.fecha) : '';
+      cuerpo = `
+        <p>En ${fv(f.ciudad,'ciudad')}, a ${fv(fechaDoc,'fecha')}, yo, Notario Público, certifico que la presente copia es fiel y conforme con el documento original que se ha tenido a la vista, correspondiente a ${fv(f.descripcion_documento,'descripción')}.</p>
+        <p style="margin-top:.75rem">Se deja constancia que esta copia se extiende a solicitud de don (doña) ${fv(f.nombre_solicitante,'nombre')}, cédula de identidad N° ${fv(f.rut_solicitante,'RUT')}.</p>
+        <p style="margin-top:.75rem">En comprobante, firmo y sello la presente copia autorizada.</p>`;
+      firma = `<div class="doc-firma-modal">NOTARIO PÚBLICO</div>`;
+    }
+
+    // ── VERIFICACIÓN IDENTIDAD ──
+    else if (tipo.includes('Verificación') || tipo.includes('Verificacion')) {
+      titulo = 'CERTIFICADO DE VERIFICACIÓN DE IDENTIDAD';
+      const fechaDoc = f.fecha ? ffecha(f.fecha) : '';
+      cuerpo = `
+        <p>En ${fv(f.ciudad,'ciudad')}, a ${fv(fechaDoc,'fecha')}, yo, Notario Público, certifico que don (doña) ${fv(f.nombre_persona,'nombre')}, cédula de identidad N° ${fv(f.rut_persona,'RUT')}, ha acreditado su identidad mediante la exhibición de su documento oficial vigente.</p>
+        <p style="margin-top:.75rem">Se deja constancia que la verificación de identidad se realiza para los fines de ${fv(f.finalidad_verificacion,'finalidad')}.</p>
+        <p style="margin-top:.75rem">En comprobante, firmo la presente certificación.</p>`;
+      firma = `<div class="doc-firma-modal">NOTARIO PÚBLICO</div>`;
+    }
+
+    // ── FALLBACK ──
+    else {
+      titulo = t.tipo || 'DOCUMENTO';
+      cuerpo = `<p style="color:#7888A8;font-style:italic">Vista previa no disponible para este tipo de documento.</p>
+        <pre style="font-size:11px;background:#f5f5f5;padding:1rem;border-radius:6px;overflow:auto">${JSON.stringify(f, null, 2)}</pre>`;
+      firma = '';
+    }
+
+    document.getElementById('modal-doc-titulo').textContent = titulo;
+    document.getElementById('modal-doc-cuerpo').innerHTML = cuerpo;
+    document.getElementById('modal-doc-firma').innerHTML = firma;
   }
 
   function cerrarModal() {
