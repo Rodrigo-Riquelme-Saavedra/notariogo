@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NotarioGO — Panel del Notario</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    .nav-logo-text{font-size:22px;font-weight:800;color:#0D1B3E;text-decoration:none;letter-spacing:-.5px}.nav-logo-text span{color:#3B8BFF}
+    body{background:#F7F9FC}
+
+    /* PAGE HEADER */
+    .page-header{background:#0D1B3E;padding:2.5rem 2rem}
+    .page-header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .page-header h1{font-family:'DM Serif Display',serif;font-size:1.8rem;color:white;margin-bottom:.25rem}
+    .page-header p{color:rgba(255,255,255,.6);font-size:14px}
+    .notario-badge{background:rgba(16,185,129,.25);border:1px solid rgba(16,185,129,.5);color:#10B981;font-size:12px;font-weight:700;padding:5px 14px;border-radius:100px;text-transform:uppercase;letter-spacing:.05em}
+    .btn-salir-notario{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.25);border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
+    .btn-salir-notario:hover{background:rgba(255,255,255,.2)}
+
+    /* CONTENT */
+    .page-content{max-width:1200px;margin:0 auto;padding:2rem}
+
+    /* KPIs */
+    .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
+    .kpi-card{background:white;border:2px solid #EEF2F9;border-radius:14px;padding:1.25rem 1.5rem;box-shadow:0 2px 6px rgba(13,27,62,.05);cursor:pointer;transition:all .2s}
+    .kpi-card:hover{border-color:#C5D9FF;transform:translateY(-2px)}
+    .kpi-card.active{border-color:#1E6FE8;background:#E6F0FF}
+    .kpi-num{font-family:'DM Serif Display',serif;font-size:2rem;line-height:1;margin-bottom:.25rem}
+    .kpi-label{font-size:12px;font-weight:600;color:#7888A8}
+    .kpi-pendiente .kpi-num{color:#92400E}
+    .kpi-proceso .kpi-num{color:#1E40AF}
+    .kpi-completado .kpi-num{color:#065F46}
+    .kpi-rechazado .kpi-num{color:#991B1B}
+
+    /* TOOLBAR */
+    .toolbar{display:flex;gap:1rem;margin-bottom:1.25rem;align-items:center;flex-wrap:wrap}
+    .search-box{flex:1;min-width:220px;position:relative}
+    .search-box input{width:100%;padding:9px 14px 9px 36px;border:1.5px solid #C1CBDF;border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;color:#0D1B3E;outline:none;transition:border-color .2s;box-sizing:border-box;background:white}
+    .search-box input:focus{border-color:#1E6FE8}
+    .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;color:#7888A8}
+    .sort-select{padding:9px 12px;border:1.5px solid #C1CBDF;border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;color:#0D1B3E;outline:none;background:white;cursor:pointer}
+    .results-count{font-size:13px;color:#7888A8;font-weight:600;white-space:nowrap}
+
+    /* TABLA */
+    .tabla-wrap{background:white;border:2px solid #EEF2F9;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(13,27,62,.06)}
+    .tabla-wrap table{width:100%;border-collapse:collapse}
+    thead th{background:#F7F9FC;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7888A8;padding:.875rem 1rem;border-bottom:2px solid #EEF2F9;white-space:nowrap}
+    tbody tr{border-bottom:1px solid #F7F9FC;transition:background .15s}
+    tbody tr:last-child{border-bottom:none}
+    tbody tr:hover{background:#F7F9FC}
+    tbody td{padding:.875rem 1rem;font-size:13px;color:#0D1B3E;vertical-align:middle}
+    .td-codigo{font-family:'Courier New',monospace;font-size:11px;color:#7888A8;letter-spacing:.04em}
+    .td-tipo{font-weight:700}
+    .td-subtipo{font-size:11px;color:#7888A8;margin-top:2px}
+    .td-user{font-weight:600}
+    .td-user small{display:block;font-size:11px;color:#7888A8;font-weight:400;margin-top:1px}
+    .td-fecha{font-size:12px;color:#7888A8;white-space:nowrap}
+    .estado-pill{font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;display:inline-block}
+
+    /* ACCIONES */
+    .acciones-cell{display:flex;gap:.5rem;flex-wrap:nowrap}
+    .btn-accion{border:none;border-radius:7px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;white-space:nowrap}
+    .btn-aprobar{background:#D1FAE5;color:#065F46}.btn-aprobar:hover{background:#10B981;color:white}
+    .btn-rechazar{background:#FEE2E2;color:#991B1B}.btn-rechazar:hover{background:#EF4444;color:white}
+    .btn-ver{background:#E6F0FF;color:#1E40AF}.btn-ver:hover{background:#1E6FE8;color:white}
+
+    /* PAGINACIÓN */
+    .paginacion{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-top:1px solid #EEF2F9;flex-wrap:wrap;gap:.75rem}
+    .pag-info{font-size:13px;color:#7888A8}
+    .pag-btns{display:flex;gap:.5rem}
+    .pag-btn{padding:6px 12px;border:1.5px solid #C1CBDF;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;background:white;color:#7888A8;transition:all .2s}
+    .pag-btn:hover:not(:disabled){border-color:#1E6FE8;color:#1E6FE8}
+    .pag-btn.active{border-color:#1E6FE8;background:#1E6FE8;color:white}
+    .pag-btn:disabled{opacity:.4;cursor:not-allowed}
+
+    /* MODAL */
+    .modal-overlay{position:fixed;inset:0;background:rgba(13,27,62,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(3px);display:none}
+    .modal-overlay.visible{display:flex}
+    .modal{background:white;border-radius:20px;padding:2rem;max-width:560px;width:100%;box-shadow:0 20px 60px rgba(13,27,62,.2);max-height:90vh;overflow-y:auto}
+    .modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem}
+    .modal-title{font-family:'DM Serif Display',serif;font-size:1.4rem;color:#0D1B3E}
+    .modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#7888A8;padding:0;line-height:1}
+    .modal-close:hover{color:#0D1B3E}
+    .modal-info{background:#F7F9FC;border-radius:12px;padding:1.25rem;margin-bottom:1.25rem}
+    .modal-info-row{display:flex;gap:.5rem;margin-bottom:.5rem;font-size:13px}
+    .modal-info-row:last-child{margin-bottom:0}
+    .modal-info-label{font-weight:700;color:#3A4A6B;min-width:90px;flex-shrink:0}
+    .modal-info-val{color:#0D1B3E}
+    .modal-label{font-size:12px;font-weight:700;color:#3A4A6B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.5rem;display:block}
+    .modal-textarea{width:100%;padding:10px 14px;border:1.5px solid #C1CBDF;border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;color:#0D1B3E;outline:none;resize:vertical;min-height:90px;box-sizing:border-box;transition:border-color .2s;margin-bottom:1rem}
+    .modal-textarea:focus{border-color:#1E6FE8;box-shadow:0 0 0 3px rgba(30,111,232,.1)}
+    .modal-acciones{display:flex;gap:.75rem;flex-wrap:wrap}
+    .btn-modal-aprobar{background:#10B981;color:white;border:none;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;flex:1}
+    .btn-modal-aprobar:hover{background:#059669}
+    .btn-modal-rechazar{background:#EF4444;color:white;border:none;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;flex:1}
+    .btn-modal-rechazar:hover{background:#DC2626}
+    .btn-modal-cancel{background:white;color:#7888A8;border:1.5px solid #C1CBDF;border-radius:10px;padding:11px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
+    .btn-modal-cancel:hover{border-color:#7888A8}
+
+    /* EMAIL BADGE */
+    .email-enviado{display:none;background:#D1FAE5;border:1px solid #10B981;border-radius:8px;padding:.5rem .875rem;font-size:12px;color:#065F46;font-weight:600;align-items:center;gap:6px;margin-top:.75rem}
+    .email-enviado.visible{display:flex}
+
+    /* LOADING / EMPTY */
+    .loading{text-align:center;padding:3rem;color:#7888A8}
+    .spinner{width:32px;height:32px;border:3px solid #EEF2F9;border-top-color:#1E6FE8;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1rem}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .empty-state{text-align:center;padding:3rem 2rem}
+    .empty-icon{font-size:48px;margin-bottom:1rem}
+    .empty-state h3{font-family:'DM Serif Display',serif;color:#0D1B3E;font-size:1.4rem;margin-bottom:.5rem}
+    .empty-state p{color:#7888A8;font-size:14px}
+
+    /* LOGIN */
+    .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0D1B3E;padding:2rem}
+    .login-card{background:white;border-radius:20px;padding:2.5rem;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+    .login-logo{font-family:'DM Serif Display',serif;font-size:1.8rem;color:#0D1B3E;text-align:center;margin-bottom:.25rem}
+    .login-logo span{color:#1E6FE8}
+    .login-sub{text-align:center;font-size:13px;color:#7888A8;margin-bottom:2rem}
+    .login-badge{background:#E6F0FF;color:#1E40AF;font-size:12px;font-weight:700;padding:4px 12px;border-radius:100px;display:inline-block;margin-bottom:1.5rem}
+    .login-label{display:block;font-size:12px;font-weight:700;color:#3A4A6B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem}
+    .login-input{width:100%;padding:11px 14px;border:1.5px solid #C1CBDF;border-radius:8px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:#0D1B3E;outline:none;box-sizing:border-box;transition:border-color .2s;margin-bottom:1rem}
+    .login-input:focus{border-color:#1E6FE8;box-shadow:0 0 0 3px rgba(30,111,232,.1)}
+    .btn-login{width:100%;background:#1E6FE8;color:white;border:none;border-radius:10px;padding:13px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;box-shadow:0 4px 14px rgba(30,111,232,.35)}
+    .btn-login:hover{background:#1458C4}
+    .login-error{background:#FEE2E2;border:1px solid #FCA5A5;border-radius:8px;padding:.75rem 1rem;font-size:13px;color:#991B1B;margin-top:.75rem;display:none}
+    .login-error.visible{display:block}
+
+    footer{background:#0D1B3E;padding:1.5rem 2rem;margin-top:2rem}
+    .footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .footer-copy{font-size:12px;color:rgba(255,255,255,.35)}
+  </style>
+</head>
+<body>
+
+<!-- ══════════ LOGIN ══════════ -->
+<div class="login-wrap" id="login-wrap">
+  <div class="login-card">
+    <div class="login-logo">Notario<span>Go</span></div>
+    <div class="login-sub">Plataforma notarial digital</div>
+    <div style="text-align:center"><span class="login-badge">⚖️ Acceso exclusivo — Notario</span></div>
+    <div>
+      <label class="login-label">Correo electrónico</label>
+      <input type="email" class="login-input" id="login-email" placeholder="notariogo2026@gmail.com" onkeydown="if(event.key==='Enter')doLogin()"/>
+      <label class="login-label">Contraseña</label>
+      <input type="password" class="login-input" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
+      <button class="btn-login" onclick="doLogin()">Ingresar al panel</button>
+      <div class="login-error" id="login-error">Credenciales incorrectas o sin acceso de notario.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PANEL NOTARIO ══════════ -->
+<div id="panel-wrap" style="display:none;">
+
+  <nav>
+    <a class="nav-logo-text" href="index.html">Notario<span>Go</span></a>
+    <div class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="tramites.html">Trámites</a>
+      <a href="mis-documentos.html">Mis documentos</a>
+    </div>
+    <div class="nav-actions">
+      <span class="notario-badge">⚖️ Panel Notario</span>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div>
+        <h1>Panel del Notario</h1>
+        <p id="notario-saludo">Gestiona y resuelve los trámites enviados por los usuarios</p>
+      </div>
+      <button class="btn-salir-notario" onclick="cerrarSesionNotario()">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- KPIs -->
+    <div class="kpi-row" id="kpi-row">
+      <div class="kpi-card" onclick="filtrarEstado('todos',this)">
+        <div class="kpi-num" id="kpi-todos" style="color:#0D1B3E">0</div>
+        <div class="kpi-label">📂 Todos</div>
+      </div>
+      <div class="kpi-card kpi-pendiente active" onclick="filtrarEstado('Pendiente',this)">
+        <div class="kpi-num" id="kpi-pendiente">0</div>
+        <div class="kpi-label">⏳ Pendientes</div>
+      </div>
+      <div class="kpi-card kpi-proceso" onclick="filtrarEstado('En proceso',this)">
+        <div class="kpi-num" id="kpi-proceso">0</div>
+        <div class="kpi-label">🔄 En proceso</div>
+      </div>
+      <div class="kpi-card kpi-completado" onclick="filtrarEstado('Completado',this)">
+        <div class="kpi-num" id="kpi-completado">0</div>
+        <div class="kpi-label">✅ Completados</div>
+      </div>
+      <div class="kpi-card kpi-rechazado" onclick="filtrarEstado('Rechazado',this)">
+        <div class="kpi-num" id="kpi-rechazado">0</div>
+        <div class="kpi-label">❌ Rechazados</div>
+      </div>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="buscador" placeholder="Buscar por tipo, usuario, código..." oninput="aplicarFiltros()"/>
+      </div>
+      <select class="sort-select" id="ordenar" onchange="aplicarFiltros()">
+        <option value="fecha-desc">Más recientes primero</option>
+        <option value="fecha-asc">Más antiguos primero</option>
+        <option value="tipo-asc">Tipo A→Z</option>
+      </select>
+      <span class="results-count" id="results-count"></span>
+    </div>
+
+    <!-- TABLA -->
+    <div id="tabla-contenido">
+      <div class="loading"><div class="spinner"></div>Cargando trámites...</div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 NotarioGO SpA · Panel del Notario</div>
+      <div class="footer-copy">Ley N° 19.799 sobre firma electrónica</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════ MODAL RESOLUCIÓN ══════════ -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modal-titulo">Resolver trámite</div>
+        <div style="font-size:13px;color:#7888A8;margin-top:.25rem;" id="modal-codigo-display"></div>
+      </div>
+      <button class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+
+    <!-- Info del trámite -->
+    <div class="modal-info" id="modal-info"></div>
+
+    <!-- Comentario/Observación -->
+    <label class="modal-label">Comentarios u observaciones (opcional)</label>
+    <textarea class="modal-textarea" id="modal-comentario" placeholder="Ej: Documento revisado. Se solicita corrección del RUT del apoderado antes de aprobar..."></textarea>
+
+    <!-- Email preview -->
+    <div style="background:#FEF3C7;border:1px solid #F59E0B;border-radius:8px;padding:.75rem 1rem;font-size:12px;color:#92400E;margin-bottom:1rem;">
+      📧 Se enviará una notificación automática al correo <strong>notariogo2026@gmail.com</strong> con la resolución.
+    </div>
+
+    <div class="email-enviado" id="email-enviado">
+      📧 Notificación enviada correctamente a notariogo2026@gmail.com
+    </div>
+
+    <div class="modal-acciones">
+      <button class="btn-modal-cancel" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn-modal-rechazar" onclick="resolverTramite('Rechazado')">❌ Rechazar</button>
+      <button class="btn-modal-aprobar" onclick="resolverTramite('Completado')">✅ Aprobar</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/jsonbin.js"></script>
+<script src="js/app.js"></script>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+  // ── CONFIG EMAILJS ──
+  // IMPORTANTE: Reemplaza estos valores con los tuyos de EmailJS
+  const EMAILJS_PUBLIC_KEY  = 'TU_PUBLIC_KEY_AQUI';   // Account > API Keys
+  const EMAILJS_SERVICE_ID  = 'TU_SERVICE_ID_AQUI';   // Email Services
+  const EMAILJS_TEMPLATE_ID = 'TU_TEMPLATE_ID_AQUI';  // Email Templates
+  const EMAIL_NOTARIO       = 'notariogo2026@gmail.com';
+
+  // ── ESTADO ──
+  let tramitesAll = [];
+  let tramitesFiltrados = [];
+  let estadoActual = 'Pendiente';
+  let tramiteActual = null;
+  const POR_PAGINA = 10;
+  let paginaActual = 1;
+
+  // ── LOGIN ──
+  async function doLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const pass  = document.getElementById('login-pass').value.trim();
+    const err   = document.getElementById('login-error');
+    err.classList.remove('visible');
+    if (!email || !pass) { err.textContent = 'Completa ambos campos.'; err.classList.add('visible'); return; }
+    try {
+      const data = await JSONBIN.get('usuarios');
+      const user = (data.usuarios || []).find(u =>
+        u.email.toLowerCase() === email.toLowerCase() &&
+        u.password === pass &&
+        u.rol === 'notario'
+      );
+      if (!user) { err.textContent = 'Credenciales incorrectas o sin acceso de notario.'; err.classList.add('visible'); return; }
+      localStorage.setItem('notariogo_notario', JSON.stringify(user));
+      mostrarPanel(user);
+    } catch(e) {
+      err.textContent = 'Error de conexión. Intenta más tarde.'; err.classList.add('visible');
+    }
+  }
+
+  function mostrarPanel(user) {
+    document.getElementById('login-wrap').style.display = 'none';
+    document.getElementById('panel-wrap').style.display = 'block';
+    document.getElementById('notario-saludo').textContent =
+      `Bienvenido(a), ${user.nombre} — Revisa y resuelve los trámites enviados`;
+    cargarTramites();
+  }
+
+  function cerrarSesionNotario() {
+    localStorage.removeItem('notariogo_notario');
+    location.reload();
+  }
+
+  // ── CARGA TRÁMITES ──
+  async function cargarTramites() {
+    try {
+      const data = await JSONBIN.get('tramites');
+      tramitesAll = (data.tramites || []).sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
+      actualizarKPIs();
+      aplicarFiltros();
+    } catch(e) {
+      document.getElementById('tabla-contenido').innerHTML =
+        '<p style="color:red;text-align:center;padding:2rem;">Error al cargar trámites.</p>';
+    }
+  }
+
+  function actualizarKPIs() {
+    document.getElementById('kpi-todos').textContent      = tramitesAll.length;
+    document.getElementById('kpi-pendiente').textContent  = tramitesAll.filter(t=>t.estado==='Pendiente').length;
+    document.getElementById('kpi-proceso').textContent    = tramitesAll.filter(t=>t.estado==='En proceso').length;
+    document.getElementById('kpi-completado').textContent = tramitesAll.filter(t=>t.estado==='Completado').length;
+    document.getElementById('kpi-rechazado').textContent  = tramitesAll.filter(t=>t.estado==='Rechazado').length;
+  }
+
+  // ── FILTROS ──
+  function filtrarEstado(estado, kpi) {
+    estadoActual = estado; paginaActual = 1;
+    document.querySelectorAll('.kpi-card').forEach(k=>k.classList.remove('active'));
+    kpi.classList.add('active');
+    aplicarFiltros();
+  }
+
+  function aplicarFiltros() {
+    const busq = document.getElementById('buscador').value.toLowerCase();
+    const orden = document.getElementById('ordenar').value;
+    let lista = tramitesAll.filter(t => {
+      const matchEstado = estadoActual === 'todos' || t.estado === estadoActual;
+      const matchBusq = !busq ||
+        t.tipo?.toLowerCase().includes(busq) ||
+        t.codigo?.toLowerCase().includes(busq) ||
+        t.usuarioNombre?.toLowerCase().includes(busq) ||
+        t.usuarioEmail?.toLowerCase().includes(busq);
+      return matchEstado && matchBusq;
+    });
+    if (orden === 'fecha-asc') lista.sort((a,b)=>new Date(a.fecha)-new Date(b.fecha));
+    else if (orden === 'tipo-asc') lista.sort((a,b)=>a.tipo.localeCompare(b.tipo));
+    tramitesFiltrados = lista;
+    paginaActual = 1;
+    renderTabla();
+  }
+
+  // ── RENDER TABLA ──
+  function estadoColor(e) {
+    const c={'Pendiente':{bg:'#FEF3C7',text:'#92400E'},'En proceso':{bg:'#DBEAFE',text:'#1E40AF'},'Completado':{bg:'#D1FAE5',text:'#065F46'},'Rechazado':{bg:'#FEE2E2',text:'#991B1B'}};
+    return c[e]||{bg:'#EEF2F9',text:'#3A4A6B'};
+  }
+  function formatFecha(iso){const d=new Date(iso);return d.toLocaleDateString('es-CL',{day:'2-digit',month:'short',year:'numeric'})+' · '+d.toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'})}
+  function parseTipo(tipo){const p=tipo.split('—').map(s=>s.trim());return{principal:p[0]||tipo,subtipo:p[1]||''}}
+
+  function renderTabla() {
+    const total = tramitesFiltrados.length;
+    const inicio = (paginaActual-1)*POR_PAGINA;
+    const fin = inicio+POR_PAGINA;
+    const pagina = tramitesFiltrados.slice(inicio,fin);
+    const totalPags = Math.ceil(total/POR_PAGINA);
+    document.getElementById('results-count').textContent = `${total} trámite${total!==1?'s':''}`;
+
+    if (total === 0) {
+      document.getElementById('tabla-contenido').innerHTML = `
+        <div class="tabla-wrap"><div class="empty-state">
+          <div class="empty-icon">📭</div>
+          <h3>Sin trámites</h3>
+          <p>No hay trámites con ese filtro o búsqueda.</p>
+        </div></div>`;
+      return;
+    }
+
+    const filas = pagina.map(t => {
+      const col = estadoColor(t.estado);
+      const {principal,subtipo} = parseTipo(t.tipo);
+      const puedeResolver = t.estado === 'Pendiente' || t.estado === 'En proceso';
+      return `<tr>
+        <td class="td-codigo">${t.codigo||'—'}</td>
+        <td><div class="td-tipo">${t.emoji||'📋'} ${principal}</div>${subtipo?`<div class="td-subtipo">${subtipo}</div>`:''}</td>
+        <td><div class="td-user">${t.usuarioNombre||'—'}<small>${t.usuarioEmail||''}</small></div></td>
+        <td><span class="estado-pill" style="background:${col.bg};color:${col.text};">${t.estado}</span></td>
+        <td class="td-fecha">${formatFecha(t.fecha)}</td>
+        <td><div class="acciones-cell">
+          <button class="btn-accion btn-ver" onclick="abrirModal(${JSON.stringify(t).replace(/'/g,"&#39;")})">👁 Ver</button>
+          ${puedeResolver?`<button class="btn-accion btn-aprobar" onclick="abrirModal(${JSON.stringify(t).replace(/'/g,"&#39;")})">✅</button>
+          <button class="btn-accion btn-rechazar" onclick="abrirModal(${JSON.stringify(t).replace(/'/g,"&#39;")})">❌</button>`:''}
+        </div></td>
+      </tr>`;
+    }).join('');
+
+    let pags = '';
+    for(let i=1;i<=totalPags;i++) pags+=`<button class="pag-btn ${i===paginaActual?'active':''}" onclick="irPagina(${i})">${i}</button>`;
+
+    document.getElementById('tabla-contenido').innerHTML = `
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr>
+            <th>Código</th><th>Tipo de trámite</th><th>Usuario</th>
+            <th>Estado</th><th>Fecha</th><th>Acciones</th>
+          </tr></thead>
+          <tbody>${filas}</tbody>
+        </table>
+        <div class="paginacion">
+          <div class="pag-info">Mostrando ${inicio+1}–${Math.min(fin,total)} de ${total}</div>
+          <div class="pag-btns">
+            <button class="pag-btn" onclick="irPagina(${paginaActual-1})" ${paginaActual===1?'disabled':''}>← Anterior</button>
+            ${pags}
+            <button class="pag-btn" onclick="irPagina(${paginaActual+1})" ${paginaActual===totalPags?'disabled':''}>Siguiente →</button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function irPagina(n) {
+    const tp = Math.ceil(tramitesFiltrados.length/POR_PAGINA);
+    if(n<1||n>tp) return;
+    paginaActual=n; renderTabla();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  // ── MODAL ──
+  function abrirModal(tramite) {
+    tramiteActual = tramite;
+    document.getElementById('modal-titulo').textContent = `${tramite.emoji||'📋'} ${tramite.tipo}`;
+    document.getElementById('modal-codigo-display').textContent = `Código: ${tramite.codigo||'—'}`;
+    document.getElementById('modal-comentario').value = tramite.comentario_notario || '';
+    document.getElementById('email-enviado').classList.remove('visible');
+
+    // Info
+    const f = tramite.formulario || {};
+    const otorgante = f.nombre_otorgante||f.nombre_mandante||f.nombre_declarante||f.nombre_firmante||f.nombre_compareciente||f.nombre_arrendador||f.nombre_solicitante||f.nombre_persona||tramite.usuarioNombre||'—';
+    const apoderado = f.nombre_apoderado||f.nombre_mandatario||f.nombre_autorizado||null;
+    document.getElementById('modal-info').innerHTML = `
+      <div class="modal-info-row"><span class="modal-info-label">Usuario</span><span class="modal-info-val">${tramite.usuarioNombre} (${tramite.usuarioEmail})</span></div>
+      <div class="modal-info-row"><span class="modal-info-label">Fecha</span><span class="modal-info-val">${formatFecha(tramite.fecha)}</span></div>
+      <div class="modal-info-row"><span class="modal-info-label">Estado actual</span><span class="modal-info-val">${tramite.estado}</span></div>
+      <div class="modal-info-row"><span class="modal-info-label">Otorgante</span><span class="modal-info-val">${otorgante}</span></div>
+      ${apoderado?`<div class="modal-info-row"><span class="modal-info-label">Apoderado</span><span class="modal-info-val">${apoderado}</span></div>`:''}
+      ${tramite.comentario_notario?`<div class="modal-info-row"><span class="modal-info-label">Obs. previas</span><span class="modal-info-val">${tramite.comentario_notario}</span></div>`:''}
+    `;
+    document.getElementById('modal-overlay').classList.add('visible');
+    document.body.style.overflow='hidden';
+  }
+
+  function cerrarModal() {
+    document.getElementById('modal-overlay').classList.remove('visible');
+    document.body.style.overflow='';
+    tramiteActual = null;
+  }
+
+  // ── RESOLVER TRÁMITE ──
+  async function resolverTramite(nuevoEstado) {
+    if (!tramiteActual) return;
+    const comentario = document.getElementById('modal-comentario').value.trim();
+    const btnAp = document.querySelector('.btn-modal-aprobar');
+    const btnRe = document.querySelector('.btn-modal-rechazar');
+    btnAp.disabled=true; btnRe.disabled=true;
+    btnAp.textContent='⏳ Guardando...';
+
+    try {
+      // Actualizar en JsonBin
+      const data = await JSONBIN.get('tramites');
+      const idx = data.tramites.findIndex(t => t.id === tramiteActual.id);
+      if (idx !== -1) {
+        data.tramites[idx].estado = nuevoEstado;
+        data.tramites[idx].comentario_notario = comentario || null;
+        data.tramites[idx].fecha_resolucion = new Date().toISOString();
+        await JSONBIN.set('tramites', data);
+        tramiteActual.estado = nuevoEstado;
+        tramiteActual.comentario_notario = comentario;
+      }
+
+      // Enviar email via EmailJS
+      await enviarEmailNotario(tramiteActual, nuevoEstado, comentario);
+
+      // Actualizar UI
+      tramitesAll = tramitesAll.map(t => t.id===tramiteActual.id ? {...t,estado:nuevoEstado,comentario_notario:comentario} : t);
+      actualizarKPIs();
+      aplicarFiltros();
+      document.getElementById('email-enviado').classList.add('visible');
+      setTimeout(() => cerrarModal(), 2000);
+    } catch(e) {
+      alert('Error al guardar. Intenta más tarde.');
+    } finally {
+      btnAp.disabled=false; btnRe.disabled=false;
+      btnAp.textContent='✅ Aprobar';
+    }
+  }
+
+  // ── EMAILJS ──
+  async function enviarEmailNotario(tramite, estado, comentario) {
+    try {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+      const f = tramite.formulario || {};
+      const otorgante = f.nombre_otorgante||f.nombre_mandante||f.nombre_declarante||f.nombre_firmante||f.nombre_compareciente||f.nombre_arrendador||f.nombre_solicitante||f.nombre_persona||tramite.usuarioNombre||'—';
+      const emoji_estado = estado === 'Completado' ? '✅' : '❌';
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_email:       EMAIL_NOTARIO,
+        to_name:        'Notario NotarioGO',
+        tipo_tramite:   tramite.tipo,
+        codigo:         tramite.codigo || '—',
+        usuario_nombre: tramite.usuarioNombre,
+        usuario_email:  tramite.usuarioEmail,
+        otorgante:      otorgante,
+        estado_nuevo:   `${emoji_estado} ${estado}`,
+        comentario:     comentario || 'Sin observaciones.',
+        fecha:          formatFecha(tramite.fecha),
+        fecha_resolucion: new Date().toLocaleDateString('es-CL',{day:'2-digit',month:'long',year:'numeric'}),
+      });
+    } catch(e) {
+      console.warn('EmailJS no configurado aún:', e.text || e);
+      // No bloquear el flujo si el email falla
+    }
+  }
+
+  // ── INIT ──
+  document.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('notariogo_notario');
+    if (saved) {
+      try { mostrarPanel(JSON.parse(saved)); } catch(e) { localStorage.removeItem('notariogo_notario'); }
+    }
+    // Cerrar modal con Escape
+    document.addEventListener('keydown', e => { if(e.key==='Escape') cerrarModal(); });
+    // Cerrar modal clickeando overlay
+    document.getElementById('modal-overlay').addEventListener('click', e => {
+      if(e.target.id==='modal-overlay') cerrarModal();
+    });
+  });
+</script>
+
+</body>
+</html>
