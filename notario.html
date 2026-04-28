@@ -397,6 +397,10 @@
       return;
     }
 
+    // Guardar mapa de tramites por id para acceso seguro desde onclick
+    window.__tramitesMap__ = {};
+    tramitesFiltrados.forEach(t => { window.__tramitesMap__[t.id] = t; });
+
     const filas = pagina.map(t => {
       const col = estadoColor(t.estado);
       const {principal,subtipo} = parseTipo(t.tipo);
@@ -408,9 +412,9 @@
         <td><span class="estado-pill" style="background:${col.bg};color:${col.text};">${t.estado}</span></td>
         <td class="td-fecha">${formatFecha(t.fecha)}</td>
         <td><div class="acciones-cell">
-          <button class="btn-accion btn-ver" onclick="abrirModal(${JSON.stringify(t).replace(/'/g,"&#39;")})">👁 Ver</button>
-          ${puedeResolver?`<button class="btn-accion btn-aprobar" onclick="abrirModal(${JSON.stringify(t).replace(/'/g,"&#39;")})">✅</button>
-          <button class="btn-accion btn-rechazar" onclick="abrirModal(${JSON.stringify(t).replace(/'/g,"&#39;")})">❌</button>`:''}
+          <button class="btn-accion btn-ver" onclick="abrirModalPorId(${t.id})">👁 Ver</button>
+          ${puedeResolver?`<button class="btn-accion btn-aprobar" onclick="abrirModalPorId(${t.id})">✅</button>
+          <button class="btn-accion btn-rechazar" onclick="abrirModalPorId(${t.id})">❌</button>`:''}
         </div></td>
       </tr>`;
     }).join('');
@@ -446,6 +450,12 @@
   }
 
   // ── MODAL ──
+  function abrirModalPorId(id) {
+    const tramite = window.__tramitesMap__ && window.__tramitesMap__[id];
+    if (!tramite) { console.error('Trámite no encontrado:', id); return; }
+    abrirModal(tramite);
+  }
+
   function abrirModal(tramite) {
     tramiteActual = tramite;
     document.getElementById('modal-titulo').textContent = `${tramite.emoji||'📋'} ${tramite.tipo}`;
