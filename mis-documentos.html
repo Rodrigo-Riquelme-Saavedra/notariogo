@@ -107,6 +107,38 @@
       .tabla-wrap { overflow-x: auto; }
       thead th, tbody td { white-space: nowrap; }
     }
+
+    /* ── BOTÓN VER ── */
+    .btn-ver-doc{background:#E6F0FF;color:#1E40AF;border:none;border-radius:7px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;white-space:nowrap}
+    .btn-ver-doc:hover{background:#1E6FE8;color:white}
+
+    /* ── MODAL DOCUMENTO ── */
+    .modal-overlay-doc{position:fixed;inset:0;background:rgba(13,27,62,.55);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(3px)}
+    .modal-overlay-doc.visible{display:flex}
+    .modal-doc-card{background:white;border-radius:20px;padding:2rem;max-width:620px;width:100%;box-shadow:0 20px 60px rgba(13,27,62,.2);max-height:90vh;overflow-y:auto}
+    .modal-doc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.25rem}
+    .modal-doc-titulo-header{font-family:'DM Serif Display',serif;font-size:1.3rem;color:#0D1B3E}
+    .modal-doc-meta{font-size:12px;color:#7888A8;margin-top:.25rem}
+    .modal-doc-close{background:none;border:none;font-size:22px;cursor:pointer;color:#7888A8;padding:0;line-height:1}
+    .modal-doc-close:hover{color:#0D1B3E}
+    .doc-legal-modal{font-family:'Times New Roman',Times,serif;font-size:13px;line-height:1.9;color:#1a1a1a;background:#FAFAFA;border:1px solid #E0E0E0;border-radius:8px;padding:1.5rem;margin-bottom:1.25rem}
+    .doc-legal-modal .doc-titulo-modal{text-align:center;font-weight:bold;font-size:14px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.25rem;text-decoration:underline}
+    .doc-legal-modal .doc-codigo-modal{font-family:'Courier New',monospace;font-size:11px;color:#7888A8;text-align:right;margin-bottom:.75rem}
+    .doc-legal-modal .doc-cuerpo-modal{text-align:justify}
+    .doc-legal-modal .clausula{margin-bottom:.75rem}
+    .doc-legal-modal .clausula-num{font-weight:bold;text-transform:uppercase}
+    .doc-legal-modal .doc-firma-modal{margin-top:1.5rem;text-align:center;border-top:1px solid #ccc;padding-top:1rem;font-size:12px}
+    .doc-legal-modal .notario-sello-modal{margin-top:.75rem;border-top:1px dashed #ccc;padding-top:.75rem;text-align:center;font-size:11px;color:#555;font-style:italic}
+    .doc-legal-modal .doc-firmas-modal{display:grid;grid-template-columns:1fr 1fr;gap:2rem;text-align:center;margin-top:1.5rem}
+    .doc-legal-modal .firma-col .linea{border-top:1px solid #333;width:140px;margin:0 auto .4rem}
+    .doc-legal-modal .firma-col .rol{font-size:11px;color:#555;font-style:italic}
+    .modal-doc-obs{background:#FEF3C7;border:1px solid #F59E0B;border-radius:8px;padding:.875rem 1rem;font-size:13px;color:#92400E;margin-bottom:1rem;display:none}
+    .modal-doc-obs.visible{display:block}
+    .modal-doc-obs strong{display:block;margin-bottom:.25rem}
+    .btn-modal-cerrar{width:100%;background:#0D1B3E;color:white;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
+    .btn-modal-cerrar:hover{background:#1A2F5E}
+    .btn-modal-imprimir{width:100%;background:white;color:#0D1B3E;border:1.5px solid #C1CBDF;border-radius:10px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;margin-bottom:.75rem}
+    .btn-modal-imprimir:hover{border-color:#1E6FE8;color:#1E6FE8}
   </style>
 </head>
 <body>
@@ -291,6 +323,10 @@
       return;
     }
 
+    // Mapa para acceso seguro por id
+    window.__misDocsMap__ = {};
+    tramitesFiltrados.forEach(t => { window.__misDocsMap__[t.id] = t; });
+
     const filas = pagina.map(t => {
       const col = estadoColor(t.estado);
       const { principal, subtipo } = parseTipo(t.tipo);
@@ -322,6 +358,9 @@
             ${formatFecha(t.fecha)}
             <small>${formatHora(t.fecha)}</small>
           </td>
+          <td>
+            <button class="btn-ver-doc" onclick="verDocumento(${t.id})">👁 Ver</button>
+          </td>
         </tr>`;
     }).join('');
 
@@ -341,6 +380,7 @@
               <th>Otorgante / Apoderado</th>
               <th onclick="cambiarOrden('estado')" class="${document.getElementById('ordenar').value === 'estado-asc' ? 'sorted' : ''}">Estado <span class="sort-icon">↕</span></th>
               <th onclick="cambiarOrden('fecha')" class="${document.getElementById('ordenar').value.startsWith('fecha') ? 'sorted' : ''}">Fecha y hora <span class="sort-icon">↕</span></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>${filas}</tbody>
@@ -428,5 +468,224 @@
   });
 </script>
 
+
+<!-- ══════════ MODAL VER DOCUMENTO ══════════ -->
+<div class="modal-overlay-doc" id="modal-overlay-doc">
+  <div class="modal-doc-card">
+    <div class="modal-doc-header">
+      <div>
+        <div class="modal-doc-titulo-header" id="modal-doc-titulo-header">Documento</div>
+        <div class="modal-doc-meta" id="modal-doc-meta"></div>
+      </div>
+      <button class="modal-doc-close" onclick="cerrarModalDoc()">✕</button>
+    </div>
+    <!-- Observaciones del notario -->
+    <div class="modal-doc-obs" id="modal-doc-obs">
+      <strong>💬 Observación del notario:</strong>
+      <span id="modal-doc-obs-texto"></span>
+    </div>
+    <!-- Documento legal -->
+    <div class="doc-legal-modal">
+      <div class="doc-codigo-modal" id="modal-doc-codigo"></div>
+      <div class="doc-titulo-modal" id="modal-doc-titulo"></div>
+      <div class="doc-cuerpo-modal" id="modal-doc-cuerpo"></div>
+      <div id="modal-doc-firma"></div>
+    </div>
+    <button class="btn-modal-imprimir" onclick="imprimirDocModal()">🖨 Imprimir documento</button>
+    <button class="btn-modal-cerrar" onclick="cerrarModalDoc()">Cerrar</button>
+  </div>
+</div>
+
+<script>
+  // ── MODAL VER DOCUMENTO ──
+  function verDocumento(id) {
+    const t = window.__misDocsMap__ && window.__misDocsMap__[id];
+    if (!t) { alert('No se encontró el documento.'); return; }
+
+    document.getElementById('modal-doc-titulo-header').textContent = (t.emoji||'📋') + ' ' + t.tipo;
+    document.getElementById('modal-doc-meta').textContent =
+      'Código: ' + (t.codigo||'—') + ' · ' + formatFecha(t.fecha) + ' · Estado: ' + t.estado;
+
+    // Observación notario
+    const obs = t.comentario_notario;
+    const obsEl = document.getElementById('modal-doc-obs');
+    if (obs) {
+      document.getElementById('modal-doc-obs-texto').textContent = obs;
+      obsEl.classList.add('visible');
+    } else {
+      obsEl.classList.remove('visible');
+    }
+
+    // Renderizar documento
+    renderDocMisDocs(t);
+
+    document.getElementById('modal-overlay-doc').classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function cerrarModalDoc() {
+    document.getElementById('modal-overlay-doc').classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
+  function imprimirDocModal() {
+    const s = document.createElement('style');
+    s.id = '__print-doc__';
+    s.textContent = '@media print{body>*{display:none!important}.modal-overlay-doc{display:flex!important;position:static!important;background:white!important;backdrop-filter:none!important;padding:0!important}.modal-doc-card{box-shadow:none!important;max-height:unset!important;border-radius:0!important;padding:1cm!important}.modal-doc-header,.btn-modal-cerrar,.btn-modal-imprimir,.modal-doc-close{display:none!important}.doc-legal-modal{border:none!important;background:white!important}}';
+    document.head.appendChild(s);
+    window.print();
+    setTimeout(() => { const x = document.getElementById('__print-doc__'); if(x) x.remove(); }, 600);
+  }
+
+  // Cerrar con Escape o click en overlay
+  document.addEventListener('keydown', e => { if(e.key==='Escape') cerrarModalDoc(); });
+  document.getElementById('modal-overlay-doc').addEventListener('click', e => {
+    if(e.target.id==='modal-overlay-doc') cerrarModalDoc();
+  });
+
+  function fvd(val, etiqueta) {
+    return val ? '<strong>' + val + '</strong>' : '<em style="color:#92400E;background:#FEF3C7;padding:0 3px;border-radius:2px">[' + etiqueta + ']</em>';
+  }
+  function ffechad(iso) {
+    if (!iso) return null;
+    const parts = iso.split('-');
+    const M = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    return parseInt(parts[2]) + ' de ' + M[parseInt(parts[1])-1] + ' de ' + parts[0];
+  }
+
+  function renderDocMisDocs(t) {
+    const f = t.formulario || {};
+    const tipo = t.tipo || '';
+    let titulo = '', cuerpo = '', firma = '';
+
+    // ── PODERES SIMPLES ──
+    if (tipo.includes('Poder simple') || tipo.includes('Poder Simple')) {
+      titulo = 'PODER SIMPLE';
+      const fechaDoc = f.fecha ? ffechad(f.fecha) : null;
+      let p3 = '';
+      if (f.banco) p3 = 'para que en mi nombre y representación realice gestiones ante ' + fvd(f.banco,'banco') + ', pudiendo especialmente ' + fvd(f.facultades,'facultades') + '.';
+      else if (f.objeto_retiro && !f.patente && !f.empresa) p3 = 'para que en mi nombre y representación proceda al retiro de ' + fvd(f.objeto_retiro,'objeto') + ', desde ' + fvd(f.lugar_retiro,'lugar') + ', pudiendo firmar los documentos necesarios.';
+      else if (f.patente) p3 = 'para que en mi nombre y representación proceda al retiro del vehículo ' + fvd(f.tipo_vehiculo,'tipo') + ' marca ' + fvd(f.marca,'marca') + ', patente <strong style="font-family:monospace">' + (f.patente||'[patente]') + '</strong>, desde ' + fvd(f.lugar_retiro,'lugar') + '.';
+      else if (f.empresa) p3 = 'para que en mi nombre y representación proceda al retiro de la encomienda de ' + fvd(f.empresa,'empresa') + ', N° <strong>' + (f.numero_envio||'[N°]') + '</strong>.';
+      else if (f.institucion||f.institucion_legal) p3 = 'para que en mi nombre y representación realice gestiones ante ' + fvd(f.institucion||f.institucion_legal,'institución') + ', pudiendo especialmente ' + fvd(f.facultades,'facultades') + '.';
+      else if (f.accion_personalizada) p3 = 'para que en mi nombre y representación ' + fvd(f.accion_personalizada,'acción') + ', ante ' + fvd(f.institucion_o_persona,'institución') + ', respecto de ' + fvd(f.detalle_tramite,'detalle') + '.';
+      else p3 = fvd(f.facultades,'facultades');
+      cuerpo = '<p>Don (Doña) ' + fvd(f.nombre_otorgante,'nombre otorgante') + ', C.I. N° ' + fvd(f.rut_otorgante,'RUT') + ', domiciliado en ' + fvd(f.domicilio_otorgante,'domicilio') + ', comuna de ' + fvd(f.comuna_otorgante,'comuna') + ',</p>'
+        + '<p style="margin-top:.75rem">viene en otorgar poder a don (doña) ' + fvd(f.nombre_apoderado,'nombre apoderado') + ', C.I. N° ' + fvd(f.rut_apoderado,'RUT') + ', domiciliado en ' + fvd(f.domicilio_apoderado,'domicilio') + ',</p>'
+        + '<p style="margin-top:.75rem">' + p3 + '</p>'
+        + '<p style="margin-top:.75rem">En ' + fvd(f.ciudad,'ciudad') + ', a ' + fvd(fechaDoc,'fecha') + '.</p>';
+      firma = '<div class="doc-firma-modal">' + fvd(f.nombre_otorgante,'nombre') + '<br><span style="font-size:11px;color:#555">C.I. ' + (f.rut_otorgante||'________________') + '</span></div>';
+    }
+
+    // ── PODER NOTARIAL ──
+    else if (tipo.includes('notarial') || tipo.includes('Notarial')) {
+      titulo = tipo.includes('Administración') ? 'PODER NOTARIAL PARA ADMINISTRACIÓN DE BIENES'
+             : tipo.includes('judicial') ? 'PODER NOTARIAL PARA REPRESENTACIÓN JUDICIAL'
+             : 'PODER NOTARIAL';
+      const fechaDoc = f.fecha ? ffechad(f.fecha) : null;
+      let p3 = tipo.includes('Administración')
+        ? 'para que administre mis bienes, pudiendo especialmente ' + fvd(f.facultades,'facultades') + '.'
+        : tipo.includes('judicial')
+        ? 'para que lo represente judicialmente ante ' + fvd(f.tribunal,'tribunal') + ', pudiendo especialmente ' + fvd(f.facultades,'facultades') + ', con todas las facultades del artículo 7° del Código de Procedimiento Civil.'
+        : 'para que lo represente con las más amplias facultades de administración, pudiendo especialmente ' + fvd(f.facultades,'facultades') + '.';
+      cuerpo = '<p>En ' + fvd(f.ciudad,'ciudad') + ', a ' + fvd(fechaDoc,'fecha') + ', comparece don (doña) ' + fvd(f.nombre_mandante,'nombre mandante') + ', C.I. N° ' + fvd(f.rut_mandante,'RUT') + ', domiciliado en ' + fvd(f.domicilio_mandante,'domicilio') + ', comuna de ' + fvd(f.comuna_mandante,'comuna') + ',</p>'
+        + '<p style="margin-top:.75rem">quien confiere poder a don (doña) ' + fvd(f.nombre_mandatario,'nombre mandatario') + ', C.I. N° ' + fvd(f.rut_mandatario,'RUT') + ', domiciliado en ' + fvd(f.domicilio_mandatario,'domicilio') + ',</p>'
+        + '<p style="margin-top:.75rem">' + p3 + '</p>'
+        + '<p style="margin-top:.75rem">El presente poder se otorga por tiempo ' + fvd(f.vigencia,'vigencia') + '.</p>';
+      firma = '<div class="doc-firma-modal">' + fvd(f.nombre_mandante,'nombre') + '<br><span style="font-size:11px;color:#555">C.I. ' + (f.rut_mandante||'________________') + ' · MANDANTE</span><div class="notario-sello-modal">AUTORIZADA ANTE MÍ NOTARIO PÚBLICO</div></div>';
+    }
+
+    // ── DECLARACIONES ──
+    else if (tipo.includes('Declaración') || tipo.includes('Declaracion')) {
+      titulo = tipo.includes('notarial') ? 'DECLARACIÓN JURADA NOTARIAL' : 'DECLARACIÓN JURADA SIMPLE';
+      const fechaDoc = f.fecha ? ffechad(f.fecha) : null;
+      const decl = f.declaracion || [f.hecho, f.contexto && 'en relación con ' + f.contexto, f.finalidad && 'para efectos de ' + f.finalidad].filter(Boolean).join(', ');
+      cuerpo = '<p>Yo, ' + fvd(f.nombre_declarante,'nombre') + ', C.I. N° ' + fvd(f.rut_declarante,'RUT') + ', domiciliado en ' + fvd(f.domicilio_declarante,'domicilio') + ',</p>'
+        + '<p style="margin-top:.75rem"><strong>declaro bajo juramento que</strong> ' + fvd(decl,'declaración') + '.</p>'
+        + '<p style="margin-top:.75rem">Formulado para presentar ante ' + fvd(f.institucion_destino,'institución') + '.</p>'
+        + '<p style="margin-top:.75rem">En ' + fvd(f.ciudad,'ciudad') + ', a ' + fvd(fechaDoc,'fecha') + '.</p>';
+      firma = '<div class="doc-firma-modal">' + fvd(f.nombre_declarante,'nombre') + '<br><span style="font-size:11px;color:#555">C.I. ' + (f.rut_declarante||'________________') + ' · DECLARANTE</span><div class="notario-sello-modal">AUTORIZADA ANTE MÍ NOTARIO PÚBLICO</div></div>';
+    }
+
+    // ── AUTORIZACIÓN DE FIRMA ──
+    else if (tipo.includes('Autorización') || tipo.includes('Autorizacion')) {
+      titulo = 'AUTORIZACIÓN DE FIRMA';
+      const fechaDoc = f.fecha ? ffechad(f.fecha) : null;
+      cuerpo = '<p>En ' + fvd(f.ciudad,'ciudad') + ', a ' + fvd(fechaDoc,'fecha') + ', ante mí, Notario Público, comparece don (doña) ' + fvd(f.nombre_firmante,'nombre') + ', C.I. N° ' + fvd(f.rut_firmante,'RUT') + ', quien firma el documento que antecede en mi presencia.</p>'
+        + '<p style="margin-top:.75rem">En consecuencia, autorizo la firma que antecede.</p>';
+      firma = '<div class="doc-firma-modal">' + fvd(f.nombre_firmante,'nombre') + '<div class="notario-sello-modal">AUTORIZADA ANTE MÍ NOTARIO PÚBLICO</div></div>';
+    }
+
+    // ── CARTA PODER ──
+    else if (tipo.includes('Carta poder') || tipo.includes('Carta Poder')) {
+      titulo = 'CARTA PODER';
+      const fechaDoc = f.fecha ? ffechad(f.fecha) : null;
+      const p2 = f.objeto_retiro
+        ? 'para que en mi nombre y representación proceda a retirar ' + fvd(f.objeto_retiro,'objeto') + ' desde ' + fvd(f.lugar_retiro,'lugar') + '.'
+        : 'para que en mi nombre y representación ' + fvd(f.accion,'acción') + ', ante ' + fvd(f.institucion_o_persona,'institución') + ', respecto de ' + fvd(f.detalle,'detalle') + '.';
+      cuerpo = '<p>Yo, ' + fvd(f.nombre_otorgante,'nombre otorgante') + ', C.I. N° ' + fvd(f.rut_otorgante,'RUT') + ', domiciliado(a) en ' + fvd(f.domicilio_otorgante,'domicilio') + ',</p>'
+        + '<p style="margin-top:.75rem">vengo en autorizar a don (doña) ' + fvd(f.nombre_autorizado,'nombre autorizado') + ', C.I. N° ' + fvd(f.rut_autorizado,'RUT') + ', ' + p2 + '</p>'
+        + '<p style="margin-top:.75rem">Se deja constancia que el autorizado podrá firmar los documentos necesarios.</p>'
+        + '<p style="margin-top:.75rem">En ' + fvd(f.ciudad,'ciudad') + ', a ' + fvd(fechaDoc,'fecha') + '.</p>';
+      firma = '<div class="doc-firma-modal">' + fvd(f.nombre_otorgante,'nombre') + '<br><span style="font-size:11px;color:#555">C.I. ' + (f.rut_otorgante||'________________') + '</span></div>';
+    }
+
+    // ── CONTRATO DE ARRIENDO ──
+    else if (tipo.includes('arriendo') || tipo.includes('Arriendo')) {
+      titulo = 'CONTRATO DE ARRIENDO';
+      const fechaDoc = f.fecha ? ffechad(f.fecha) : null;
+      const fInicio = f.fecha_inicio ? ffechad(f.fecha_inicio) : '[fecha inicio]';
+      const monto = f.monto_arriendo ? '$' + parseInt(f.monto_arriendo).toLocaleString('es-CL') : '[monto]';
+      const garantia = f.monto_garantia ? '$' + parseInt(f.monto_garantia).toLocaleString('es-CL') : '[garantía]';
+      cuerpo = '<p>En ' + fvd(f.ciudad,'ciudad') + ', a ' + fvd(fechaDoc,'fecha') + ', entre don (doña) ' + fvd(f.nombre_arrendador,'arrendador') + ', C.I. N° ' + fvd(f.rut_arrendador,'RUT') + ', en adelante el <strong>"ARRENDADOR"</strong>, y don (doña) ' + fvd(f.nombre_arrendatario,'arrendatario') + ', C.I. N° ' + fvd(f.rut_arrendatario,'RUT') + ', en adelante el <strong>"ARRENDATARIO"</strong>.</p>'
+        + '<div class="clausula" style="margin-top:.75rem"><span class="clausula-num">PRIMERO: PROPIEDAD</span> Inmueble ubicado en ' + fvd(f.direccion_propiedad,'dirección') + ', comuna de ' + fvd(f.comuna_propiedad,'comuna') + '.</div>'
+        + '<div class="clausula"><span class="clausula-num">SEGUNDO: DESTINO</span> ' + fvd(f.destino_propiedad,'destino') + '.</div>'
+        + '<div class="clausula"><span class="clausula-num">TERCERO: RENTA</span> <strong>' + monto + '</strong> mensuales, pagaderos dentro de los primeros ' + fvd(f.dia_pago,'día') + ' días de cada mes.</div>'
+        + '<div class="clausula"><span class="clausula-num">CUARTO: DURACIÓN</span> ' + fvd(f.duracion_contrato,'duración') + ', desde el ' + fvd(fInicio,'fecha inicio') + '.</div>'
+        + '<div class="clausula"><span class="clausula-num">QUINTO: GARANTÍA</span> <strong>' + garantia + '</strong>.</div>';
+      firma = '<div class="doc-firmas-modal"><div class="firma-col"><div class="linea"></div><div>' + (f.nombre_arrendador||'________________') + '</div><div class="rol">ARRENDADOR</div></div><div class="firma-col"><div class="linea"></div><div>' + (f.nombre_arrendatario||'________________') + '</div><div class="rol">ARRENDATARIO</div></div></div>';
+    }
+
+    // ── PROTOCOLIZACIÓN ──
+    else if (tipo.includes('Protocolización') || tipo.includes('Protocolizacion')) {
+      titulo = 'ACTA DE PROTOCOLIZACIÓN';
+      const fechaDoc = f.fecha ? ffechad(f.fecha) : null;
+      cuerpo = '<p>En ' + fvd(f.ciudad,'ciudad') + ', a ' + fvd(fechaDoc,'fecha') + ', ante mí, Notario Público, comparece don (doña) ' + fvd(f.nombre_compareciente,'nombre') + ', C.I. N° ' + fvd(f.rut_compareciente,'RUT') + ', domiciliado en ' + fvd(f.domicilio_compareciente,'domicilio') + ',</p>'
+        + '<p style="margin-top:.75rem">quien solicita la protocolización de ' + fvd(f.descripcion_documento,'descripción') + ', que pasa a formar parte del registro de instrumentos públicos a mi cargo.</p>'
+        + '<p style="margin-top:.75rem;text-align:center;font-family:monospace;font-size:13px;font-weight:700;background:#F0F6FF;padding:.5rem;border-radius:6px">Repertorio N° ' + (f.numero_repertorio||'[N° repertorio]') + '</p>';
+      firma = '<div class="doc-firma-modal">' + fvd(f.nombre_compareciente,'nombre') + '<div class="notario-sello-modal">AUTORIZADA ANTE MÍ NOTARIO PÚBLICO</div></div>';
+    }
+
+    // ── COPIA AUTORIZADA ──
+    else if (tipo.includes('Copia')) {
+      titulo = 'COPIA AUTORIZADA';
+      const fechaDoc = f.fecha ? ffechad(f.fecha) : null;
+      cuerpo = '<p>En ' + fvd(f.ciudad,'ciudad') + ', a ' + fvd(fechaDoc,'fecha') + ', yo, Notario Público, certifico que la presente copia es fiel y conforme con el documento original, correspondiente a ' + fvd(f.descripcion_documento,'descripción') + '.</p>'
+        + '<p style="margin-top:.75rem">Copia extendida a solicitud de don (doña) ' + fvd(f.nombre_solicitante,'nombre') + ', C.I. N° ' + fvd(f.rut_solicitante,'RUT') + '.</p>';
+      firma = '<div class="doc-firma-modal">NOTARIO PÚBLICO</div>';
+    }
+
+    // ── VERIFICACIÓN DE IDENTIDAD ──
+    else if (tipo.includes('Verificación') || tipo.includes('Verificacion')) {
+      titulo = 'CERTIFICADO DE VERIFICACIÓN DE IDENTIDAD';
+      const fechaDoc = f.fecha ? ffechad(f.fecha) : null;
+      cuerpo = '<p>En ' + fvd(f.ciudad,'ciudad') + ', a ' + fvd(fechaDoc,'fecha') + ', yo, Notario Público, certifico que don (doña) ' + fvd(f.nombre_persona,'nombre') + ', C.I. N° ' + fvd(f.rut_persona,'RUT') + ', ha acreditado su identidad mediante la exhibición de su documento oficial vigente.</p>'
+        + '<p style="margin-top:.75rem">Verificación realizada para los fines de ' + fvd(f.finalidad_verificacion,'finalidad') + '.</p>';
+      firma = '<div class="doc-firma-modal">NOTARIO PÚBLICO</div>';
+    }
+
+    // ── FALLBACK ──
+    else {
+      titulo = t.tipo || 'DOCUMENTO';
+      cuerpo = '<p style="color:#7888A8;font-style:italic;text-align:center;padding:1rem">Vista previa en construcción para este tipo de documento.</p>';
+      firma = '';
+    }
+
+    document.getElementById('modal-doc-codigo').textContent = t.codigo || '';
+    document.getElementById('modal-doc-titulo').textContent = titulo;
+    document.getElementById('modal-doc-cuerpo').innerHTML = cuerpo;
+    document.getElementById('modal-doc-firma').innerHTML = firma;
+  }
+</script>
 </body>
 </html>
