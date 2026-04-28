@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NotarioGO — Contrato de Arriendo</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    .nav-logo-text{font-size:22px;font-weight:800;color:#0D1B3E;text-decoration:none;letter-spacing:-.5px}.nav-logo-text span{color:#3B8BFF}body{background:#F7F9FC}
+    .breadcrumb{background:white;border-bottom:1px solid #EEF2F9;padding:.875rem 2rem;font-size:13px;color:#7888A8}.breadcrumb a{color:#1E6FE8;text-decoration:none;font-weight:600}.breadcrumb span{margin:0 .5rem}
+    .page-header{background:#0D1B3E;padding:2.5rem 2rem}.page-header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:1.5rem}.page-header-icon{width:56px;height:56px;background:rgba(255,255,255,.1);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}.page-header h1{font-family:'DM Serif Display',serif;font-size:1.8rem;color:white;margin-bottom:.25rem}.page-header p{color:rgba(255,255,255,.6);font-size:14px}
+    .header-badge{background:rgba(255,184,0,.2);border:1px solid rgba(255,184,0,.4);color:#FFB800;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.05em;margin-top:.5rem;display:inline-block}
+    .codigo-doc{background:#0D1B3E;color:white;padding:1rem 2rem;display:flex;align-items:center;justify-content:center;gap:1rem;font-family:'Courier New',monospace;font-size:15px;font-weight:700;letter-spacing:.08em;border-top:1px solid rgba(255,255,255,.1)}.codigo-doc span{color:#FFB800}.codigo-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:rgba(255,255,255,.55);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+    .form-layout{max-width:1300px;margin:0 auto;padding:2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}@media(max-width:960px){.form-layout{grid-template-columns:1fr}}
+    .form-panel{background:white;border:2px solid #EEF2F9;border-radius:16px;padding:2rem;box-shadow:0 2px 8px rgba(13,27,62,.06)}
+    .form-section{margin-bottom:1.75rem}.form-section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1E6FE8;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid #E6F0FF;display:flex;align-items:center;gap:8px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.form-row.single{grid-template-columns:1fr}.form-row.triple{grid-template-columns:1fr 1fr 1fr}
+    .form-group{margin-bottom:1rem}.form-group label{display:block;font-size:12px;font-weight:700;color:#3A4A6B;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.04em}
+    .form-group input,.form-group select{width:100%;padding:10px 14px;border:1.5px solid #C1CBDF;border-radius:8px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:#0D1B3E;outline:none;transition:border-color .2s;box-sizing:border-box;background:white}
+    .form-group input:focus,.form-group select:focus{border-color:#1E6FE8;box-shadow:0 0 0 3px rgba(30,111,232,.1)}
+    .form-group .hint{font-size:11px;color:#7888A8;margin-top:.3rem}.form-group .error-msg{font-size:11px;color:#EF4444;margin-top:.3rem;display:none}.form-group .valid-msg{font-size:11px;color:#10B981;margin-top:.3rem;display:none}
+    .form-group.has-error input,.form-group.has-error select{border-color:#EF4444;box-shadow:0 0 0 3px rgba(239,68,68,.1)}.form-group.has-error .error-msg{display:block}.form-group.is-valid input{border-color:#10B981}.form-group.is-valid .valid-msg{display:block}
+    .rut-wrap{position:relative}.rut-wrap input{padding-right:36px}.rut-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none}
+    .monto-wrap{position:relative}.monto-prefix{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:700;color:#7888A8;pointer-events:none}.monto-wrap input{padding-left:28px}
+
+    /* MODO RÁPIDO */
+    .modo-rapido-card{background:linear-gradient(135deg,#0D1B3E,#1A2F5E);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.75rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .modo-rapido-card h3{font-family:'DM Serif Display',serif;color:white;font-size:1.1rem;margin-bottom:.25rem}
+    .modo-rapido-card p{color:rgba(255,255,255,.6);font-size:12px}
+    .btn-modo{background:#FFB800;color:#0D1B3E;border:none;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;white-space:nowrap}
+    .btn-modo:hover{background:#FFCA40;transform:translateY(-1px)}
+
+    /* DESTINO PILLS */
+    .destino-pills{display:flex;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap}
+    .destino-pill{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;border:2px solid #EEF2F9;background:white;color:#3A4A6B;transition:all .2s}
+    .destino-pill:hover{border-color:#1E6FE8;background:#E6F0FF;color:#1E40AF}
+    .destino-pill.sel{border-color:#1E6FE8;background:#E6F0FF;color:#1E40AF}
+
+    /* CLÁUSULAS OPCIONALES */
+    .clausulas-grid{display:flex;flex-direction:column;gap:.5rem}
+    .clausula-item{display:flex;align-items:flex-start;gap:10px;padding:.75rem 1rem;border:1.5px solid #EEF2F9;border-radius:10px;cursor:pointer;transition:all .2s}
+    .clausula-item:hover{border-color:#C5D9FF;background:#F7F9FC}
+    .clausula-item.checked{border-color:#1E6FE8;background:#E6F0FF}
+    .clausula-item input[type=checkbox]{width:18px;height:18px;cursor:pointer;accent-color:#1E6FE8;flex-shrink:0;margin-top:1px}
+    .clausula-info{flex:1}
+    .clausula-label{font-size:13px;font-weight:700;color:#0D1B3E}
+    .clausula-desc{font-size:11px;color:#7888A8;margin-top:2px}
+
+    /* VIGENCIA PILLS */
+    .duracion-pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem}
+    .dur-pill{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;border:1.5px solid #C1CBDF;background:white;color:#3A4A6B;transition:all .2s}
+    .dur-pill:hover{border-color:#1E6FE8;color:#1E6FE8}
+    .dur-pill.sel{border-color:#1E6FE8;background:#1E6FE8;color:white}
+
+    .form-actions{display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+    .btn-limpiar{background:white;color:#7888A8;border:1.5px solid #C1CBDF;border-radius:8px;padding:11px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
+    .btn-guardar{background:#1E6FE8;color:white;border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;box-shadow:0 4px 14px rgba(30,111,232,.35);flex:1}
+    .btn-guardar:hover{background:#1458C4;transform:translateY(-1px)}.btn-guardar:disabled{background:#C1CBDF;box-shadow:none;cursor:not-allowed;transform:none}
+
+    /* PREVIEW */
+    .preview-panel{position:sticky;top:80px}
+    .preview-card{background:white;border:2px solid #EEF2F9;border-radius:16px;padding:2rem;box-shadow:0 2px 8px rgba(13,27,62,.06)}
+    .preview-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:.5rem}
+    .preview-title{font-size:14px;font-weight:700;color:#0D1B3E}
+    .preview-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
+    .preview-badge.completo{background:#D1FAE5;color:#065F46}.preview-badge.incompleto{background:#FEF3C7;color:#92400E}
+    .doc-legal{font-family:'Times New Roman',Times,serif;font-size:12.5px;line-height:1.8;color:#1a1a1a;background:#FAFAFA;border:1px solid #E0E0E0;border-radius:8px;padding:1.5rem;min-height:500px;max-height:600px;overflow-y:auto}
+    .doc-legal .doc-codigo{font-family:'Courier New',monospace;font-size:11px;color:#7888A8;text-align:right;margin-bottom:1rem}
+    .doc-legal .doc-titulo{text-align:center;font-weight:bold;font-size:14px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.5rem;text-decoration:underline}
+    .doc-legal .clausula{margin-bottom:.875rem}
+    .doc-legal .clausula-num{font-weight:bold;text-transform:uppercase}
+    .doc-legal .doc-firmas{margin-top:2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;text-align:center}
+    .doc-legal .doc-firma-col .linea{border-top:1px solid #333;width:160px;margin:0 auto .5rem}
+    .doc-legal .doc-firma-col .rol{font-size:11px;color:#555;font-style:italic}
+    .doc-legal .campo-vacio{background:#FEF3C7;border-bottom:1px dashed #F59E0B;color:#92400E;padding:0 3px;border-radius:2px;font-style:italic;font-size:11px}
+    .doc-legal .campo-ok{color:#1a1a1a;font-weight:600}
+
+    .progreso-wrap{margin-bottom:1.5rem}.progreso-label{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:#7888A8;margin-bottom:.5rem}.progreso-bar{height:6px;background:#EEF2F9;border-radius:100px;overflow:hidden}.progreso-fill{height:100%;background:linear-gradient(90deg,#1E6FE8,#3B8BFF);border-radius:100px;transition:width .3s}
+    .doc-acciones{display:flex;gap:.75rem;margin-top:1rem}.btn-imprimir{background:#0D1B3E;color:white;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}.btn-imprimir:disabled{background:#C1CBDF;cursor:not-allowed}.btn-enviar{background:#10B981;color:white;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;flex:1}.btn-enviar:disabled{background:#C1CBDF;cursor:not-allowed}
+    footer{background:#0D1B3E;padding:2rem;margin-top:3rem}.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}.footer-copy{font-size:12px;color:rgba(255,255,255,.35)}
+    @media print{nav,.breadcrumb,.form-panel,.page-header,.codigo-doc,.progreso-wrap,.doc-acciones,footer,.preview-header,.modo-rapido-card{display:none!important}.form-layout{display:block;padding:0}.preview-panel{position:static}.preview-card{border:none;padding:0;box-shadow:none}.doc-legal{border:none;background:white;font-size:11pt;padding:1cm;min-height:unset;max-height:unset;overflow:visible}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo-text" href="index.html">Notario<span>Go</span></a>
+  <div class="nav-links"><a href="index.html">Inicio</a><a href="tramites.html" class="active">Trámites</a><a href="mis-documentos.html">Mis documentos</a><a href="ayuda.html">Ayuda</a></div>
+  <div class="nav-actions"><a href="login.html" class="btn-outline">Ingresar / Cuenta</a><a href="tramites.html" class="btn-primary">Iniciar trámite</a></div>
+</nav>
+<div class="breadcrumb"><a href="tramites.html">Trámites</a><span>›</span> Contratos<span>›</span> Contrato de arriendo</div>
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-header-icon">🏠</div>
+    <div>
+      <h1>Contrato de Arriendo</h1>
+      <p>Genera un contrato de arrendamiento completo con cláusulas personalizadas</p>
+      <span class="header-badge">⚡ Listo en minutos</span>
+    </div>
+  </div>
+</div>
+<div class="codigo-doc"><div class="codigo-label">Código del documento</div><span id="codigo-display">Generando...</span></div>
+
+<div class="form-layout">
+  <div class="form-panel">
+    <div class="progreso-wrap">
+      <div class="progreso-label"><span>Progreso del formulario</span><span id="progreso-pct">0%</span></div>
+      <div class="progreso-bar"><div class="progreso-fill" id="progreso-fill" style="width:0%"></div></div>
+    </div>
+
+    <!-- MODO RÁPIDO -->
+    <div class="modo-rapido-card">
+      <div><h3>🏠 Arriendo habitacional estándar</h3><p>Autocompleta destino y cláusulas base más comunes</p></div>
+      <button class="btn-modo" onclick="modoHabitacional()">⚡ Aplicar plantilla</button>
+    </div>
+
+    <!-- ARRENDADOR -->
+    <div class="form-section">
+      <div class="form-section-title">👤 Arrendador (propietario)</div>
+      <div class="form-row single"><div class="form-group"><label>Nombre completo *</label><input type="text" id="nombre_arrendador" placeholder="Ej: María González Pérez" oninput="actualizar()"/></div></div>
+      <div class="form-row">
+        <div class="form-group" id="g-rut_arrendador"><label>RUT *</label><div class="rut-wrap"><input type="text" id="rut_arrendador" placeholder="Ej: 12.345.678-9" oninput="onRUT(this,'g-rut_arrendador');actualizar()" maxlength="12"/><span class="rut-icon" id="icon-rut_arrendador"></span></div><div class="error-msg" id="err-rut_arrendador">RUT inválido</div><div class="valid-msg" id="ok-rut_arrendador">✓ RUT válido</div></div>
+        <div class="form-group"><label>Domicilio *</label><input type="text" id="domicilio_arrendador" placeholder="Ej: Av. Providencia 1234" oninput="actualizar()"/></div>
+      </div>
+    </div>
+
+    <!-- ARRENDATARIO -->
+    <div class="form-section">
+      <div class="form-section-title">👤 Arrendatario (inquilino)</div>
+      <div class="form-row single"><div class="form-group"><label>Nombre completo *</label><input type="text" id="nombre_arrendatario" placeholder="Ej: Juan Pérez Soto" oninput="actualizar()"/></div></div>
+      <div class="form-row">
+        <div class="form-group" id="g-rut_arrendatario"><label>RUT *</label><div class="rut-wrap"><input type="text" id="rut_arrendatario" placeholder="Ej: 9.876.543-2" oninput="onRUT(this,'g-rut_arrendatario');actualizar()" maxlength="12"/><span class="rut-icon" id="icon-rut_arrendatario"></span></div><div class="error-msg" id="err-rut_arrendatario">RUT inválido</div><div class="valid-msg" id="ok-rut_arrendatario">✓ RUT válido</div></div>
+        <div class="form-group"><label>Domicilio *</label><input type="text" id="domicilio_arrendatario" placeholder="Ej: Calle Los Aromos 456" oninput="actualizar()"/></div>
+      </div>
+    </div>
+
+    <!-- PROPIEDAD -->
+    <div class="form-section">
+      <div class="form-section-title">🏠 Datos de la propiedad</div>
+      <div class="form-row single"><div class="form-group"><label>Dirección de la propiedad *</label><input type="text" id="direccion_propiedad" placeholder="Ej: Calle Los Olmos 789, Depto. 3B" oninput="actualizar()"/></div></div>
+      <div class="form-row single"><div class="form-group"><label>Comuna *</label><input type="text" id="comuna_propiedad" placeholder="Ej: Ñuñoa, Providencia" oninput="actualizar()"/></div></div>
+      <div style="font-size:12px;font-weight:700;color:#3A4A6B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.6rem;">Destino de la propiedad *</div>
+      <div class="destino-pills">
+        <button class="destino-pill" id="dp-habitacional" onclick="setDestino('fines habitacionales',this)">🏠 Habitacional</button>
+        <button class="destino-pill" id="dp-comercial" onclick="setDestino('fines comerciales',this)">🏪 Comercial</button>
+        <button class="destino-pill" id="dp-oficina" onclick="setDestino('uso de oficina',this)">💼 Oficina</button>
+        <button class="destino-pill" id="dp-bodega" onclick="setDestino('uso de bodega',this)">📦 Bodega</button>
+      </div>
+      <div class="form-group"><input type="text" id="destino_propiedad" placeholder="O escribe el destino..." oninput="limpiarDestinoPills();actualizar()"/></div>
+    </div>
+
+    <!-- CONDICIONES ECONÓMICAS -->
+    <div class="form-section">
+      <div class="form-section-title">💰 Condiciones económicas</div>
+      <div class="form-row">
+        <div class="form-group" id="g-monto_arriendo">
+          <label>Monto del arriendo (mensual) *</label>
+          <div class="monto-wrap"><span class="monto-prefix">$</span><input type="number" id="monto_arriendo" placeholder="500000" min="1" oninput="actualizar()"/></div>
+          <div class="error-msg" id="err-monto_arriendo">Ingresa un monto mayor a 0</div>
+        </div>
+        <div class="form-group">
+          <label>Día de pago (del mes) *</label>
+          <select id="dia_pago" onchange="actualizar()">
+            <option value="">Seleccionar...</option>
+            <option value="5">5</option><option value="10">10</option><option value="15">15</option><option value="último">último</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row single">
+        <div class="form-group">
+          <label>Monto de garantía *</label>
+          <div class="monto-wrap"><span class="monto-prefix">$</span><input type="number" id="monto_garantia" placeholder="500000" min="0" oninput="actualizar()"/></div>
+          <div class="hint">Recomendado: equivalente a 1 mes de arriendo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DURACIÓN -->
+    <div class="form-section">
+      <div class="form-section-title">⏳ Duración del contrato</div>
+      <div class="duracion-pills">
+        <button class="dur-pill" onclick="setDuracion('6 meses',this)">6 meses</button>
+        <button class="dur-pill" onclick="setDuracion('12 meses',this)">1 año</button>
+        <button class="dur-pill" onclick="setDuracion('24 meses',this)">2 años</button>
+        <button class="dur-pill" onclick="setDuracion('indefinido',this)">Indefinido</button>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Duración *</label><input type="text" id="duracion_contrato" placeholder="Ej: 12 meses, indefinido" oninput="actualizar()"/></div>
+        <div class="form-group"><label>Fecha de inicio *</label><input type="date" id="fecha_inicio" oninput="actualizar()"/></div>
+      </div>
+    </div>
+
+    <!-- CLÁUSULAS OPCIONALES -->
+    <div class="form-section">
+      <div class="form-section-title">📋 Cláusulas adicionales</div>
+      <div class="clausulas-grid">
+        <label class="clausula-item" onclick="toggleClausula(this)">
+          <input type="checkbox" id="cl-multa" onchange="actualizar()"/>
+          <div class="clausula-info"><div class="clausula-label">Multa por atraso en el pago</div><div class="clausula-desc">Establece penalidad por pago fuera de plazo</div></div>
+        </label>
+        <label class="clausula-item" onclick="toggleClausula(this)">
+          <input type="checkbox" id="cl-reajuste" onchange="actualizar()"/>
+          <div class="clausula-info"><div class="clausula-label">Reajuste anual (IPC)</div><div class="clausula-desc">La renta se reajusta anualmente según el IPC</div></div>
+        </label>
+        <label class="clausula-item" onclick="toggleClausula(this)">
+          <input type="checkbox" id="cl-subarriendo" onchange="actualizar()"/>
+          <div class="clausula-info"><div class="clausula-label">Prohibición de subarriendo</div><div class="clausula-desc">El arrendatario no puede subarrendar la propiedad</div></div>
+        </label>
+        <label class="clausula-item" onclick="toggleClausula(this)">
+          <input type="checkbox" id="cl-mascotas" onchange="actualizar()"/>
+          <div class="clausula-info"><div class="clausula-label">Prohibición de mascotas</div><div class="clausula-desc">No se permite tener animales en la propiedad</div></div>
+        </label>
+      </div>
+    </div>
+
+    <!-- METADATA -->
+    <div class="form-section">
+      <div class="form-section-title">📍 Lugar y fecha de firma</div>
+      <div class="form-row">
+        <div class="form-group"><label>Ciudad *</label><input type="text" id="ciudad" placeholder="Ej: Santiago" oninput="actualizar()"/></div>
+        <div class="form-group"><label>Fecha de firma *</label><input type="date" id="fecha" oninput="actualizar()"/></div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-limpiar" onclick="limpiarFormulario()">🗑 Limpiar</button>
+      <button class="btn-guardar" id="btn-guardar" onclick="guardarTramite()" disabled>✅ Guardar y enviar contrato</button>
+    </div>
+  </div>
+
+  <!-- VISTA PREVIA -->
+  <div class="preview-panel">
+    <div class="preview-card">
+      <div class="preview-header"><div class="preview-title">📄 Vista previa del contrato</div><div class="preview-badge incompleto" id="preview-badge">Incompleto</div></div>
+      <div class="doc-legal">
+        <div class="doc-codigo" id="doc-codigo-preview"></div>
+        <div class="doc-titulo">CONTRATO DE ARRIENDO</div>
+        <div id="doc-cuerpo"></div>
+        <div class="doc-firmas" id="doc-firmas" style="display:none;">
+          <div class="doc-firma-col"><div class="linea"></div><div id="firma-arrendador"></div><div class="rol">ARRENDADOR</div></div>
+          <div class="doc-firma-col"><div class="linea"></div><div id="firma-arrendatario"></div><div class="rol">ARRENDATARIO</div></div>
+        </div>
+      </div>
+      <div class="doc-acciones">
+        <button class="btn-imprimir" id="btn-imprimir" onclick="window.print()" disabled>🖨 Imprimir</button>
+        <button class="btn-enviar" id="btn-enviar" onclick="guardarTramite()" disabled>📤 Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-bottom"><div class="footer-copy">© 2025 NotarioGO SpA · Santiago, Chile</div><div class="footer-copy">Ley N° 19.799 sobre firma electrónica</div></div></footer>
+<script src="js/jsonbin.js"></script><script src="js/app.js"></script>
+<script>
+  let codigoDoc='';
+  async function generarCodigo(){const f=new Date().toISOString().split('T')[0].replace(/-/g,'');try{const d=await JSONBIN.get('tramites');return`NOTAGO-${f}-${String((d.tramites||[]).length+1).padStart(7,'0')}`}catch(e){return`NOTAGO-${f}-${String(Date.now()).slice(-7)}`}}
+  generarCodigo().then(c=>{codigoDoc=c;document.getElementById('codigo-display').textContent=c;document.getElementById('doc-codigo-preview').textContent=c});
+
+  function modoHabitacional(){
+    setDestino('fines habitacionales',document.getElementById('dp-habitacional'));
+    document.getElementById('cl-subarriendo').checked=true;document.getElementById('cl-subarriendo').closest('.clausula-item').classList.add('checked');
+    document.getElementById('cl-reajuste').checked=true;document.getElementById('cl-reajuste').closest('.clausula-item').classList.add('checked');
+    setDuracion('12 meses',document.querySelectorAll('.dur-pill')[1]);
+    if(!document.getElementById('fecha_inicio').value)document.getElementById('fecha_inicio').value=new Date().toISOString().split('T')[0];
+    actualizar();
+    const btn=document.querySelector('.btn-modo');btn.textContent='✅ ¡Aplicado!';setTimeout(()=>btn.textContent='⚡ Aplicar plantilla',2000);
+  }
+
+  function setDestino(val,btn){document.getElementById('destino_propiedad').value=val;document.querySelectorAll('.destino-pill').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');actualizar()}
+  function limpiarDestinoPills(){document.querySelectorAll('.destino-pill').forEach(b=>b.classList.remove('sel'))}
+  function setDuracion(val,btn){document.getElementById('duracion_contrato').value=val;document.querySelectorAll('.dur-pill').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');actualizar()}
+  function toggleClausula(label){setTimeout(()=>{const cb=label.querySelector('input');label.classList.toggle('checked',cb.checked);actualizar()},0)}
+
+  function calcularDV(r){let s=0,m=2;for(let i=r.length-1;i>=0;i--){s+=parseInt(r[i])*m;m=m<7?m+1:2}const x=s%11;return x===0?'0':x===1?'k':String(11-x)}
+  function validarRUT(r){const l=r.replace(/[.\-\s]/g,'').toLowerCase();if(l.length<2)return false;return/^\d+$/.test(l.slice(0,-1))&&calcularDV(l.slice(0,-1))===l.slice(-1)}
+  function formatRUT(r){const l=r.replace(/[^0-9kK]/g,'');if(l.length<2)return l;return l.slice(0,-1).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+'-'+l.slice(-1)}
+  function onRUT(input,gId){input.value=formatRUT(input.value.replace(/[^0-9kK]/g,''));const id=gId.replace('g-','');const g=document.getElementById(gId);const err=document.getElementById('err-'+id);const ok=document.getElementById('ok-'+id);const ic=document.getElementById('icon-'+id);if(input.value.length<3){g.classList.remove('has-error','is-valid');if(err)err.style.display='none';if(ok)ok.style.display='none';if(ic)ic.textContent='';return}const valid=validarRUT(input.value);g.classList.toggle('has-error',!valid);g.classList.toggle('is-valid',valid);if(err)err.style.display=valid?'none':'block';if(ok)ok.style.display=valid?'block':'none';if(ic)ic.textContent=valid?'✅':'❌'}
+  function formatMoney(n){return n?'$'+parseInt(n).toLocaleString('es-CL'):''}
+
+  const CAMPOS_TEXTO=['nombre_arrendador','domicilio_arrendador','nombre_arrendatario','domicilio_arrendatario','direccion_propiedad','comuna_propiedad','destino_propiedad','dia_pago','duracion_contrato','fecha_inicio','ciudad','fecha'];
+  const CAMPOS_RUT=['rut_arrendador','rut_arrendatario'];
+  const CAMPOS_NUM=['monto_arriendo','monto_garantia'];
+
+  document.addEventListener('DOMContentLoaded',()=>{document.getElementById('fecha').value=new Date().toISOString().split('T')[0];actualizar()});
+  function v(id){return document.getElementById(id)?.value?.trim()||''}
+  function campo(id,e){const val=v(id);return val?`<span class="campo-ok">${val}</span>`:`<span class="campo-vacio">[${e}]</span>`}
+  function campoMoney(id,e){const val=v(id);return val&&parseInt(val)>0?`<span class="campo-ok">${formatMoney(val)}</span>`:`<span class="campo-vacio">[${e}]</span>`}
+  function formatFecha(iso){if(!iso)return null;const[y,m,d]=iso.split('-');const M=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];return`${parseInt(d)} de ${M[parseInt(m)-1]} de ${y}`}
+
+  function clausulasOpcionales(){
+    let extra='';
+    if(document.getElementById('cl-multa').checked)extra+=`<div class="clausula"><span class="clausula-num">OCTAVO: MULTA POR ATRASO</span> El atraso en el pago de la renta generará una multa equivalente al 1% del monto mensual por cada día de atraso.</div>`;
+    if(document.getElementById('cl-reajuste').checked)extra+=`<div class="clausula"><span class="clausula-num">${document.getElementById('cl-multa').checked?'NOVENO':'OCTAVO'}: REAJUSTE</span> La renta se reajustará anualmente según la variación del Índice de Precios al Consumidor (IPC).</div>`;
+    const n=(['cl-multa','cl-reajuste'].filter(id=>document.getElementById(id).checked).length)+8;
+    if(document.getElementById('cl-subarriendo').checked)extra+=`<div class="clausula"><span class="clausula-num">${n===8?'OCTAVO':n===9?'NOVENO':'DÉCIMO'}: PROHIBICIÓN DE SUBARRIENDO</span> El arrendatario queda expresamente prohibido de subarrendar el inmueble en todo o en parte, sin previa autorización escrita del arrendador.</div>`;
+    const n2=n+(['cl-subarriendo'].filter(id=>document.getElementById(id).checked).length);
+    if(document.getElementById('cl-mascotas').checked)extra+=`<div class="clausula"><span class="clausula-num">CLÁUSULA ADICIONAL: MASCOTAS</span> Queda expresamente prohibida la tenencia de animales domésticos en el inmueble arrendado sin autorización escrita previa del arrendador.</div>`;
+    return extra;
+  }
+
+  function actualizar(){
+    const fF=v('fecha')?formatFecha(v('fecha')):null;const fHTML=fF?`<span class="campo-ok">${fF}</span>`:`<span class="campo-vacio">[fecha]</span>`;
+    const fI=v('fecha_inicio')?formatFecha(v('fecha_inicio')):null;const fIHTML=fI?`<span class="campo-ok">${fI}</span>`:`<span class="campo-vacio">[fecha inicio]</span>`;
+    const cHTML=v('ciudad')?`<span class="campo-ok">${v('ciudad')}</span>`:`<span class="campo-vacio">[ciudad]</span>`;
+    const extra=clausulasOpcionales();
+    document.getElementById('doc-cuerpo').innerHTML=`
+      <p>En ${cHTML}, a ${fHTML}, entre don (doña) ${campo('nombre_arrendador','nombre arrendador')}, cédula de identidad N° ${campo('rut_arrendador','RUT')}, domiciliado en ${campo('domicilio_arrendador','domicilio arrendador')}, en adelante el <strong>"ARRENDADOR"</strong>, y don (doña) ${campo('nombre_arrendatario','nombre arrendatario')}, cédula de identidad N° ${campo('rut_arrendatario','RUT')}, domiciliado en ${campo('domicilio_arrendatario','domicilio arrendatario')}, en adelante el <strong>"ARRENDATARIO"</strong>, se ha convenido el siguiente contrato de arriendo:</p>
+      <div class="clausula" style="margin-top:.875rem;"><span class="clausula-num">PRIMERO: PROPIEDAD</span> El arrendador da en arriendo al arrendatario el inmueble ubicado en ${campo('direccion_propiedad','dirección')}, comuna de ${campo('comuna_propiedad','comuna')}.</div>
+      <div class="clausula"><span class="clausula-num">SEGUNDO: DESTINO</span> El inmueble será destinado exclusivamente a ${campo('destino_propiedad','destino')}.</div>
+      <div class="clausula"><span class="clausula-num">TERCERO: RENTA</span> La renta mensual de arrendamiento será la suma de ${campoMoney('monto_arriendo','monto')}, que el arrendatario se obliga a pagar dentro de los primeros ${campo('dia_pago','día de pago')} días de cada mes.</div>
+      <div class="clausula"><span class="clausula-num">CUARTO: DURACIÓN</span> El presente contrato tendrá una duración de ${campo('duracion_contrato','duración')}, comenzando el día ${fIHTML}.</div>
+      <div class="clausula"><span class="clausula-num">QUINTO: GARANTÍA</span> El arrendatario entrega en este acto la suma de ${campoMoney('monto_garantia','garantía')}, en garantía del cumplimiento de las obligaciones del presente contrato.</div>
+      <div class="clausula"><span class="clausula-num">SEXTO: OBLIGACIONES</span> El arrendatario se obliga a mantener el inmueble en buen estado, pagar los servicios básicos y restituir la propiedad al término del contrato.</div>
+      <div class="clausula"><span class="clausula-num">SÉPTIMO: TÉRMINO</span> El contrato podrá terminar por incumplimiento de cualquiera de las partes o por acuerdo mutuo.</div>
+      ${extra}
+      <div class="clausula" style="margin-top:.5rem;">Leído el presente contrato y encontrándolo conforme, firman:</div>`;
+    const nomArr=v('nombre_arrendador');const nomArt=v('nombre_arrendatario');
+    if(nomArr&&nomArt){document.getElementById('doc-firmas').style.display='grid';document.getElementById('firma-arrendador').textContent=nomArr.toUpperCase();document.getElementById('firma-arrendatario').textContent=nomArt.toUpperCase()}else document.getElementById('doc-firmas').style.display='none';
+
+    const lT=CAMPOS_TEXTO.filter(id=>v(id)!=='').length;
+    const lR=CAMPOS_RUT.filter(id=>v(id)&&validarRUT(v(id))).length;
+    const lN=CAMPOS_NUM.filter(id=>v(id)&&parseInt(v(id))>0).length;
+    const total=CAMPOS_TEXTO.length+CAMPOS_RUT.length+CAMPOS_NUM.length;
+    const llenos=lT+lR+lN;
+    const pct=Math.round((llenos/total)*100);
+    document.getElementById('progreso-fill').style.width=pct+'%';document.getElementById('progreso-pct').textContent=pct+'%';
+    const completo=llenos===total;const badge=document.getElementById('preview-badge');
+    badge.textContent=completo?'✅ Completo':`${llenos}/${total} campos`;badge.className='preview-badge '+(completo?'completo':'incompleto');
+    document.getElementById('btn-guardar').disabled=!completo;document.getElementById('btn-imprimir').disabled=!completo;document.getElementById('btn-enviar').disabled=!completo;
+  }
+
+  function limpiarFormulario(){if(!confirm('¿Limpiar todos los campos?'))return;[...CAMPOS_TEXTO,...CAMPOS_RUT,...CAMPOS_NUM].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});CAMPOS_RUT.forEach(id=>{const g=document.getElementById('g-'+id);if(g)g.classList.remove('has-error','is-valid');const ic=document.getElementById('icon-'+id);if(ic)ic.textContent=''});['cl-multa','cl-reajuste','cl-subarriendo','cl-mascotas'].forEach(id=>{document.getElementById(id).checked=false;document.getElementById(id).closest('.clausula-item').classList.remove('checked')});document.querySelectorAll('.destino-pill,.dur-pill').forEach(b=>b.classList.remove('sel'));document.getElementById('fecha').value=new Date().toISOString().split('T')[0];actualizar()}
+
+  async function guardarTramite(){const user=usuarioActual();if(!user)return window.location.href='login.html';const btnG=document.getElementById('btn-guardar');const btnE=document.getElementById('btn-enviar');btnG.disabled=true;btnG.textContent='⏳ Guardando...';btnE.disabled=true;
+    const clausulas_extra=[];
+    if(document.getElementById('cl-multa').checked)clausulas_extra.push('Multa por atraso');
+    if(document.getElementById('cl-reajuste').checked)clausulas_extra.push('Reajuste anual IPC');
+    if(document.getElementById('cl-subarriendo').checked)clausulas_extra.push('Prohibición subarriendo');
+    if(document.getElementById('cl-mascotas').checked)clausulas_extra.push('Prohibición mascotas');
+    try{const data=await JSONBIN.get('tramites');const tramite={id:Date.now(),codigo:codigoDoc,usuarioId:user.id,usuarioNombre:user.nombre,usuarioEmail:user.email,tipo:'Contrato de arriendo',emoji:'🏠',estado:'Pendiente',fecha:new Date().toISOString(),formulario:{nombre_otorgante:v('nombre_arrendador'),nombre_arrendador:v('nombre_arrendador'),rut_arrendador:v('rut_arrendador'),domicilio_arrendador:v('domicilio_arrendador'),nombre_arrendatario:v('nombre_arrendatario'),rut_arrendatario:v('rut_arrendatario'),domicilio_arrendatario:v('domicilio_arrendatario'),direccion_propiedad:v('direccion_propiedad'),comuna_propiedad:v('comuna_propiedad'),destino_propiedad:v('destino_propiedad'),monto_arriendo:v('monto_arriendo'),dia_pago:v('dia_pago'),monto_garantia:v('monto_garantia'),duracion_contrato:v('duracion_contrato'),fecha_inicio:v('fecha_inicio'),clausulas_extra,ciudad:v('ciudad'),fecha:v('fecha')}};data.tramites.push(tramite);await JSONBIN.set('tramites',data);alert(`✅ Contrato guardado.\nCódigo: ${codigoDoc}`);window.location.href='mis-documentos.html'}catch(e){alert('Error al guardar.');btnG.disabled=false;btnG.textContent='✅ Guardar y enviar contrato';btnE.disabled=false}}
+</script>
+</body>
+</html>
