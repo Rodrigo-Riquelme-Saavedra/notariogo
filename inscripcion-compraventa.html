@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NotarioGO — Inscripción: Compraventa</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    .nav-logo-text{font-size:22px;font-weight:800;color:#0D1B3E;text-decoration:none;letter-spacing:-.5px}.nav-logo-text span{color:#3B8BFF}body{background:#F7F9FC}.breadcrumb{background:white;border-bottom:1px solid #EEF2F9;padding:.875rem 2rem;font-size:13px;color:#7888A8}.breadcrumb a{color:#1E6FE8;text-decoration:none;font-weight:600}.breadcrumb span{margin:0 .5rem}.page-header{background:#0D1B3E;padding:2.5rem 2rem}.page-header-inner{max-width:1300px;margin:0 auto;display:flex;align-items:center;gap:1.5rem}.page-header-icon{width:56px;height:56px;background:rgba(255,255,255,.1);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}.page-header h1{font-family:'DM Serif Display',serif;font-size:1.8rem;color:white;margin-bottom:.25rem}.page-header p{color:rgba(255,255,255,.6);font-size:14px}.header-badge{background:rgba(255,184,0,.2);border:1px solid rgba(255,184,0,.4);color:#FFB800;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.05em;margin-top:.5rem;display:inline-block}.header-badge-cbr{background:rgba(139,92,246,.2);border:1px solid rgba(139,92,246,.4);color:#8B5CF6;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.05em;margin-top:.5rem;margin-left:.5rem;display:inline-block}.codigo-doc{background:#0D1B3E;color:white;padding:1rem 2rem;display:flex;align-items:center;justify-content:center;gap:1rem;font-family:'Courier New',monospace;font-size:15px;font-weight:700;letter-spacing:.08em;border-top:1px solid rgba(255,255,255,.1)}.codigo-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:rgba(255,255,255,.55);font-weight:600;letter-spacing:.04em;text-transform:uppercase}.form-layout{max-width:1300px;margin:0 auto;padding:2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}@media(max-width:960px){.form-layout{grid-template-columns:1fr}}.form-panel{background:white;border:2px solid #EEF2F9;border-radius:16px;padding:2rem;box-shadow:0 2px 8px rgba(13,27,62,.06)}.form-section{margin-bottom:1.75rem}.form-section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1E6FE8;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid #E6F0FF;display:flex;align-items:center;gap:8px}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.form-row.single{grid-template-columns:1fr}.form-row.triple{grid-template-columns:1fr 1fr 1fr}.form-group{margin-bottom:1rem}.form-group label{display:block;font-size:12px;font-weight:700;color:#3A4A6B;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.04em}.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 14px;border:1.5px solid #C1CBDF;border-radius:8px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:#0D1B3E;outline:none;transition:border-color .2s;box-sizing:border-box;background:white}.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#1E6FE8;box-shadow:0 0 0 3px rgba(30,111,232,.1)}.form-group .hint{font-size:11px;color:#7888A8;margin-top:.3rem}.form-group .error-msg{font-size:11px;color:#EF4444;margin-top:.3rem;display:none}.form-group .valid-msg{font-size:11px;color:#10B981;margin-top:.3rem;display:none}.form-group.has-error input{border-color:#EF4444}.form-group.has-error .error-msg{display:block}.form-group.is-valid input{border-color:#10B981}.form-group.is-valid .valid-msg{display:block}.rut-wrap{position:relative}.rut-wrap input{padding-right:36px}.rut-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none}
+    .persona-toggle{display:flex;gap:0;margin-bottom:1.25rem;border:1.5px solid #C1CBDF;border-radius:10px;overflow:hidden}.persona-btn{flex:1;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;border:none;background:white;color:#7888A8;transition:all .2s;text-align:center}.persona-btn.sel{background:#1E6FE8;color:white}
+    .titulo-vigente-box{background:#F0FFF4;border:2px solid #10B981;border-radius:12px;padding:1.25rem;margin-bottom:1rem}.titulo-vigente-label{font-size:12px;font-weight:800;color:#065F46;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem;display:flex;align-items:center;gap:8px}.titulo-alerta{background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:8px;padding:.75rem 1rem;font-size:12px;color:#92400E;margin-bottom:.875rem;line-height:1.5}.titulo-alerta strong{display:block;margin-bottom:.25rem}
+    .deslinde-box{background:#F7F9FC;border:1.5px solid #EEF2F9;border-radius:12px;padding:1.25rem}.deslinde-row{display:grid;grid-template-columns:80px 1fr;gap:.75rem;align-items:center;margin-bottom:.6rem}.deslinde-row:last-child{margin-bottom:0}.deslinde-label{font-size:12px;font-weight:800;color:#3A4A6B;text-transform:uppercase;letter-spacing:.04em;text-align:center;background:#EEF2F9;border-radius:6px;padding:6px 4px}.deslinde-input{width:100%;padding:9px 12px;border:1.5px solid #C1CBDF;border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;color:#0D1B3E;outline:none;transition:border-color .2s;box-sizing:border-box}.deslinde-input:focus{border-color:#1E6FE8}
+    .progreso-wrap{margin-bottom:1.5rem}.progreso-label{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:#7888A8;margin-bottom:.5rem}.progreso-bar{height:6px;background:#EEF2F9;border-radius:100px;overflow:hidden}.progreso-fill{height:100%;background:linear-gradient(90deg,#8B5CF6,#1E6FE8);border-radius:100px;transition:width .3s}
+    .form-actions{display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}.btn-limpiar{background:white;color:#7888A8;border:1.5px solid #C1CBDF;border-radius:8px;padding:11px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}.btn-guardar{background:#1E6FE8;color:white;border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;box-shadow:0 4px 14px rgba(30,111,232,.35);flex:1}.btn-guardar:hover{background:#1458C4}.btn-guardar:disabled{background:#C1CBDF;box-shadow:none;cursor:not-allowed}
+    .preview-panel{position:sticky;top:80px}.preview-card{background:white;border:2px solid #EEF2F9;border-radius:16px;padding:2rem;box-shadow:0 2px 8px rgba(13,27,62,.06)}.preview-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:.5rem}.preview-title{font-size:14px;font-weight:700;color:#0D1B3E}.preview-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}.preview-badge.completo{background:#D1FAE5;color:#065F46}.preview-badge.incompleto{background:#FEF3C7;color:#92400E}
+    .doc-legal{font-family:'Times New Roman',Times,serif;font-size:13px;line-height:1.9;color:#1a1a1a;background:#FAFAFA;border:1px solid #E0E0E0;border-radius:8px;padding:1.5rem;min-height:480px;max-height:620px;overflow-y:auto}.doc-legal .doc-codigo{font-family:'Courier New',monospace;font-size:11px;color:#7888A8;text-align:right;margin-bottom:1rem}.doc-legal .doc-fojas{text-align:center;font-weight:bold;font-size:15px;margin-bottom:.5rem;letter-spacing:.05em;font-style:italic}.doc-legal .margen-izq{display:grid;grid-template-columns:130px 1fr;gap:.5rem;font-size:12px}.doc-legal .margen-col{line-height:1.6;color:#444}.doc-legal .doc-cuerpo{text-align:justify}.campo-vacio{background:#FEF3C7;border-bottom:1px dashed #F59E0B;color:#92400E;padding:0 3px;border-radius:2px;font-style:italic;font-size:11px}.campo-ok{color:#1a1a1a;font-weight:600}.tv-box{background:#F0FFF4;border:1px solid #10B981;border-radius:4px;padding:1px 6px;font-family:'Courier New',monospace;font-size:12px;color:#065F46;font-weight:700}.firma-cbr{margin-top:2rem;border-top:1px solid #ccc;padding-top:1rem;text-align:center;font-size:12px;font-style:italic;color:#555}
+    .doc-acciones{display:flex;gap:.75rem;margin-top:1rem}.btn-imprimir{background:#0D1B3E;color:white;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}.btn-imprimir:disabled{background:#C1CBDF;cursor:not-allowed}.btn-enviar{background:#10B981;color:white;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;flex:1}.btn-enviar:disabled{background:#C1CBDF;cursor:not-allowed}
+    footer{background:#0D1B3E;padding:2rem;margin-top:3rem}.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}.footer-copy{font-size:12px;color:rgba(255,255,255,.35)}
+    @media print{nav,.breadcrumb,.form-panel,.page-header,.codigo-doc,.progreso-wrap,.doc-acciones,footer,.preview-header{display:none!important}.form-layout{display:block;padding:0}.preview-panel{position:static}.preview-card{border:none;padding:0;box-shadow:none}.doc-legal{border:none;background:white;font-size:11pt;padding:1cm;min-height:unset;max-height:unset;overflow:visible}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo-text" href="index.html">Notario<span>Go</span></a>
+  <div class="nav-links"><a href="index.html">Inicio</a><a href="tramites.html" class="active">Trámites</a><a href="mis-documentos.html">Mis documentos</a><a href="ayuda.html">Ayuda</a></div>
+  <div class="nav-actions"><a href="login.html" class="btn-outline">Ingresar / Cuenta</a><a href="tramites.html" class="btn-primary">Iniciar trámite</a></div>
+</nav>
+<div class="breadcrumb"><a href="tramites.html">Trámites</a><span>›</span>Inscripciones<span>›</span>Compraventa</div>
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-header-icon">🏠</div>
+    <div>
+      <h1>Inscripción — Compraventa</h1>
+      <p>Inscripción de compraventa de inmueble en el Conservador de Bienes Raíces</p>
+      <span class="header-badge">⚖️ Uso profesional</span>
+      <span class="header-badge-cbr">📋 CBR</span>
+    </div>
+  </div>
+</div>
+<div class="codigo-doc"><div class="codigo-label">Código</div><span id="codigo-display">Generando...</span></div>
+ 
+<div class="form-layout">
+<div class="form-panel">
+  <div class="progreso-wrap">
+    <div class="progreso-label"><span>Progreso</span><span id="progreso-pct">0%</span></div>
+    <div class="progreso-bar"><div class="progreso-fill" id="progreso-fill" style="width:0%"></div></div>
+  </div>
+ 
+  <!-- COMPRADOR -->
+  <div class="form-section">
+    <div class="form-section-title">👤 Comprador (adquirente)</div>
+    <div style="font-size:12px;font-weight:700;color:#3A4A6B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.5rem;">Tipo de persona</div>
+    <div class="persona-toggle">
+      <button class="persona-btn sel" id="btn-natural" onclick="setPersona('natural')">👤 Persona natural</button>
+      <button class="persona-btn" id="btn-juridica" onclick="setPersona('juridica')">🏢 Persona jurídica</button>
+    </div>
+    <!-- NATURAL -->
+    <div id="bloque-natural">
+      <div class="form-row single"><div class="form-group"><label>Nombre completo *</label><input type="text" id="nombre_comprador" placeholder="Ej: Mitzy Yessenia Villarroel Olave" oninput="actualizar()"/></div></div>
+      <div class="form-row">
+        <div class="form-group" id="g-rut_comprador"><label>RUT *</label><div class="rut-wrap"><input type="text" id="rut_comprador" placeholder="Ej: 17.934.705-9" oninput="onRUT(this,'g-rut_comprador')" maxlength="12"/><span class="rut-icon" id="icon-rut_comprador"></span></div><div class="error-msg" id="err-rut_comprador">RUT inválido</div><div class="valid-msg" id="ok-rut_comprador">✓ Válido</div></div>
+        <div class="form-group"><label>Nacionalidad *</label><select id="nacionalidad_comprador" onchange="actualizar()"><option value="">Seleccionar...</option><option value="chileno(a)">Chileno(a)</option><option value="argentino(a)">Argentino(a)</option><option value="peruano(a)">Peruano(a)</option><option value="colombiano(a)">Colombiano(a)</option><option value="venezolano(a)">Venezolano(a)</option><option value="español(a)">Español(a)</option><option value="otro">Otro</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Estado civil *</label><select id="estado_civil_comprador" onchange="actualizar()"><option value="">Seleccionar...</option><option value="soltero(a)">Soltero(a)</option><option value="casado(a)">Casado(a)</option><option value="casado(a), separado(a) totalmente de bienes">Casado(a), sep. bienes</option><option value="divorciado(a)">Divorciado(a)</option><option value="viudo(a)">Viudo(a)</option><option value="conviviente civil">Conviviente civil</option></select></div>
+        <div class="form-group"><label>Profesión u oficio *</label><input type="text" id="profesion_comprador" placeholder="Ej: comerciante, ingeniero" oninput="actualizar()"/></div>
+      </div>
+      <div class="form-row single"><div class="form-group"><label>Domicilio *</label><input type="text" id="domicilio_comprador" placeholder="Ej: de este domicilio / calle X N°123, comuna de Y" oninput="actualizar()"/></div></div>
+    </div>
+    <!-- JURÍDICA -->
+    <div id="bloque-juridica" style="display:none;">
+      <div class="form-row single"><div class="form-group"><label>Razón social *</label><input type="text" id="razon_social" placeholder="Ej: Sociedad de Inversiones Idecc Limitada" oninput="actualizar()"/></div></div>
+      <div class="form-row">
+        <div class="form-group" id="g-rut_empresa"><label>RUT empresa *</label><div class="rut-wrap"><input type="text" id="rut_empresa" placeholder="Ej: 76.495.694-K" oninput="onRUT(this,'g-rut_empresa')" maxlength="12"/><span class="rut-icon" id="icon-rut_empresa"></span></div><div class="error-msg" id="err-rut_empresa">RUT inválido</div><div class="valid-msg" id="ok-rut_empresa">✓ Válido</div></div>
+        <div class="form-group"><label>Giro *</label><input type="text" id="giro_empresa" placeholder="Ej: sociedad del giro de su denominación" oninput="actualizar()"/></div>
+      </div>
+      <div class="form-row single"><div class="form-group"><label>Representada por (nombre completo) *</label><input type="text" id="rep_nombre" placeholder="Ej: Mauricio Oliver Chacón Figueroa" oninput="actualizar()"/></div></div>
+      <div class="form-row">
+        <div class="form-group" id="g-rep_rut"><label>RUT representante *</label><div class="rut-wrap"><input type="text" id="rep_rut" placeholder="Ej: 9.870.721-2" oninput="onRUT(this,'g-rep_rut')" maxlength="12"/><span class="rut-icon" id="icon-rep_rut"></span></div><div class="error-msg" id="err-rep_rut">RUT inválido</div><div class="valid-msg" id="ok-rep_rut">✓ Válido</div></div>
+        <div class="form-group"><label>Estado civil rep. *</label><select id="rep_estado_civil" onchange="actualizar()"><option value="">Seleccionar...</option><option value="soltero(a)">Soltero(a)</option><option value="casado(a)">Casado(a)</option><option value="casado(a), separado(a) totalmente de bienes">Casado(a), sep. bienes</option><option value="divorciado(a)">Divorciado(a)</option><option value="viudo(a)">Viudo(a)</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Profesión representante *</label><input type="text" id="rep_profesion" placeholder="Ej: ingeniero" oninput="actualizar()"/></div>
+        <div class="form-group"><label>Domicilio empresa *</label><input type="text" id="rep_domicilio" placeholder="Ej: San Ignacio N°091-B, Quilicura" oninput="actualizar()"/></div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- VENDEDOR -->
+  <div class="form-section">
+    <div class="form-section-title">👤 Vendedor (enajenante)</div>
+    <div class="form-row single"><div class="form-group"><label>Nombre completo *</label><input type="text" id="nombre_vendedor" placeholder="Ej: Jéssica de las Mercedes Álvarez Pacheco" oninput="actualizar()"/></div></div>
+    <div class="form-row single"><div class="form-group"><label>Domicilio del vendedor</label><input type="text" id="domicilio_vendedor" placeholder="Ej: con domicilio en la comuna de San Miguel" oninput="actualizar()"/><div class="hint">Opcional — aparecerá en la escritura</div></div></div>
+  </div>
+ 
+  <!-- ESCRITURA -->
+  <div class="form-section">
+    <div class="form-section-title">📄 Escritura de compraventa</div>
+    <div class="form-row">
+      <div class="form-group"><label>Fecha de la escritura *</label><input type="date" id="fecha_escritura" oninput="actualizar()"/></div>
+      <div class="form-group"><label>N° de repertorio *</label><input type="text" id="repertorio_escritura" placeholder="Ej: 74845" oninput="actualizar()"/></div>
+    </div>
+    <div class="form-row single"><div class="form-group"><label>Notaría donde se otorgó *</label><input type="text" id="notaria" placeholder="Ej: 2ª Notaría de Santiago" oninput="actualizar()"/></div></div>
+    <div class="form-row single"><div class="form-group"><label>Nombre del Notario *</label><input type="text" id="nombre_notario" placeholder="Ej: Francisco Javier Leiva Carvajal" oninput="actualizar()"/></div></div>
+    <div class="form-row single"><div class="form-group"><label>Precio de la compraventa *</label><input type="text" id="precio_compraventa" placeholder="Ej: MIL TRESCIENTAS VEINTIDÓS UNIDADES DE FOMENTO" oninput="actualizar()"/><div class="hint">Escribe en letras mayúsculas tal como aparece en la escritura</div></div></div>
+  </div>
+ 
+  <!-- TÍTULO VIGENTE -->
+  <div class="form-section">
+    <div class="titulo-vigente-box">
+      <div class="titulo-vigente-label"><span>✅</span>Título vigente del vendedor</div>
+      <div class="titulo-alerta"><strong>⚠️ Atención — Dato crítico</strong>Cite el título que figura al <strong>margen izquierdo</strong> del documento (Fojas y N° en recuadros rojos). NO use el "título anterior" que aparece en el texto de la inscripción.</div>
+      <div class="form-row triple">
+        <div class="form-group"><label>Fojas *</label><input type="text" id="tv_fojas" placeholder="Ej: 74897" oninput="actualizar()"/></div>
+        <div class="form-group"><label>Número *</label><input type="text" id="tv_numero" placeholder="Ej: 104572" oninput="actualizar()"/></div>
+        <div class="form-group"><label>Año *</label><input type="text" id="tv_anio" placeholder="Ej: 2025" oninput="actualizar()" maxlength="4"/></div>
+      </div>
+      <div class="form-row single"><div class="form-group"><label>Conservador de Bienes Raíces *</label><input type="text" id="tv_cbr" placeholder="Ej: Conservador de Bienes Raíces de Santiago" oninput="actualizar()"/></div></div>
+    </div>
+  </div>
+ 
+  <!-- PROPIEDAD -->
+  <div class="form-section">
+    <div class="form-section-title">🏠 Descripción de la propiedad</div>
+    <div class="form-row single"><div class="form-group"><label>Descripción completa del inmueble *</label><textarea id="descripcion_propiedad" rows="3" placeholder="Ej: Departamento número cuatrocientos ochenta y dos del octavo piso, Edificio cuatro, del 'Condominio Atenas', con entrada principal por calle Cueto número mil trescientos veintidós, Comuna de Santiago..." oninput="actualizar()"></textarea></div></div>
+    <div style="font-size:12px;font-weight:700;color:#3A4A6B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.6rem;">Deslindes *</div>
+    <div class="deslinde-box">
+      <div class="deslinde-row"><div class="deslinde-label">NORTE</div><input type="text" class="deslinde-input" id="d_norte" placeholder="Ej: en sesenta y un metros con propiedad de don Roberto Yunge" oninput="actualizar()"/></div>
+      <div class="deslinde-row"><div class="deslinde-label">SUR</div><input type="text" class="deslinde-input" id="d_sur" placeholder="Ej: en sesenta y un metros con sitio de don Enrique Marconi" oninput="actualizar()"/></div>
+      <div class="deslinde-row"><div class="deslinde-label">ORIENTE</div><input type="text" class="deslinde-input" id="d_oriente" placeholder="Ej: en treinta y dos metros con calle Cueto" oninput="actualizar()"/></div>
+      <div class="deslinde-row"><div class="deslinde-label">PONIENTE</div><input type="text" class="deslinde-input" id="d_poniente" placeholder="Ej: en treinta y tres metros con calle Rafael Sotomayor" oninput="actualizar()"/></div>
+    </div>
+    <div class="form-row" style="margin-top:1rem;">
+      <div class="form-group"><label>Rol de avalúo *</label><input type="text" id="rol_avaluo" placeholder="Ej: 48-213" oninput="actualizar()"/></div>
+      <div class="form-group"><label>Comuna del rol *</label><input type="text" id="comuna_avaluo" placeholder="Ej: Santiago Oeste" oninput="actualizar()"/></div>
+    </div>
+  </div>
+ 
+  <!-- METADATA -->
+  <div class="form-section">
+    <div class="form-section-title">📍 Datos del CBR</div>
+    <div class="form-row">
+      <div class="form-group"><label>Ciudad *</label><input type="text" id="ciudad" placeholder="Ej: Santiago" oninput="actualizar()"/></div>
+      <div class="form-group"><label>Fecha de inscripción *</label><input type="date" id="fecha" oninput="actualizar()"/></div>
+    </div>
+    <div class="form-row single"><div class="form-group"><label>Requirente *</label><input type="text" id="requirente" placeholder="Ej: Banco de Crédito e Inversiones" oninput="actualizar()"/></div></div>
+    <div class="form-row single"><div class="form-group"><label>Firma del Conservador *</label><input type="text" id="firma_conservador" placeholder="Ej: LUIS MALDONADO C." oninput="actualizar()"/></div></div>
+  </div>
+ 
+  <div class="form-actions">
+    <button class="btn-limpiar" onclick="limpiarFormulario()">🗑 Limpiar</button>
+    <button class="btn-guardar" id="btn-guardar" onclick="guardarTramite()" disabled>✅ Guardar inscripción</button>
+  </div>
+</div>
+ 
+<!-- VISTA PREVIA -->
+<div class="preview-panel">
+  <div class="preview-card">
+    <div class="preview-header"><div class="preview-title">📋 Vista previa del documento CBR</div><div class="preview-badge incompleto" id="preview-badge">Incompleto</div></div>
+    <div class="doc-legal">
+      <div class="doc-codigo" id="doc-codigo"></div>
+      <div id="doc-cuerpo"></div>
+    </div>
+    <div class="doc-acciones">
+      <button class="btn-imprimir" id="btn-imprimir" onclick="window.print()" disabled>🖨 Imprimir</button>
+      <button class="btn-enviar" id="btn-enviar" onclick="guardarTramite()" disabled>📤 Enviar</button>
+    </div>
+  </div>
+</div>
+</div>
+ 
+<footer><div class="footer-bottom"><div class="footer-copy">© 2025 NotarioGO SpA · Santiago, Chile</div><div class="footer-copy">Conservador de Bienes Raíces</div></div></footer>
+<script src="js/jsonbin.js"></script><script src="js/app.js"></script>
+<script>
+  let codigoDoc='';
+  async function generarCodigo(){const f=new Date().toISOString().split('T')[0].replace(/-/g,'');try{const d=await JSONBIN.get('tramites');return`NOTAGO-${f}-${String((d.tramites||[]).length+1).padStart(7,'0')}`}catch(e){return`NOTAGO-${f}-${String(Date.now()).slice(-7)}`}}
+  generarCodigo().then(c=>{codigoDoc=c;document.getElementById('codigo-display').textContent=c;document.getElementById('doc-codigo').textContent=c});
+ 
+  let tipoPersona='natural';
+  function setPersona(tipo){
+    tipoPersona=tipo;
+    document.getElementById('bloque-natural').style.display=tipo==='natural'?'block':'none';
+    document.getElementById('bloque-juridica').style.display=tipo==='juridica'?'block':'none';
+    document.getElementById('btn-natural').classList.toggle('sel',tipo==='natural');
+    document.getElementById('btn-juridica').classList.toggle('sel',tipo==='juridica');
+    actualizar();
+  }
+ 
+  function calcularDV(r){let s=0,m=2;for(let i=r.length-1;i>=0;i--){s+=parseInt(r[i])*m;m=m<7?m+1:2}const x=s%11;return x===0?'0':x===1?'k':String(11-x)}
+  function validarRUT(r){const l=r.replace(/[.\-\s]/g,'').toLowerCase();if(l.length<2)return false;return/^\d+$/.test(l.slice(0,-1))&&calcularDV(l.slice(0,-1))===l.slice(-1)}
+  function formatRUT(r){const l=r.replace(/[^0-9kK]/g,'');if(l.length<2)return l;return l.slice(0,-1).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+'-'+l.slice(-1)}
+  function onRUT(input,gId){
+    input.value=formatRUT(input.value.replace(/[^0-9kK]/g,''));
+    const id=gId.replace('g-','');const g=document.getElementById(gId);const err=document.getElementById('err-'+id);const ok=document.getElementById('ok-'+id);const ic=document.getElementById('icon-'+id);
+    if(input.value.length<3){g.classList.remove('has-error','is-valid');if(err)err.style.display='none';if(ok)ok.style.display='none';if(ic)ic.textContent='';actualizar();return;}
+    const valid=validarRUT(input.value);g.classList.toggle('has-error',!valid);g.classList.toggle('is-valid',valid);
+    if(err)err.style.display=valid?'none':'block';if(ok)ok.style.display=valid?'block':'none';if(ic)ic.textContent=valid?'✅':'❌';
+    actualizar();
+  }
+ 
+  function numLetras(fecha){
+    if(!fecha)return null;
+    const[y,m,d]=fecha.split('-');
+    const dias=['','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez','once','doce','trece','catorce','quince','dieciséis','diecisiete','dieciocho','diecinueve','veinte','veintiuno','veintidós','veintitrés','veinticuatro','veinticinco','veintiséis','veintisiete','veintiocho','veintinueve','treinta','treinta y uno'];
+    const meses=['','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const anios={2020:'dos mil veinte',2021:'dos mil veintiuno',2022:'dos mil veintidós',2023:'dos mil veintitrés',2024:'dos mil veinticuatro',2025:'dos mil veinticinco',2026:'dos mil veintiséis',2027:'dos mil veintisiete'};
+    return`${dias[parseInt(d)]} de ${meses[parseInt(m)]} del año ${anios[parseInt(y)]||y}`;
+  }
+ 
+  function v(id){return document.getElementById(id)?.value?.trim()||''}
+  function campo(val,e){return val?`<span class="campo-ok">${val}</span>`:`<span class="campo-vacio">[${e}]</span>`}
+ 
+  document.addEventListener('DOMContentLoaded',()=>{document.getElementById('fecha').value=new Date().toISOString().split('T')[0];actualizar()});
+ 
+  function actualizar(){
+    const fechaLetras=v('fecha')?numLetras(v('fecha')):null;
+    const fechaEscLetras=v('fecha_escritura')?numLetras(v('fecha_escritura')):null;
+    const ciudad=v('ciudad');
+ 
+    // Identificador comprador
+    let idComprador='', nombreComprador='';
+    if(tipoPersona==='natural'){
+      nombreComprador=v('nombre_comprador');
+      const rut=v('rut_comprador');const nac=v('nacionalidad_comprador');const ec=v('estado_civil_comprador');const prof=v('profesion_comprador');const dom=v('domicilio_comprador');
+      idComprador=`${campo(nombreComprador,'nombre comprador')}, ${campo(nac,'nacionalidad')}, ${campo(ec,'estado civil')}, ${campo(prof,'profesión u oficio')}, C.I. ${campo(rut,'RUT')}, domiciliado en ${campo(dom,'domicilio')}`;
+    } else {
+      nombreComprador=v('razon_social');
+      const rute=v('rut_empresa');const giro=v('giro_empresa');const rep=v('rep_nombre');const rutr=v('rep_rut');const ec=v('rep_estado_civil');const prof=v('rep_profesion');const dom=v('rep_domicilio');
+      idComprador=`${campo(nombreComprador,'razón social')}, R.U.T. ${campo(rute,'RUT empresa')}, ${campo(giro,'giro')}, representada por don(ña) ${campo(rep,'representante')}, C.I. ${campo(rutr,'RUT rep.')}, ${campo(ec,'estado civil')}, ${campo(prof,'profesión')}, domiciliados en ${campo(dom,'domicilio')}`;
+    }
+ 
+    const vendedor=v('nombre_vendedor');const domVend=v('domicilio_vendedor');
+    const vendedorHTML=`${campo(vendedor,'nombre vendedor')}${domVend?`, ${domVend}`:''}`;
+ 
+    const desc=v('descripcion_propiedad');const norte=v('d_norte');const sur=v('d_sur');const oriente=v('d_oriente');const poniente=v('d_poniente');
+    const rol=v('rol_avaluo');const comunaRol=v('comuna_avaluo');
+    const tvFojas=v('tv_fojas');const tvNum=v('tv_numero');const tvAnio=v('tv_anio');const tvCbr=v('tv_cbr');
+    const not=v('notaria');const nomNot=v('nombre_notario');const rep=v('repertorio_escritura');const precio=v('precio_compraventa');
+    const requirente=v('requirente');const firma=v('firma_conservador');
+ 
+    const tvHTML=tvFojas&&tvNum&&tvAnio?`<span class="tv-box">Fojas ${tvFojas} Número ${tvNum} del año ${tvAnio}</span>${tvCbr?' del '+tvCbr:''}`:`<span class="campo-vacio">[TÍTULO VIGENTE — Fojas / N° / Año]</span>`;
+ 
+    // Fojas y N° para el margen izquierdo (mismo que título vigente)
+    const margenFojas=tvFojas||'[Fojas]';
+    const margenNum=tvNum||'[N°]';
+ 
+    document.getElementById('doc-cuerpo').innerHTML=`
+      <div style="text-align:center;font-weight:bold;font-size:15px;font-style:italic;margin-bottom:.75rem">Fojas ${margenFojas}</div>
+      <div style="display:grid;grid-template-columns:130px 1fr;gap:.5rem;font-size:12px;margin-bottom:1rem;line-height:1.7;color:#444">
+        <div><strong>N°${margenNum}</strong><br>${ciudad||'Santiago'}<br><br>COMPRAVENTA<br><br>${vendedor?vendedor.toUpperCase().split(' ').slice(0,3).join(' '):'[VENDEDOR]'}<br>A<br>${nombreComprador?nombreComprador.toUpperCase().split(' ').slice(0,3).join(' '):'[COMPRADOR]'}</div>
+        <div class="campo-ok" style="font-family:'Times New Roman',serif;font-size:13px;line-height:1.9;color:#1a1a1a">
+          <p>${campo(ciudad,'ciudad')}, ${fechaLetras?`<span class="campo-ok">${fechaLetras}</span>`:'<span class="campo-vacio">[fecha en letras]</span>'}.— ${idComprador}, es dueño(a) del inmueble correspondiente a: ${campo(desc,'descripción del inmueble')}, que deslinda: NORTE, ${campo(norte,'deslinde norte')}; SUR, ${campo(sur,'deslinde sur')}; ORIENTE, ${campo(oriente,'deslinde oriente')}; PONIENTE, ${campo(poniente,'deslinde poniente')}.— Adquirió por compra a ${vendedorHTML}, según escritura de fecha ${fechaEscLetras?`<span class="campo-ok">${fechaEscLetras}</span>`:'<span class="campo-vacio">[fecha escritura]</span>'}, otorgada en ${campo(not,'notaría')}, de don(ña) ${campo(nomNot,'nombre notario')}, Repertorio Número ${campo(rep,'N° repertorio')}, por el precio de ${campo(precio,'precio')}.— El título anterior está a ${tvHTML}.— Rol de avalúo número ${campo(rol,'rol')}, Comuna de ${campo(comunaRol,'comuna del rol')}.— Requirente: ${campo(requirente,'requirente')}.— ${campo(firma,'firma conservador')}.</p>
+        </div>
+      </div>
+      <div style="margin-top:1rem;border-top:1px solid #ddd;padding-top:.75rem;font-size:11px;color:#777;text-align:center;font-style:italic">CERTIFICO QUE LA PRESENTE COPIA ESTA CONFORME CON SU ORIGINAL DEL REGISTRO DE PROPIEDAD Y QUE LA INSCRIPCION QUE CONSTA EN ELLA SE ENCUENTRA VIGENTE AL ${fechaLetras||'[fecha]'}.— ${campo(ciudad,'ciudad')}, ${fechaLetras||'[fecha]'}.— ${campo(firma,'firma conservador')}</div>`;
+ 
+    // Calcular progreso
+    const camposOblig=['tv_fojas','tv_numero','tv_anio','tv_cbr','descripcion_propiedad','d_norte','d_sur','d_oriente','d_poniente','rol_avaluo','comuna_avaluo','fecha_escritura','repertorio_escritura','notaria','nombre_notario','precio_compraventa','nombre_vendedor','requirente','firma_conservador','ciudad','fecha'];
+    const camposPersona=tipoPersona==='natural'?['nombre_comprador','rut_comprador','nacionalidad_comprador','estado_civil_comprador','profesion_comprador','domicilio_comprador']:['razon_social','rut_empresa','giro_empresa','rep_nombre','rep_rut','rep_estado_civil','rep_profesion','rep_domicilio'];
+    const todos=[...camposOblig,...camposPersona];
+    const llenos=todos.filter(id=>v(id)!=='').length;
+    const pct=Math.round((llenos/todos.length)*100);
+    document.getElementById('progreso-fill').style.width=pct+'%';
+    document.getElementById('progreso-pct').textContent=pct+'%';
+    const completo=llenos===todos.length;
+    const badge=document.getElementById('preview-badge');
+    badge.textContent=completo?'✅ Completo':`${llenos}/${todos.length} campos`;
+    badge.className='preview-badge '+(completo?'completo':'incompleto');
+    document.getElementById('btn-guardar').disabled=!completo;
+    document.getElementById('btn-imprimir').disabled=!completo;
+    document.getElementById('btn-enviar').disabled=!completo;
+  }
+ 
+  function limpiarFormulario(){if(!confirm('¿Limpiar todos los campos?'))return;document.querySelectorAll('input,select,textarea').forEach(el=>{if(el.type==='checkbox')return;el.value='';el.className=el.className.replace(/has-error|is-valid/g,'')});document.querySelectorAll('.rut-icon').forEach(ic=>ic.textContent='');document.getElementById('fecha').value=new Date().toISOString().split('T')[0];actualizar()}
+ 
+  async function guardarTramite(){
+    const user=usuarioActual();if(!user)return window.location.href='login.html';
+    const btnG=document.getElementById('btn-guardar');const btnE=document.getElementById('btn-enviar');
+    btnG.disabled=true;btnG.textContent='⏳ Guardando...';if(btnE)btnE.disabled=true;
+    try{
+      const data=await JSONBIN.get('tramites');
+      const f={tipo_persona:tipoPersona,nombre_comprador:tipoPersona==='natural'?v('nombre_comprador'):v('razon_social'),rut_comprador:tipoPersona==='natural'?v('rut_comprador'):v('rut_empresa'),nombre_vendedor:v('nombre_vendedor'),titulo_vigente:`Fojas ${v('tv_fojas')} N° ${v('tv_numero')} del año ${v('tv_anio')}`,tv_cbr:v('tv_cbr'),descripcion_propiedad:v('descripcion_propiedad'),deslindes:{norte:v('d_norte'),sur:v('d_sur'),oriente:v('d_oriente'),poniente:v('d_poniente')},rol_avaluo:v('rol_avaluo'),comuna_avaluo:v('comuna_avaluo'),notaria:v('notaria'),nombre_notario:v('nombre_notario'),repertorio_escritura:v('repertorio_escritura'),precio_compraventa:v('precio_compraventa'),requirente:v('requirente'),firma_conservador:v('firma_conservador'),ciudad:v('ciudad'),fecha:v('fecha')};
+      const tramite={id:Date.now(),codigo:codigoDoc,usuarioId:user.id,usuarioNombre:user.nombre,usuarioEmail:user.email,tipo:'Inscripción — Compraventa',emoji:'🏠',estado:'Pendiente',fecha:new Date().toISOString(),formulario:f};
+      data.tramites.push(tramite);await JSONBIN.set('tramites',data);
+      alert(`✅ Inscripción guardada.\nCódigo: ${codigoDoc}`);window.location.href='mis-documentos.html';
+    }catch(e){alert('Error al guardar.');btnG.disabled=false;btnG.textContent='✅ Guardar inscripción';if(btnE)btnE.disabled=false;}
+  }
+</script>
+</body>
+</html>
