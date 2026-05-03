@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NotarioGO — Inscripción: Posesión Efectiva</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    .nav-logo-text{font-size:22px;font-weight:800;color:#0D1B3E;text-decoration:none;letter-spacing:-.5px}.nav-logo-text span{color:#3B8BFF}body{background:#F7F9FC}.breadcrumb{background:white;border-bottom:1px solid #EEF2F9;padding:.875rem 2rem;font-size:13px;color:#7888A8}.breadcrumb a{color:#1E6FE8;text-decoration:none;font-weight:600}.breadcrumb span{margin:0 .5rem}.page-header{background:#0D1B3E;padding:2.5rem 2rem}.page-header-inner{max-width:1300px;margin:0 auto;display:flex;align-items:center;gap:1.5rem}.page-header-icon{width:56px;height:56px;background:rgba(255,255,255,.1);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}.page-header h1{font-family:'DM Serif Display',serif;font-size:1.8rem;color:white;margin-bottom:.25rem}.page-header p{color:rgba(255,255,255,.6);font-size:14px}.header-badge{background:rgba(255,184,0,.2);border:1px solid rgba(255,184,0,.4);color:#FFB800;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.05em;margin-top:.5rem;display:inline-block}.header-badge-cbr{background:rgba(139,92,246,.2);border:1px solid rgba(139,92,246,.4);color:#8B5CF6;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.05em;margin-top:.5rem;margin-left:.5rem;display:inline-block}.codigo-doc{background:#0D1B3E;color:white;padding:1rem 2rem;display:flex;align-items:center;justify-content:center;gap:1rem;font-family:'Courier New',monospace;font-size:15px;font-weight:700;letter-spacing:.08em;border-top:1px solid rgba(255,255,255,.1)}.codigo-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:rgba(255,255,255,.55);font-weight:600;letter-spacing:.04em;text-transform:uppercase}.form-layout{max-width:1300px;margin:0 auto;padding:2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}@media(max-width:960px){.form-layout{grid-template-columns:1fr}}.form-panel{background:white;border:2px solid #EEF2F9;border-radius:16px;padding:2rem;box-shadow:0 2px 8px rgba(13,27,62,.06)}.form-section{margin-bottom:1.75rem}.form-section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1E6FE8;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid #E6F0FF;display:flex;align-items:center;gap:8px}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.form-row.single{grid-template-columns:1fr}.form-row.triple{grid-template-columns:1fr 1fr 1fr}.form-group{margin-bottom:1rem}.form-group label{display:block;font-size:12px;font-weight:700;color:#3A4A6B;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.04em}.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 14px;border:1.5px solid #C1CBDF;border-radius:8px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:#0D1B3E;outline:none;transition:border-color .2s;box-sizing:border-box;background:white}.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#1E6FE8;box-shadow:0 0 0 3px rgba(30,111,232,.1)}.form-group .hint{font-size:11px;color:#7888A8;margin-top:.3rem}.rut-wrap{position:relative}.rut-wrap input{padding-right:36px}.rut-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none}
+    .titulo-vigente-box{background:#F0FFF4;border:2px solid #10B981;border-radius:12px;padding:1.25rem;margin-bottom:1rem}.titulo-vigente-label{font-size:12px;font-weight:800;color:#065F46;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+    .herederos-list{display:flex;flex-direction:column;gap:.75rem;margin-bottom:.75rem}.heredero-item{background:#F7F9FC;border:1.5px solid #EEF2F9;border-radius:10px;padding:1rem;position:relative}.heredero-num{font-size:11px;font-weight:700;color:#7888A8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem}.btn-remove-heredero{position:absolute;top:.75rem;right:.75rem;background:#FEE2E2;color:#991B1B;border:none;border-radius:6px;width:26px;height:26px;font-size:14px;cursor:pointer;transition:all .2s}.btn-remove-heredero:hover{background:#EF4444;color:white}.btn-add-heredero{background:#E6F0FF;color:#1E40AF;border:1.5px dashed #1E6FE8;border-radius:10px;padding:.875rem;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;width:100%;text-align:center;transition:all .2s;box-sizing:border-box}.btn-add-heredero:hover{background:#1E6FE8;color:white;border-style:solid}
+    .bienes-list{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem}.bien-item{display:flex;gap:.5rem;align-items:center}.bien-input{flex:1;padding:9px 12px;border:1.5px solid #C1CBDF;border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;color:#0D1B3E;outline:none;box-sizing:border-box}.bien-input:focus{border-color:#1E6FE8}.btn-remove-bien{background:#FEE2E2;color:#991B1B;border:none;border-radius:6px;width:28px;height:28px;font-size:14px;cursor:pointer;flex-shrink:0}.btn-remove-bien:hover{background:#EF4444;color:white}.btn-add-bien{background:#F7F9FC;color:#3A4A6B;border:1.5px dashed #C1CBDF;border-radius:8px;padding:.6rem;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;width:100%;text-align:center;transition:all .2s;box-sizing:border-box}.btn-add-bien:hover{border-color:#1E6FE8;color:#1E6FE8}
+    .progreso-wrap{margin-bottom:1.5rem}.progreso-label{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:#7888A8;margin-bottom:.5rem}.progreso-bar{height:6px;background:#EEF2F9;border-radius:100px;overflow:hidden}.progreso-fill{height:100%;background:linear-gradient(90deg,#8B5CF6,#1E6FE8);border-radius:100px;transition:width .3s}
+    .form-actions{display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}.btn-limpiar{background:white;color:#7888A8;border:1.5px solid #C1CBDF;border-radius:8px;padding:11px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}.btn-guardar{background:#1E6FE8;color:white;border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;box-shadow:0 4px 14px rgba(30,111,232,.35);flex:1}.btn-guardar:hover{background:#1458C4}.btn-guardar:disabled{background:#C1CBDF;box-shadow:none;cursor:not-allowed}
+    .preview-panel{position:sticky;top:80px}.preview-card{background:white;border:2px solid #EEF2F9;border-radius:16px;padding:2rem;box-shadow:0 2px 8px rgba(13,27,62,.06)}.preview-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:.5rem}.preview-title{font-size:14px;font-weight:700;color:#0D1B3E}.preview-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}.preview-badge.completo{background:#D1FAE5;color:#065F46}.preview-badge.incompleto{background:#FEF3C7;color:#92400E}
+    .doc-legal{font-family:'Times New Roman',Times,serif;font-size:12.5px;line-height:1.85;color:#1a1a1a;background:#FAFAFA;border:1px solid #E0E0E0;border-radius:8px;padding:1.5rem;min-height:480px;max-height:640px;overflow-y:auto}.doc-legal .doc-codigo{font-family:'Courier New',monospace;font-size:11px;color:#7888A8;text-align:right;margin-bottom:1rem}.campo-vacio{background:#FEF3C7;border-bottom:1px dashed #F59E0B;color:#92400E;padding:0 3px;border-radius:2px;font-style:italic;font-size:11px}.campo-ok{color:#1a1a1a;font-weight:600}.tv-box{background:#F0FFF4;border:1px solid #10B981;border-radius:4px;padding:1px 6px;font-family:'Courier New',monospace;font-size:12px;color:#065F46;font-weight:700}
+    .doc-acciones{display:flex;gap:.75rem;margin-top:1rem}.btn-imprimir{background:#0D1B3E;color:white;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}.btn-imprimir:disabled{background:#C1CBDF;cursor:not-allowed}.btn-enviar{background:#10B981;color:white;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;flex:1}.btn-enviar:disabled{background:#C1CBDF;cursor:not-allowed}
+    footer{background:#0D1B3E;padding:2rem;margin-top:3rem}.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}.footer-copy{font-size:12px;color:rgba(255,255,255,.35)}
+    @media print{nav,.breadcrumb,.form-panel,.page-header,.codigo-doc,.progreso-wrap,.doc-acciones,footer,.preview-header{display:none!important}.form-layout{display:block;padding:0}.preview-panel{position:static}.preview-card{border:none;padding:0;box-shadow:none}.doc-legal{border:none;background:white;font-size:11pt;padding:1cm;min-height:unset;max-height:unset;overflow:visible}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo-text" href="index.html">Notario<span>Go</span></a>
+  <div class="nav-links"><a href="index.html">Inicio</a><a href="tramites.html" class="active">Trámites</a><a href="mis-documentos.html">Mis documentos</a><a href="ayuda.html">Ayuda</a></div>
+  <div class="nav-actions"><a href="login.html" class="btn-outline">Ingresar / Cuenta</a><a href="tramites.html" class="btn-primary">Iniciar trámite</a></div>
+</nav>
+<div class="breadcrumb"><a href="tramites.html">Trámites</a><span>›</span>Inscripciones<span>›</span>Posesión efectiva</div>
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-header-icon">📜</div>
+    <div>
+      <h1>Inscripción — Posesión Efectiva</h1>
+      <p>Certificación de inscripción de resolución de posesión efectiva</p>
+      <span class="header-badge">⚖️ Uso profesional</span>
+      <span class="header-badge-cbr">📋 CBR</span>
+    </div>
+  </div>
+</div>
+<div class="codigo-doc"><div class="codigo-label">Código</div><span id="codigo-display">Generando...</span></div>
+ 
+<div class="form-layout">
+<div class="form-panel">
+  <div class="progreso-wrap">
+    <div class="progreso-label"><span>Progreso</span><span id="progreso-pct">0%</span></div>
+    <div class="progreso-bar"><div class="progreso-fill" id="progreso-fill" style="width:0%"></div></div>
+  </div>
+ 
+  <!-- CAUSANTE -->
+  <div class="form-section">
+    <div class="form-section-title">⚰️ Causante</div>
+    <div class="form-row single"><div class="form-group"><label>Nombre completo *</label><input type="text" id="nombre_causante" placeholder="Ej: José Fermín Cáceres Alarcón" oninput="actualizar()"/></div></div>
+    <div class="form-row">
+      <div class="form-group" id="g-rut_causante"><label>RUT *</label><div class="rut-wrap"><input type="text" id="rut_causante" placeholder="Ej: 5.758.211-1" oninput="onRUT(this,'g-rut_causante')" maxlength="12"/><span class="rut-icon" id="icon-rut_causante"></span></div><div class="error-msg" id="err-rut_causante" style="display:none;font-size:11px;color:#EF4444">RUT inválido</div><div class="valid-msg" id="ok-rut_causante" style="display:none;font-size:11px;color:#10B981">✓ Válido</div></div>
+      <div class="form-group"><label>Estado civil (era) *</label><select id="ec_causante" onchange="actualizar()"><option value="">Seleccionar...</option><option value="soltero(a)">Soltero(a)</option><option value="casado(a)">Casado(a)</option><option value="viudo(a)">Viudo(a)</option><option value="divorciado(a)">Divorciado(a)</option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Fecha de fallecimiento *</label><input type="date" id="fecha_fallecimiento" oninput="actualizar()"/></div>
+      <div class="form-group"><label>Región Metropolitana *</label><input type="text" id="region" placeholder="Ej: Región Metropolitana de Santiago" oninput="actualizar()"/></div>
+    </div>
+    <div class="form-row single"><div class="form-group"><label>Último domicilio *</label><input type="text" id="ultimo_domicilio" placeholder="Ej: Los Tilos 139, Quilicura, Región Metropolitana" oninput="actualizar()"/></div></div>
+  </div>
+ 
+  <!-- RESOLUCIÓN -->
+  <div class="form-section">
+    <div class="form-section-title">📋 Resolución de posesión efectiva</div>
+    <div class="form-row">
+      <div class="form-group"><label>N° de resolución *</label><input type="text" id="num_resolucion" placeholder="Ej: 79.111" oninput="actualizar()"/></div>
+      <div class="form-group"><label>Fecha de resolución *</label><input type="date" id="fecha_resolucion" oninput="actualizar()"/></div>
+    </div>
+    <div class="form-row single"><div class="form-group"><label>Director Regional / Servicio *</label><input type="text" id="director_regional" placeholder="Ej: Director Regional Región Metropolitana de Santiago del Servicio del Registro Civil e Identificación de Chile" oninput="actualizar()"/></div></div>
+    <div style="font-size:12px;font-weight:700;color:#3A4A6B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.5rem;margin-top:.5rem;">N° inscripción en repertorio *</div>
+    <div class="form-row">
+      <div class="form-group"><label>N° repertorio CBR *</label><input type="text" id="num_repertorio" placeholder="Ej: 96332" oninput="actualizar()"/></div>
+      <div class="form-group"><label>Año repertorio *</label><input type="text" id="anio_repertorio" placeholder="Ej: 2025" oninput="actualizar()" maxlength="4"/></div>
+    </div>
+  </div>
+ 
+  <!-- INSCRIPCIONES -->
+  <div class="form-section">
+    <div class="titulo-vigente-box">
+      <div class="titulo-vigente-label"><span>✅</span>Inscripciones practicadas</div>
+      <div style="font-size:12px;font-weight:700;color:#065F46;margin-bottom:.5rem;">Posesión efectiva (Registro de Propiedad)</div>
+      <div class="form-row triple">
+        <div class="form-group"><label>Fojas *</label><input type="text" id="pe_fojas" placeholder="Ej: 84414" oninput="actualizar()"/></div>
+        <div class="form-group"><label>Número *</label><input type="text" id="pe_numero" placeholder="Ej: 117869" oninput="actualizar()"/></div>
+        <div class="form-group"><label>Año *</label><input type="text" id="pe_anio" placeholder="Ej: 2025" oninput="actualizar()" maxlength="4"/></div>
+      </div>
+      <div style="font-size:12px;font-weight:700;color:#065F46;margin:.75rem 0 .5rem;">Herencia</div>
+      <div class="form-row triple">
+        <div class="form-group"><label>Fojas *</label><input type="text" id="h_fojas" placeholder="Ej: 84415" oninput="actualizar()"/></div>
+        <div class="form-group"><label>Número *</label><input type="text" id="h_numero" placeholder="Ej: 117870" oninput="actualizar()"/></div>
+        <div class="form-group"><label>Año *</label><input type="text" id="h_anio" placeholder="Ej: 2025" oninput="actualizar()" maxlength="4"/></div>
+      </div>
+      <div class="form-row single" style="margin-top:.75rem;"><div class="form-group"><label>CBR donde se inscribe *</label><input type="text" id="cbr_inscripcion" placeholder="Ej: Conservador de Bienes Raíces de Santiago" oninput="actualizar()"/></div></div>
+    </div>
+  </div>
+ 
+  <!-- HEREDEROS -->
+  <div class="form-section">
+    <div class="form-section-title">👨‍👩‍👧‍👦 Herederos</div>
+    <div id="herederos-list"></div>
+    <button class="btn-add-heredero" onclick="agregarHeredero()">+ Agregar heredero</button>
+  </div>
+ 
+  <!-- BIENES -->
+  <div class="form-section">
+    <div class="form-section-title">🏠 Bienes del inventario</div>
+    <div id="bienes-list"></div>
+    <button class="btn-add-bien" onclick="agregarBien()">+ Agregar bien</button>
+  </div>
+ 
+  <!-- METADATA -->
+  <div class="form-section">
+    <div class="form-section-title">📍 Datos del CBR</div>
+    <div class="form-row">
+      <div class="form-group"><label>Ciudad *</label><input type="text" id="ciudad" placeholder="Ej: Santiago" oninput="actualizar()"/></div>
+      <div class="form-group"><label>Fecha de certificación *</label><input type="date" id="fecha" oninput="actualizar()"/></div>
+    </div>
+    <div class="form-row single"><div class="form-group"><label>Requirente *</label><input type="text" id="requirente" placeholder="Ej: José Reynaldo Salazar Arcuch" oninput="actualizar()"/></div></div>
+    <div class="form-row single"><div class="form-group"><label>Firma del Conservador *</label><input type="text" id="firma_conservador" placeholder="Ej: Luis Maldonado C." oninput="actualizar()"/></div></div>
+  </div>
+ 
+  <div class="form-actions">
+    <button class="btn-limpiar" onclick="limpiarFormulario()">🗑 Limpiar</button>
+    <button class="btn-guardar" id="btn-guardar" onclick="guardarTramite()" disabled>✅ Guardar inscripción</button>
+  </div>
+</div>
+ 
+<!-- PREVIEW -->
+<div class="preview-panel">
+  <div class="preview-card">
+    <div class="preview-header"><div class="preview-title">📋 Vista previa — Posesión Efectiva CBR</div><div class="preview-badge incompleto" id="preview-badge">Incompleto</div></div>
+    <div class="doc-legal"><div class="doc-codigo" id="doc-codigo"></div><div id="doc-cuerpo"></div></div>
+    <div class="doc-acciones">
+      <button class="btn-imprimir" id="btn-imprimir" onclick="window.print()" disabled>🖨 Imprimir</button>
+      <button class="btn-enviar" id="btn-enviar" onclick="guardarTramite()" disabled>📤 Enviar</button>
+    </div>
+  </div>
+</div>
+</div>
+ 
+<footer><div class="footer-bottom"><div class="footer-copy">© 2025 NotarioGO SpA · Santiago, Chile</div><div class="footer-copy">Conservador de Bienes Raíces</div></div></footer>
+<script src="js/jsonbin.js"></script><script src="js/app.js"></script>
+<script>
+  let codigoDoc='';
+  async function generarCodigo(){const f=new Date().toISOString().split('T')[0].replace(/-/g,'');try{const d=await JSONBIN.get('tramites');return`NOTAGO-${f}-${String((d.tramites||[]).length+1).padStart(7,'0')}`}catch(e){return`NOTAGO-${f}-${String(Date.now()).slice(-7)}`}}
+  generarCodigo().then(c=>{codigoDoc=c;document.getElementById('codigo-display').textContent=c;document.getElementById('doc-codigo').textContent=c});
+ 
+  let herederos=[{nombre:'',rut:'',calidad:''}];
+  let bienes=[''];
+ 
+  function calcularDV(r){let s=0,m=2;for(let i=r.length-1;i>=0;i--){s+=parseInt(r[i])*m;m=m<7?m+1:2}const x=s%11;return x===0?'0':x===1?'k':String(11-x)}
+  function validarRUT(r){const l=r.replace(/[.\-\s]/g,'').toLowerCase();if(l.length<2)return false;return/^\d+$/.test(l.slice(0,-1))&&calcularDV(l.slice(0,-1))===l.slice(-1)}
+  function formatRUT(r){const l=r.replace(/[^0-9kK]/g,'');if(l.length<2)return l;return l.slice(0,-1).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+'-'+l.slice(-1)}
+  function onRUT(input,gId){input.value=formatRUT(input.value.replace(/[^0-9kK]/g,''));const id=gId.replace('g-','');const g=document.getElementById(gId);const err=document.getElementById('err-'+id);const ok=document.getElementById('ok-'+id);const ic=document.getElementById('icon-'+id);if(!g){actualizar();return;}if(input.value.length<3){g.classList.remove('has-error','is-valid');if(err)err.style.display='none';if(ok)ok.style.display='none';if(ic)ic.textContent='';actualizar();return;}const valid=validarRUT(input.value);g.classList.toggle('has-error',!valid);g.classList.toggle('is-valid',valid);if(err)err.style.display=valid?'none':'block';if(ok)ok.style.display=valid?'block':'none';if(ic)ic.textContent=valid?'✅':'❌';actualizar()}
+  function numLetras(fecha){if(!fecha)return null;const[y,m,d]=fecha.split('-');const dias=['','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez','once','doce','trece','catorce','quince','dieciséis','diecisiete','dieciocho','diecinueve','veinte','veintiuno','veintidós','veintitrés','veinticuatro','veinticinco','veintiséis','veintisiete','veintiocho','veintinueve','treinta','treinta y uno'];const meses=['','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];const anios={2020:'dos mil veinte',2021:'dos mil veintiuno',2022:'dos mil veintidós',2023:'dos mil veintitrés',2024:'dos mil veinticuatro',2025:'dos mil veinticinco',2026:'dos mil veintiséis',2027:'dos mil veintisiete'};return`${dias[parseInt(d)]} de ${meses[parseInt(m)]} del año ${anios[parseInt(y)]||y}`}
+  function v(id){return document.getElementById(id)?.value?.trim()||''}
+  function campo(val,e){return val?`<span class="campo-ok">${val}</span>`:`<span class="campo-vacio">[${e}]</span>`}
+ 
+  function renderHerederos(){
+    const c=document.getElementById('herederos-list');
+    c.innerHTML=herederos.map((h,i)=>`<div class="heredero-item"><div class="heredero-num">Heredero ${i+1}</div>${herederos.length>1?`<button class="btn-remove-heredero" onclick="quitarHeredero(${i})">✕</button>`:''}<div class="form-row single"><div class="form-group"><label>Nombre *</label><input type="text" value="${h.nombre}" placeholder="Ej: Alex Enrique Cáceres Riffo" oninput="herederos[${i}].nombre=this.value;actualizar()"/></div></div><div class="form-row"><div class="form-group"><label>RUT *</label><input type="text" value="${h.rut}" placeholder="Ej: 13.058.374-1" oninput="herederos[${i}].rut=formatRUT(this.value.replace(/[^0-9kK]/g,''));this.value=herederos[${i}].rut;actualizar()" maxlength="12"/></div><div class="form-group"><label>Calidad *</label><select onchange="herederos[${i}].calidad=this.value;actualizar()"><option value="">Seleccionar...</option><option value="hijo" ${h.calidad==='hijo'?'selected':''}>Hijo</option><option value="hija" ${h.calidad==='hija'?'selected':''}>Hija</option><option value="cónyuge" ${h.calidad==='cónyuge'?'selected':''}>Cónyuge</option><option value="conviviente civil" ${h.calidad==='conviviente civil'?'selected':''}>Conviviente civil</option><option value="padre" ${h.calidad==='padre'?'selected':''}>Padre</option><option value="madre" ${h.calidad==='madre'?'selected':''}>Madre</option><option value="hermano(a)" ${h.calidad==='hermano(a)'?'selected':''}>Hermano(a)</option><option value="nieto(a)" ${h.calidad==='nieto(a)'?'selected':''}>Nieto(a)</option></select></div></div></div>`).join('')}
+  function agregarHeredero(){herederos.push({nombre:'',rut:'',calidad:''});renderHerederos();actualizar()}
+  function quitarHeredero(i){if(herederos.length<=1)return;herederos.splice(i,1);renderHerederos();actualizar()}
+ 
+  function renderBienes(){
+    const c=document.getElementById('bienes-list');
+    c.innerHTML=bienes.map((b,i)=>`<div class="bien-item"><input type="text" class="bien-input" value="${b}" placeholder="Ej: Propiedad Rol N° 861-15, comuna de Quilicura, inscrita a Fojas 104518 N° 146653, año 2024" oninput="bienes[${i}]=this.value;actualizar()"/>${bienes.length>1?`<button class="btn-remove-bien" onclick="quitarBien(${i})">✕</button>`:''}</div>`).join('')}
+  function agregarBien(){bienes.push('');renderBienes();actualizar()}
+  function quitarBien(i){if(bienes.length<=1)return;bienes.splice(i,1);renderBienes();actualizar()}
+ 
+  document.addEventListener('DOMContentLoaded',()=>{document.getElementById('fecha').value=new Date().toISOString().split('T')[0];renderHerederos();renderBienes();actualizar()});
+ 
+  function actualizar(){
+    const fechaL=v('fecha')?numLetras(v('fecha')):null;
+    const fechaFall=v('fecha_fallecimiento')?numLetras(v('fecha_fallecimiento')):null;
+    const fechaRes=v('fecha_resolucion')?numLetras(v('fecha_resolucion')):null;
+    const ciudad=v('ciudad');
+    const causante=v('nombre_causante');const rutCaus=v('rut_causante');const ecCaus=v('ec_causante');
+    const numRes=v('num_resolucion');const dir=v('director_regional');
+    const numRep=v('num_repertorio');const anioRep=v('anio_repertorio');
+    const peFojas=v('pe_fojas');const peNum=v('pe_numero');const peAnio=v('pe_anio');
+    const hFojas=v('h_fojas');const hNum=v('h_numero');const hAnio=v('h_anio');
+    const cbrIns=v('cbr_inscripcion');
+    const req=v('requirente');const firma=v('firma_conservador');const dom=v('ultimo_domicilio');const region=v('region');
+ 
+    const listaH=herederos.map(h=>`don (doña) ${h.nombre?`<span class="campo-ok">${h.nombre}</span>`:'<span class="campo-vacio">[nombre]</span>'}, C.I. ${h.rut?`<span class="campo-ok">${h.rut}</span>`:'<span class="campo-vacio">[RUT]</span>'}, en calidad de ${h.calidad?`<span class="campo-ok">${h.calidad}</span>`:'<span class="campo-vacio">[calidad]</span>'}`).join('; ');
+    const listaBienes=bienes.map((b,i)=>`<li>${b?`<span class="campo-ok">${b}</span>`:`<span class="campo-vacio">[bien ${i+1}]</span>`}</li>`).join('');
+    const tvPE=peFojas&&peNum&&peAnio?`<span class="tv-box">Fojas ${peFojas} N° ${peNum} del año ${peAnio}</span>`:`<span class="campo-vacio">[Fojas PE / N° / Año]</span>`;
+    const tvH=hFojas&&hNum&&hAnio?`<span class="tv-box">Fojas ${hFojas} N° ${hNum} del año ${hAnio}</span>`:`<span class="campo-vacio">[Fojas Herencia / N° / Año]</span>`;
+ 
+    document.getElementById('doc-cuerpo').innerHTML=`
+      <div style="text-align:center;font-weight:bold;font-size:13px;text-transform:uppercase;margin-bottom:1rem;text-decoration:underline">Certificación de Inscripción de Resolución de Posesión Efectiva</div>
+      <div style="text-align:center;font-weight:bold;font-size:15px;margin-bottom:.75rem">${cbrIns||'[CBR]'}</div>
+      <p>El ${campo(cbrIns,'CBR')} que suscribe, certifica que la Resolución Exenta de Posesión Efectiva número <span class="campo-ok">${numRes||'[N° resolución]'}</span>, de fecha ${fechaRes?`<span class="campo-ok">${fechaRes}</span>`:'<span class="campo-vacio">[fecha resolución]</span>'}, concedida por el ${campo(dir,'Director Regional')}, fue presentada para inscripción, anotándose en el libro de repertorio bajo el número ${campo(numRep,'N° repertorio')} del año ${campo(anioRep,'año')}.</p>
+      <p style="margin-top:.75rem">Causante: don (doña) ${campo(causante,'nombre causante')}, C.I. ${campo(rutCaus,'RUT')}, ${ecCaus?`<span class="campo-ok">${ecCaus}</span>`:''}, fallecido(a) el ${fechaFall?`<span class="campo-ok">${fechaFall}</span>`:'<span class="campo-vacio">[fecha fallecimiento]</span>'}, con último domicilio en ${campo(dom,'domicilio')}.</p>
+      <p style="margin-top:.75rem">Herederos: ${listaH}.</p>
+      <p style="margin-top:.75rem">Bienes del inventario:</p><ul style="margin:.25rem 0 .75rem 1.5rem;font-size:12.5px">${listaBienes}</ul>
+      <p>Inscripciones practicadas:</p>
+      <ul style="margin:.25rem 0 .75rem 1.5rem;font-size:12.5px">
+        <li>Registro de Propiedad (Posesión efectiva): ${tvPE}</li>
+        <li>Herencia: ${tvH}</li>
+      </ul>
+      <p style="margin-top:.75rem">En ${campo(ciudad,'ciudad')}, a ${fechaL?`<span class="campo-ok">${fechaL}</span>`:'<span class="campo-vacio">[fecha]</span>'}.— Requirente: ${campo(req,'requirente')}.— ${campo(firma,'firma conservador')}.</p>`;
+ 
+    const obligF=['nombre_causante','rut_causante','ec_causante','fecha_fallecimiento','region','ultimo_domicilio','num_resolucion','fecha_resolucion','director_regional','num_repertorio','anio_repertorio','pe_fojas','pe_numero','pe_anio','h_fojas','h_numero','h_anio','cbr_inscripcion','requirente','firma_conservador','ciudad','fecha'];
+    const lF=obligF.filter(id=>v(id)!=='').length;
+    const lH=herederos.filter(h=>h.nombre&&h.rut&&h.calidad).length;
+    const lB=bienes.filter(b=>b.trim()!=='').length;
+    const total=obligF.length+herederos.length+bienes.length;
+    const llenos=lF+lH+lB;
+    const pct=Math.round((llenos/total)*100);
+    document.getElementById('progreso-fill').style.width=pct+'%';document.getElementById('progreso-pct').textContent=pct+'%';
+    const completo=llenos===total;
+    const badge=document.getElementById('preview-badge');badge.textContent=completo?'✅ Completo':`${llenos}/${total} campos`;badge.className='preview-badge '+(completo?'completo':'incompleto');
+    document.getElementById('btn-guardar').disabled=!completo;document.getElementById('btn-imprimir').disabled=!completo;document.getElementById('btn-enviar').disabled=!completo;
+  }
+ 
+  function limpiarFormulario(){if(!confirm('¿Limpiar?'))return;document.querySelectorAll('input,select,textarea').forEach(el=>{if(el.type!=='checkbox')el.value=''});herederos=[{nombre:'',rut:'',calidad:''}];bienes=[''];renderHerederos();renderBienes();document.getElementById('fecha').value=new Date().toISOString().split('T')[0];actualizar()}
+  async function guardarTramite(){const user=usuarioActual();if(!user)return window.location.href='login.html';const btnG=document.getElementById('btn-guardar');btnG.disabled=true;btnG.textContent='⏳ Guardando...';try{const data=await JSONBIN.get('tramites');const f={nombre_causante:v('nombre_causante'),rut_causante:v('rut_causante'),ec_causante:v('ec_causante'),fecha_fallecimiento:v('fecha_fallecimiento'),ultimo_domicilio:v('ultimo_domicilio'),num_resolucion:v('num_resolucion'),fecha_resolucion:v('fecha_resolucion'),director_regional:v('director_regional'),num_repertorio:v('num_repertorio'),anio_repertorio:v('anio_repertorio'),inscripcion_pe:`Fojas ${v('pe_fojas')} N° ${v('pe_numero')} año ${v('pe_anio')}`,inscripcion_herencia:`Fojas ${v('h_fojas')} N° ${v('h_numero')} año ${v('h_anio')}`,cbr_inscripcion:v('cbr_inscripcion'),herederos:herederos.map(h=>({...h})),bienes:[...bienes],requirente:v('requirente'),firma_conservador:v('firma_conservador'),ciudad:v('ciudad'),fecha:v('fecha'),nombre_otorgante:v('nombre_causante')};const tramite={id:Date.now(),codigo:codigoDoc,usuarioId:user.id,usuarioNombre:user.nombre,usuarioEmail:user.email,tipo:'Inscripción — Posesión efectiva',emoji:'📜',estado:'Pendiente',fecha:new Date().toISOString(),formulario:f};data.tramites.push(tramite);await JSONBIN.set('tramites',data);alert(`✅ Guardado.\nCódigo: ${codigoDoc}`);window.location.href='mis-documentos.html'}catch(e){alert('Error al guardar.');btnG.disabled=false;btnG.textContent='✅ Guardar inscripción'}}
+</script>
+</body>
+</html>
