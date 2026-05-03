@@ -70,7 +70,7 @@
   </style>
 </head>
 <body>
-
+ 
 <nav>
   <a class="nav-logo-text" href="index.html">Notario<span>Go</span></a>
   <div class="nav-links">
@@ -84,22 +84,23 @@
     <a href="tramites.html" class="btn-primary">Iniciar trámite</a>
   </div>
 </nav>
-
+ 
 <div class="page-header">
   <h1>Catálogo de trámites</h1>
   <p>Selecciona el trámite que necesitas y comenzamos de inmediato</p>
 </div>
-
+ 
 <div class="page-content">
-
+ 
   <div class="cat-filtros">
     <button class="cat-btn active" onclick="mostrarCat('todos', this)"><span class="cat-emoji">📂</span> Todos</button>
     <button class="cat-btn" onclick="mostrarCat('poderes', this)"><span class="cat-emoji">📋</span> Poderes</button>
     <button class="cat-btn" onclick="mostrarCat('declaraciones', this)"><span class="cat-emoji">🏛️</span> Declaraciones</button>
     <button class="cat-btn" onclick="mostrarCat('contratos', this)"><span class="cat-emoji">🤝</span> Contratos</button>
     <button class="cat-btn" onclick="mostrarCat('documentos', this)"><span class="cat-emoji">📄</span> Documentos</button>
+  <button class="cat-btn" onclick="mostrarCat('inscripciones', this)"><span class="cat-emoji">📋</span> Inscripciones</button>
   </div>
-
+ 
   <!-- ══ PODERES ══ -->
   <div class="cat-seccion" data-cat="poderes">
     <div class="cat-header" onclick="toggleCat(this)">
@@ -153,7 +154,7 @@
       </div>
     </div>
   </div>
-
+ 
   <!-- ══ DECLARACIONES ══ -->
   <div class="cat-seccion" data-cat="declaraciones">
     <div class="cat-header" onclick="toggleCat(this)">
@@ -184,7 +185,7 @@
       </div>
     </div>
   </div>
-
+ 
   <!-- ══ CONTRATOS ══ -->
   <div class="cat-seccion" data-cat="contratos">
     <div class="cat-header" onclick="toggleCat(this)">
@@ -210,7 +211,7 @@
       </div>
     </div>
   </div>
-
+ 
   <!-- ══ DOCUMENTOS ══ -->
   <div class="cat-seccion" data-cat="documentos">
     <div class="cat-header" onclick="toggleCat(this)">
@@ -236,9 +237,25 @@
       </div>
     </div>
   </div>
-
+ 
+      <!-- INSCRIPCIONES -->
+      <div class="cat-seccion" data-cat="inscripciones">
+        <div class="cat-header" onclick="this.classList.toggle('abierto'); this.nextElementSibling.classList.toggle('abierto')">
+          <span class="cat-emoji">📋</span>
+          <span style="font-size:15px;font-weight:700;color:#0D1B3E">Inscripciones CBR</span>
+          <span style="margin-left:auto;font-size:12px;font-weight:600;color:#8B5CF6;background:rgba(139,92,246,.1);padding:3px 10px;border-radius:100px">4 trámites</span>
+          <span style="font-size:20px;color:#7888A8;margin-left:.5rem">›</span>
+        </div>
+        <div class="cat-body">
+          <div class="sub-item"><div class="sub-item-info"><div class="sub-item-nombre">Compraventa</div><div class="sub-item-desc">Inscripción de compraventa de inmueble en CBR</div></div><span class="sub-item-tag" style="background:rgba(139,92,246,.1);color:#7C3AED;border-color:rgba(139,92,246,.3)">CBR</span><a href="inscripcion-compraventa.html" class="btn-iniciar">Iniciar →</a></div>
+          <div class="sub-item"><div class="sub-item-info"><div class="sub-item-nombre">Herencia</div><div class="sub-item-desc">Inscripción de herencia por posesión efectiva</div></div><span class="sub-item-tag" style="background:rgba(139,92,246,.1);color:#7C3AED;border-color:rgba(139,92,246,.3)">CBR</span><a href="inscripcion-herencia.html" class="btn-iniciar">Iniciar →</a></div>
+          <div class="sub-item"><div class="sub-item-info"><div class="sub-item-nombre">Cesión de derechos</div><div class="sub-item-desc">Transferencia de derechos en inmueble con múltiples dueños</div></div><span class="sub-item-tag" style="background:rgba(139,92,246,.1);color:#7C3AED;border-color:rgba(139,92,246,.3)">CBR</span><a href="inscripcion-cesion-derechos.html" class="btn-iniciar">Iniciar →</a></div>
+          <div class="sub-item"><div class="sub-item-info"><div class="sub-item-nombre">Posesión efectiva</div><div class="sub-item-desc">Certificación de inscripción de resolución de posesión efectiva</div></div><span class="sub-item-tag" style="background:rgba(139,92,246,.1);color:#7C3AED;border-color:rgba(139,92,246,.3)">CBR</span><a href="inscripcion-posesion-efectiva.html" class="btn-iniciar">Iniciar →</a></div>
+        </div>
+      </div>
+ 
 </div>
-
+ 
 <footer>
   <div class="footer-top">
     <div>
@@ -264,7 +281,7 @@
     <div class="footer-copy">Ley N° 19.799 sobre firma electrónica</div>
   </div>
 </footer>
-
+ 
 <script src="js/jsonbin.js"></script>
 <script src="js/app.js"></script>
 <script>
@@ -296,6 +313,6 @@
     });
   }
 </script>
-
+ 
 </body>
 </html>
