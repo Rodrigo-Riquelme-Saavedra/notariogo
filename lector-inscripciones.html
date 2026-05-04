@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NotarioGO — Lector de Inscripciones CBR</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    .nav-logo-text{font-size:22px;font-weight:800;color:#0D1B3E;text-decoration:none;letter-spacing:-.5px}.nav-logo-text span{color:#3B8BFF}
+    body{background:#F7F9FC}
+    .breadcrumb{background:white;border-bottom:1px solid #EEF2F9;padding:.875rem 2rem;font-size:13px;color:#7888A8}.breadcrumb a{color:#1E6FE8;text-decoration:none;font-weight:600}.breadcrumb span{margin:0 .5rem}
+    .page-header{background:#0D1B3E;padding:2.5rem 2rem}.page-header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:1.5rem}.page-header-icon{width:56px;height:56px;background:rgba(255,255,255,.1);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}.page-header h1{font-family:'DM Serif Display',serif;font-size:1.8rem;color:white;margin-bottom:.25rem}.page-header p{color:rgba(255,255,255,.6);font-size:14px}
+    .header-badge{background:rgba(139,92,246,.2);border:1px solid rgba(139,92,246,.4);color:#A78BFA;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.05em;margin-top:.5rem;display:inline-block}
+ 
+    /* ZONA PRINCIPAL */
+    .page-content{max-width:1200px;margin:0 auto;padding:2rem}
+ 
+    /* PASO 1 — UPLOAD */
+    .upload-zone{background:white;border:2.5px dashed #C1CBDF;border-radius:20px;padding:3rem 2rem;text-align:center;transition:all .2s;cursor:pointer;margin-bottom:2rem}
+    .upload-zone:hover,.upload-zone.drag-over{border-color:#8B5CF6;background:#F5F3FF}
+    .upload-zone.con-archivo{border-color:#10B981;background:#F0FFF4;border-style:solid}
+    .upload-icon{font-size:48px;margin-bottom:1rem}
+    .upload-titulo{font-family:'DM Serif Display',serif;font-size:1.5rem;color:#0D1B3E;margin-bottom:.5rem}
+    .upload-sub{font-size:14px;color:#7888A8;margin-bottom:1.5rem}
+    .btn-seleccionar{background:#8B5CF6;color:white;border:none;border-radius:10px;padding:12px 28px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
+    .btn-seleccionar:hover{background:#7C3AED;transform:translateY(-1px)}
+    .archivo-info{background:#D1FAE5;border-radius:10px;padding:.875rem 1.25rem;display:inline-flex;align-items:center;gap:.75rem;font-size:13px;font-weight:600;color:#065F46}
+ 
+    /* PASO 2 — TIPO */
+    .tipo-section{background:white;border:2px solid #EEF2F9;border-radius:16px;padding:1.75rem;margin-bottom:2rem;display:none}
+    .tipo-section.visible{display:block}
+    .tipo-titulo{font-size:13px;font-weight:700;color:#3A4A6B;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1rem}
+    .tipo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}@media(max-width:700px){.tipo-grid{grid-template-columns:1fr}}
+    .tipo-btn{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1.25rem 1rem;border-radius:12px;border:2px solid #EEF2F9;background:white;cursor:pointer;transition:all .2s;text-align:center;font-family:'Plus Jakarta Sans',sans-serif}
+    .tipo-btn:hover{border-color:#8B5CF6;background:#F5F3FF}
+    .tipo-btn.sel{border-color:#8B5CF6;background:#EDE9FE}
+    .tipo-btn span{font-size:28px}
+    .tipo-btn strong{font-size:13px;font-weight:700;color:#0D1B3E}
+    .tipo-btn small{font-size:11px;color:#7888A8}
+ 
+    /* PASO 3 — EXTRACCIÓN IA */
+    .extraccion-section{display:none}
+    .extraccion-section.visible{display:block}
+    .btn-extraer{width:100%;background:linear-gradient(135deg,#7C3AED,#8B5CF6);color:white;border:none;border-radius:12px;padding:16px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;box-shadow:0 4px 20px rgba(139,92,246,.4);display:flex;align-items:center;justify-content:center;gap:.75rem;margin-bottom:2rem}
+    .btn-extraer:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(139,92,246,.5)}
+    .btn-extraer:disabled{background:#C1CBDF;box-shadow:none;cursor:not-allowed;transform:none}
+ 
+    /* LOADING IA */
+    .ia-loading{background:white;border:2px solid #EDE9FE;border-radius:16px;padding:2.5rem;text-align:center;display:none;margin-bottom:2rem}
+    .ia-loading.visible{display:block}
+    .ia-spinner{width:48px;height:48px;border:4px solid #EDE9FE;border-top-color:#8B5CF6;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1.25rem}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .ia-paso{font-size:14px;color:#7888A8;margin-top:.5rem}
+    .ia-paso strong{color:#7C3AED}
+ 
+    /* FLUJO DE PASOS */
+    .flujo-pasos{display:flex;align-items:center;gap:0;margin-bottom:2rem;background:white;border:2px solid #EEF2F9;border-radius:14px;padding:1rem 1.5rem}
+    .flujo-paso{display:flex;flex-direction:column;align-items:center;flex:1;min-width:60px}
+    .flujo-circulo{width:34px;height:34px;border-radius:50%;border:2px solid #C1CBDF;background:white;display:flex;align-items:center;justify-content:center;font-size:14px;margin-bottom:4px;transition:all .3s;flex-shrink:0}
+    .flujo-circulo.activo{border-color:#8B5CF6;background:#8B5CF6;color:white}
+    .flujo-circulo.hecho{border-color:#10B981;background:#10B981;color:white}
+    .flujo-linea{flex:1;height:2px;background:#EEF2F9;margin-bottom:22px;min-width:12px;transition:background .3s}
+    .flujo-linea.hecho{background:#10B981}
+    .flujo-label{font-size:10px;font-weight:600;color:#7888A8;text-align:center;line-height:1.3}
+    .flujo-label.activo{color:#8B5CF6}.flujo-label.hecho{color:#10B981}
+ 
+    /* FORMULARIO EXTRAÍDO */
+    .formulario-extraido{display:none}
+    .formulario-extraido.visible{display:block}
+    .seccion-form{background:white;border:2px solid #EEF2F9;border-radius:16px;padding:1.75rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(13,27,62,.04)}
+    .seccion-titulo{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7C3AED;margin-bottom:1.25rem;padding-bottom:.5rem;border-bottom:2px solid #EDE9FE;display:flex;align-items:center;gap:8px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}@media(max-width:700px){.form-row{grid-template-columns:1fr}}
+    .form-row.single{grid-template-columns:1fr}.form-row.triple{grid-template-columns:1fr 1fr 1fr}
+    .form-group{margin-bottom:1rem}.form-group label{display:block;font-size:11px;font-weight:700;color:#3A4A6B;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.04em}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:9px 13px;border:1.5px solid #C1CBDF;border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;color:#0D1B3E;outline:none;transition:border-color .2s;box-sizing:border-box;background:white}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#8B5CF6;box-shadow:0 0 0 3px rgba(139,92,246,.1)}
+    .form-group input.ia-filled{border-color:#8B5CF6;background:#FAFAFF}
+    .form-group input.ia-filled:focus{box-shadow:0 0 0 3px rgba(139,92,246,.15)}
+    .campo-ia-badge{font-size:10px;color:#8B5CF6;font-weight:600;margin-top:.2rem;display:flex;align-items:center;gap:4px}
+ 
+    /* TÍTULO VIGENTE */
+    .tv-box-form{background:#F0FFF4;border:2px solid #10B981;border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+    .tv-label{font-size:12px;font-weight:800;color:#065F46;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+    .tv-alerta{background:#FEF3C7;border:1px solid #F59E0B;border-radius:8px;padding:.625rem 1rem;font-size:11px;color:#92400E;margin-bottom:.75rem;line-height:1.5}
+ 
+    /* HEREDEROS DINÁMICOS */
+    .heredero-item{background:#F7F9FC;border:1.5px solid #EEF2F9;border-radius:10px;padding:.875rem;margin-bottom:.625rem;position:relative}
+    .heredero-num{font-size:11px;font-weight:700;color:#7888A8;text-transform:uppercase;margin-bottom:.625rem}
+    .btn-remove-h{position:absolute;top:.625rem;right:.625rem;background:#FEE2E2;color:#991B1B;border:none;border-radius:6px;width:24px;height:24px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center}
+    .btn-remove-h:hover{background:#EF4444;color:white}
+    .btn-add-h{background:#EDE9FE;color:#7C3AED;border:1.5px dashed #8B5CF6;border-radius:8px;padding:.75rem;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;width:100%;text-align:center;box-sizing:border-box;transition:all .2s}
+    .btn-add-h:hover{background:#8B5CF6;color:white;border-style:solid}
+ 
+    /* CONFIANZA IA */
+    .ia-confianza{background:linear-gradient(135deg,#F5F3FF,#EDE9FE);border:1.5px solid #C4B5FD;border-radius:12px;padding:1.25rem;margin-bottom:1.5rem}
+    .ia-confianza-titulo{font-size:13px;font-weight:700;color:#5B21B6;margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+    .ia-confianza-campos{display:flex;flex-wrap:wrap;gap:.5rem}
+    .ia-chip{font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px}
+    .ia-chip.alto{background:#D1FAE5;color:#065F46}
+    .ia-chip.medio{background:#FEF3C7;color:#92400E}
+    .ia-chip.bajo{background:#FEE2E2;color:#991B1B}
+ 
+    /* ACCIONES FINALES */
+    .acciones-finales{background:white;border:2px solid #EEF2F9;border-radius:16px;padding:1.75rem;margin-bottom:2rem;display:none}
+    .acciones-finales.visible{display:block}
+    .acciones-titulo{font-size:13px;font-weight:700;color:#3A4A6B;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1rem}
+    .acciones-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.75rem}@media(max-width:800px){.acciones-grid{grid-template-columns:1fr 1fr}}
+    .btn-accion-final{display:flex;flex-direction:column;align-items:center;gap:.4rem;padding:1rem;border-radius:12px;border:2px solid;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;transition:all .2s}
+    .btn-validar{border-color:#1E6FE8;background:#E6F0FF;color:#1E40AF}.btn-validar:hover{background:#1E6FE8;color:white}
+    .btn-aceptar{border-color:#10B981;background:#D1FAE5;color:#065F46}.btn-aceptar:hover{background:#10B981;color:white}
+    .btn-modificar{border-color:#F59E0B;background:#FEF3C7;color:#92400E}.btn-modificar:hover{background:#F59E0B;color:white}
+    .btn-rechazar{border-color:#EF4444;background:#FEE2E2;color:#991B1B}.btn-rechazar:hover{background:#EF4444;color:white}
+    .btn-accion-final span{font-size:22px}
+    .obs-textarea{width:100%;padding:10px 14px;border:1.5px solid #C1CBDF;border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;color:#0D1B3E;outline:none;resize:vertical;min-height:80px;box-sizing:border-box;margin-top:1rem;transition:border-color .2s}
+    .obs-textarea:focus{border-color:#8B5CF6}
+    .btn-guardar-final{width:100%;background:#0D1B3E;color:white;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;margin-top:1rem;transition:all .2s;display:none}
+    .btn-guardar-final.visible{display:block}
+    .btn-guardar-final:hover{background:#1A2F5E}
+    .btn-guardar-final:disabled{background:#C1CBDF;cursor:not-allowed}
+    .estado-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:5px 14px;border-radius:100px;margin-top:.75rem;display:none}
+    .estado-pill.visible{display:inline-flex}
+ 
+    footer{background:#0D1B3E;padding:2rem;margin-top:3rem}.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}.footer-copy{font-size:12px;color:rgba(255,255,255,.35)}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo-text" href="index.html">Notario<span>Go</span></a>
+  <div class="nav-links"><a href="index.html">Inicio</a><a href="tramites.html" class="active">Trámites</a><a href="mis-documentos.html">Mis documentos</a><a href="ayuda.html">Ayuda</a></div>
+  <div class="nav-actions"><a href="login.html" class="btn-outline">Ingresar / Cuenta</a><a href="tramites.html" class="btn-primary">Iniciar trámite</a></div>
+</nav>
+<div class="breadcrumb"><a href="tramites.html">Trámites</a><span>›</span>Inscripciones<span>›</span>Lector automático CBR</div>
+ 
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-header-icon">🤖</div>
+    <div>
+      <h1>Lector de Inscripciones CBR</h1>
+      <p>Sube el documento PDF y la IA extrae todos los datos automáticamente</p>
+      <span class="header-badge">✨ Powered by Claude AI</span>
+    </div>
+  </div>
+</div>
+ 
+<div class="page-content">
+ 
+  <!-- FLUJO DE PASOS -->
+  <div class="flujo-pasos">
+    <div class="flujo-paso"><div class="flujo-circulo activo" id="fp1">1</div><div class="flujo-label activo" id="fl1">Subir PDF</div></div>
+    <div class="flujo-linea" id="flinea1"></div>
+    <div class="flujo-paso"><div class="flujo-circulo" id="fp2">2</div><div class="flujo-label" id="fl2">Tipo doc.</div></div>
+    <div class="flujo-linea" id="flinea2"></div>
+    <div class="flujo-paso"><div class="flujo-circulo" id="fp3">🤖</div><div class="flujo-label" id="fl3">Extracción IA</div></div>
+    <div class="flujo-linea" id="flinea3"></div>
+    <div class="flujo-paso"><div class="flujo-circulo" id="fp4">✏️</div><div class="flujo-label" id="fl4">Revisar</div></div>
+    <div class="flujo-linea" id="flinea4"></div>
+    <div class="flujo-paso"><div class="flujo-circulo" id="fp5">✅</div><div class="flujo-label" id="fl5">Guardar</div></div>
+  </div>
+ 
+  <!-- PASO 1: UPLOAD PDF -->
+  <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()"
+       ondragover="event.preventDefault();this.classList.add('drag-over')"
+       ondragleave="this.classList.remove('drag-over')"
+       ondrop="onDrop(event)">
+    <div class="upload-icon" id="upload-icon">📄</div>
+    <div class="upload-titulo" id="upload-titulo">Sube el documento CBR</div>
+    <div class="upload-sub" id="upload-sub">Arrastra el PDF aquí o haz clic para seleccionar<br><small style="color:#C1CBDF">Compraventa · Cesión de derechos · Posesión efectiva</small></div>
+    <button class="btn-seleccionar" onclick="event.stopPropagation();document.getElementById('file-input').click()">📂 Seleccionar PDF</button>
+    <div class="archivo-info" id="archivo-info" style="display:none">📎 <span id="archivo-nombre"></span></div>
+  </div>
+  <input type="file" id="file-input" accept=".pdf" style="display:none" onchange="onFileSelect(this)"/>
+ 
+  <!-- PASO 2: TIPO DE DOCUMENTO -->
+  <div class="tipo-section" id="tipo-section">
+    <div class="tipo-titulo">¿Qué tipo de inscripción es el documento?</div>
+    <div class="tipo-grid">
+      <button class="tipo-btn" id="tipo-compraventa" onclick="setTipo('compraventa')">
+        <span>🏠</span><strong>Compraventa</strong><small>Inscripción de compraventa de inmueble</small>
+      </button>
+      <button class="tipo-btn" id="tipo-cesion" onclick="setTipo('cesion')">
+        <span>🔄</span><strong>Cesión de derechos</strong><small>Transferencia de derechos sobre inmueble</small>
+      </button>
+      <button class="tipo-btn" id="tipo-pe" onclick="setTipo('pe')">
+        <span>⚖️</span><strong>Posesión efectiva</strong><small>Herencia con posesión efectiva</small>
+      </button>
+    </div>
+  </div>
+ 
+  <!-- PASO 3: EXTRAER CON IA -->
+  <div class="extraccion-section" id="extraccion-section">
+    <button class="btn-extraer" id="btn-extraer" onclick="extraerConIA()">
+      🤖 Extraer datos automáticamente con Claude AI
+    </button>
+  </div>
+ 
+  <!-- LOADING IA -->
+  <div class="ia-loading" id="ia-loading">
+    <div class="ia-spinner"></div>
+    <div style="font-size:16px;font-weight:700;color:#5B21B6;margin-bottom:.5rem">Procesando documento...</div>
+    <div class="ia-paso">Paso <strong id="ia-paso-num">1</strong> de 3: <span id="ia-paso-txt">Leyendo el PDF...</span></div>
+  </div>
+ 
+  <!-- CONFIANZA IA -->
+  <div class="ia-confianza" id="ia-confianza" style="display:none">
+    <div class="ia-confianza-titulo">✨ Extracción completada — Campos detectados</div>
+    <div class="ia-confianza-campos" id="ia-chips"></div>
+  </div>
+ 
+  <!-- FORMULARIO EXTRAÍDO -->
+  <div class="formulario-extraido" id="formulario-extraido"></div>
+ 
+  <!-- ACCIONES FINALES -->
+  <div class="acciones-finales" id="acciones-finales">
+    <div class="acciones-titulo">Acción sobre el documento</div>
+    <div class="acciones-grid">
+      <button class="btn-accion-final btn-validar" onclick="setAccion('Validado')"><span>✔️</span>Validar<small style="font-size:10px;font-weight:500">Datos correctos</small></button>
+      <button class="btn-accion-final btn-aceptar" onclick="setAccion('Completado')"><span>✅</span>Aceptar<small style="font-size:10px;font-weight:500">Aprobado</small></button>
+      <button class="btn-accion-final btn-modificar" onclick="setAccion('En proceso')"><span>✏️</span>Modificar<small style="font-size:10px;font-weight:500">Con cambios</small></button>
+      <button class="btn-accion-final btn-rechazar" onclick="setAccion('Rechazado')"><span>❌</span>Rechazar<small style="font-size:10px;font-weight:500">No procede</small></button>
+    </div>
+    <div id="estado-seleccionado" class="estado-pill"></div>
+    <textarea class="obs-textarea" id="obs-textarea" placeholder="Observaciones o comentarios (opcional)..."></textarea>
+    <button class="btn-guardar-final" id="btn-guardar-final" onclick="guardarDocumento()">💾 Guardar documento en el sistema</button>
+  </div>
+ 
+</div>
+ 
+<footer><div class="footer-bottom"><div class="footer-copy">© 2025 NotarioGO SpA · Santiago, Chile</div><div class="footer-copy">Extracción con Claude AI</div></div></footer>
+ 
+<script src="js/jsonbin.js"></script>
+<script src="js/app.js"></script>
+<script>
+  // ── ESTADO GLOBAL ──
+  let pdfBase64 = '';
+  let pdfNombre = '';
+  let tipoDoc = '';
+  let datosExtraidos = {};
+  let accionSeleccionada = '';
+  let herederosList = [];
+  let codigoDoc = '';
+ 
+  async function generarCodigo() {
+    const f = new Date().toISOString().split('T')[0].replace(/-/g,'');
+    try { const d = await JSONBIN.get('tramites'); return `NOTAGO-${f}-${String((d.tramites||[]).length+1).padStart(7,'0')}`; }
+    catch(e) { return `NOTAGO-${f}-${String(Date.now()).slice(-7)}`; }
+  }
+  generarCodigo().then(c => codigoDoc = c);
+ 
+  // ── PASO 1: FILE UPLOAD ──
+  function onDrop(e) {
+    e.preventDefault();
+    document.getElementById('upload-zone').classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) procesarArchivo(file);
+  }
+  function onFileSelect(input) {
+    if (input.files[0]) procesarArchivo(input.files[0]);
+  }
+  function procesarArchivo(file) {
+    if (!file.type.includes('pdf') && !file.name.endsWith('.pdf')) {
+      alert('Por favor sube un archivo PDF.'); return;
+    }
+    pdfNombre = file.name;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      pdfBase64 = e.target.result.split(',')[1];
+      // Mostrar archivo cargado
+      document.getElementById('archivo-nombre').textContent = file.name + ' (' + (file.size/1024).toFixed(0) + ' KB)';
+      document.getElementById('archivo-info').style.display = 'inline-flex';
+      document.getElementById('upload-icon').textContent = '✅';
+      document.getElementById('upload-titulo').textContent = 'Documento cargado';
+      document.getElementById('upload-sub').textContent = 'Listo para procesar';
+      document.getElementById('upload-zone').classList.add('con-archivo');
+      // Mostrar paso 2
+      document.getElementById('tipo-section').classList.add('visible');
+      avanzarFlujo(2);
+    };
+    reader.readAsDataURL(file);
+  }
+ 
+  // ── PASO 2: TIPO DOC ──
+  function setTipo(tipo) {
+    tipoDoc = tipo;
+    document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('sel'));
+    document.getElementById('tipo-' + tipo).classList.add('sel');
+    document.getElementById('extraccion-section').classList.add('visible');
+  }
+ 
+  // ── FLUJO VISUAL ──
+  function avanzarFlujo(paso) {
+    for (let i = 1; i <= 5; i++) {
+      const c = document.getElementById('fp'+i);
+      const l = document.getElementById('fl'+i);
+      if (i < paso) { c.className='flujo-circulo hecho'; c.textContent='✓'; l.className='flujo-label hecho'; }
+      else if (i === paso) { c.className='flujo-circulo activo'; l.className='flujo-label activo'; }
+      else { c.className='flujo-circulo'; l.className='flujo-label'; }
+      if (i < 5) {
+        const linea = document.getElementById('flinea'+i);
+        linea.className = i < paso ? 'flujo-linea hecho' : 'flujo-linea';
+      }
+    }
+  }
+ 
+  // ── PASO 3: EXTRACCIÓN IA ──
+  async function extraerConIA() {
+    if (!pdfBase64) { alert('Primero sube un PDF.'); return; }
+    if (!tipoDoc) { alert('Selecciona el tipo de documento.'); return; }
+ 
+    document.getElementById('btn-extraer').disabled = true;
+    document.getElementById('ia-loading').classList.add('visible');
+    avanzarFlujo(3);
+ 
+    const pasos = [
+      'Leyendo el PDF...',
+      'Identificando campos legales...',
+      'Estructurando los datos extraídos...'
+    ];
+    let pasoIdx = 0;
+    const intervalo = setInterval(() => {
+      pasoIdx = (pasoIdx + 1) % 3;
+      document.getElementById('ia-paso-num').textContent = pasoIdx + 1;
+      document.getElementById('ia-paso-txt').textContent = pasos[pasoIdx];
+    }, 1800);
+ 
+    const prompts = {
+      compraventa: `Eres un experto en derecho inmobiliario chileno. Analiza este documento PDF del Conservador de Bienes Raíces y extrae TODOS los datos que encuentres. Devuelve SOLO un JSON válido con esta estructura exacta (sin texto adicional, sin markdown):
+{"fojas_titulo_vigente":"","numero_titulo_vigente":"","anio_titulo_vigente":"","cbr_titulo_vigente":"","tipo_comprador":"natural","nombre_comprador":"","rut_comprador":"","nacionalidad_comprador":"","estado_civil_comprador":"","profesion_comprador":"","domicilio_comprador":"","razon_social":"","rut_empresa":"","giro_empresa":"","rep_nombre":"","rep_rut":"","rep_estado_civil":"","rep_profesion":"","rep_domicilio":"","nombre_vendedor":"","domicilio_vendedor":"","fecha_escritura":"","notaria":"","nombre_notario":"","repertorio_escritura":"","precio_compraventa":"","descripcion_propiedad":"","d_norte":"","d_sur":"","d_oriente":"","d_poniente":"","rol_avaluo":"","comuna_avaluo":"","ciudad":"","fecha":"","requirente":"","firma_conservador":"","confianza":{}}
+IMPORTANTE: El titulo_vigente son las FOJAS y NÚMERO que aparecen al MARGEN IZQUIERDO del documento (no el título anterior mencionado en el texto). Formato fecha: YYYY-MM-DD. En "confianza" pon "alta","media" o "baja" por cada campo según tu certeza.`,
+ 
+      cesion: `Eres un experto en derecho inmobiliario chileno. Analiza este documento PDF del Conservador de Bienes Raíces y extrae TODOS los datos. Devuelve SOLO un JSON válido (sin texto adicional):
+{"fojas_titulo_vigente":"","numero_titulo_vigente":"","anio_titulo_vigente":"","cbr_titulo_vigente":"","tipo_cedente":"natural","nombre_cedente":"","rut_cedente":"","nac_cedente":"","ec_cedente":"","prof_cedente":"","dom_cedente":"","razon_social_c":"","rut_empresa_c":"","giro_cedente":"","rep_cedente":"","rep_rut_c":"","dom_cedente_j":"","nombre_cesionario":"","rut_cesionario":"","dom_cesionario":"","fecha_escritura":"","notaria":"","nombre_notario":"","repertorio_escritura":"","precio_cesion":"","descripcion_propiedad":"","d_norte":"","d_sur":"","d_oriente":"","d_poniente":"","rol_avaluo":"","comuna_avaluo":"","ciudad":"","fecha":"","requirente":"","firma_conservador":"","confianza":{}}
+IMPORTANTE: El titulo_vigente son las FOJAS y NÚMERO al MARGEN IZQUIERDO. Formato fecha: YYYY-MM-DD.`,
+ 
+      pe: `Eres un experto en derecho inmobiliario chileno. Analiza este documento PDF del Conservador de Bienes Raíces y extrae TODOS los datos. Devuelve SOLO un JSON válido (sin texto adicional):
+{"nombre_causante":"","rut_causante":"","ec_causante":"","fecha_fallecimiento":"","region":"","ultimo_domicilio":"","num_resolucion":"","fecha_resolucion":"","director_regional":"","num_repertorio":"","anio_repertorio":"","pe_fojas":"","pe_numero":"","pe_anio":"","h_fojas":"","h_numero":"","h_anio":"","cbr_inscripcion":"","herederos":[{"nombre":"","rut":"","calidad":""}],"bienes":[""],"ciudad":"","fecha":"","requirente":"","firma_conservador":"","confianza":{}}
+Formato fecha: YYYY-MM-DD. Los herederos van en el array con nombre, RUT y calidad (hijo/hija/cónyuge/etc).`
+    };
+ 
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 2000,
+          messages: [{
+            role: 'user',
+            content: [
+              { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: pdfBase64 } },
+              { type: 'text', text: prompts[tipoDoc] }
+            ]
+          }]
+        })
+      });
+ 
+      clearInterval(intervalo);
+      const data = await response.json();
+      const texto = data.content?.[0]?.text || '';
+ 
+      // Limpiar y parsear JSON
+      const jsonMatch = texto.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) throw new Error('No se pudo extraer JSON de la respuesta');
+      datosExtraidos = JSON.parse(jsonMatch[0]);
+ 
+      document.getElementById('ia-loading').classList.remove('visible');
+      mostrarConfianza(datosExtraidos.confianza || {});
+      renderFormulario(datosExtraidos);
+      document.getElementById('acciones-finales').classList.add('visible');
+      avanzarFlujo(4);
+ 
+    } catch(err) {
+      clearInterval(intervalo);
+      document.getElementById('ia-loading').classList.remove('visible');
+      document.getElementById('btn-extraer').disabled = false;
+      avanzarFlujo(3);
+      alert('Error al procesar el documento: ' + err.message + '\n\nIntenta nuevamente o verifica que el PDF sea legible.');
+    }
+  }
+ 
+  // ── CONFIANZA ──
+  function mostrarConfianza(confianza) {
+    const el = document.getElementById('ia-confianza');
+    const chips = document.getElementById('ia-chips');
+    const labels = {
+      fojas_titulo_vigente:'Fojas TV', numero_titulo_vigente:'N° TV', anio_titulo_vigente:'Año TV',
+      nombre_comprador:'Comprador', nombre_cedente:'Cedente', nombre_causante:'Causante',
+      nombre_vendedor:'Vendedor', nombre_cesionario:'Cesionario',
+      descripcion_propiedad:'Descripción', d_norte:'Norte', d_sur:'Sur', d_oriente:'Oriente', d_poniente:'Poniente',
+      rol_avaluo:'Rol', ciudad:'Ciudad', fecha:'Fecha', requirente:'Requirente',
+      herederos:'Herederos', num_resolucion:'N° Resolución', precio_compraventa:'Precio', precio_cesion:'Precio'
+    };
+    chips.innerHTML = Object.entries(labels).map(([k,label]) => {
+      const nivel = confianza[k] || (datosExtraidos[k] ? 'alta' : 'baja');
+      return `<span class="ia-chip ${nivel === 'alta' ? 'alto' : nivel === 'media' ? 'medio' : 'bajo'}">${label}: ${nivel}</span>`;
+    }).join('');
+    el.style.display = 'block';
+  }
+ 
+  // ── RENDER FORMULARIO ──
+  function renderFormulario(d) {
+    const container = document.getElementById('formulario-extraido');
+    container.classList.add('visible');
+ 
+    let html = '';
+ 
+    if (tipoDoc === 'compraventa') {
+      const esJuridica = d.razon_social && d.razon_social.trim() !== '';
+      html = `
+      <div class="seccion-form">
+        <div class="seccion-titulo">✅ Título vigente del vendedor</div>
+        <div class="tv-box-form">
+          <div class="tv-alerta">⚠️ Verifique que corresponda al Fojas/N° del <strong>margen izquierdo</strong> del documento, NO al título anterior mencionado en el texto.</div>
+          <div class="form-row triple">
+            ${campo('tv_fojas','Fojas *',d.fojas_titulo_vigente)}
+            ${campo('tv_numero','Número *',d.numero_titulo_vigente)}
+            ${campo('tv_anio','Año *',d.anio_titulo_vigente)}
+          </div>
+          ${campo('tv_cbr','Conservador de Bienes Raíces *',d.cbr_titulo_vigente,'single')}
+        </div>
+      </div>
+      <div class="seccion-form">
+        <div class="seccion-titulo">👤 Comprador (adquirente)</div>
+        <div style="background:#F7F9FC;border-radius:8px;padding:.75rem;margin-bottom:1rem;font-size:12px;color:#7888A8">
+          Tipo detectado: <strong style="color:#0D1B3E">${esJuridica ? '🏢 Persona jurídica' : '👤 Persona natural'}</strong>
+        </div>
+        ${esJuridica ? `
+          ${campo('razon_social','Razón social *',d.razon_social,'single')}
+          <div class="form-row">${campo('rut_empresa','RUT empresa *',d.rut_empresa)}${campo('giro_empresa','Giro *',d.giro_empresa)}</div>
+          ${campo('rep_nombre','Representante legal *',d.rep_nombre,'single')}
+          <div class="form-row">${campo('rep_rut','RUT representante *',d.rep_rut)}${campoSelect('rep_estado_civil','Estado civil rep.',d.rep_estado_civil,['soltero(a)','casado(a)','casado(a), separado(a) totalmente de bienes','divorciado(a)','viudo(a)'])}</div>
+          <div class="form-row">${campo('rep_profesion','Profesión rep.',d.rep_profesion)}${campo('rep_domicilio','Domicilio empresa *',d.rep_domicilio)}</div>
+        ` : `
+          ${campo('nombre_comprador','Nombre completo *',d.nombre_comprador,'single')}
+          <div class="form-row">${campo('rut_comprador','RUT *',d.rut_comprador)}${campoSelect('nacionalidad_comprador','Nacionalidad *',d.nacionalidad_comprador,['chileno(a)','argentino(a)','peruano(a)','colombiano(a)','venezolano(a)'])}</div>
+          <div class="form-row">${campoSelect('estado_civil_comprador','Estado civil *',d.estado_civil_comprador,['soltero(a)','casado(a)','casado(a), separado(a) totalmente de bienes','divorciado(a)','viudo(a)'])}${campo('profesion_comprador','Profesión *',d.profesion_comprador)}</div>
+          ${campo('domicilio_comprador','Domicilio *',d.domicilio_comprador,'single')}
+        `}
+      </div>
+      <div class="seccion-form">
+        <div class="seccion-titulo">👤 Vendedor (enajenante)</div>
+        ${campo('nombre_vendedor','Nombre completo *',d.nombre_vendedor,'single')}
+        ${campo('domicilio_vendedor','Domicilio del vendedor',d.domicilio_vendedor,'single')}
+      </div>
+      <div class="seccion-form">
+        <div class="seccion-titulo">📄 Escritura de compraventa</div>
+        <div class="form-row">${campo('fecha_escritura','Fecha escritura *',d.fecha_escritura,'',true)}${campo('repertorio_escritura','N° repertorio *',d.repertorio_escritura)}</div>
+        ${campo('notaria','Notaría *',d.notaria,'single')}
+        ${campo('nombre_notario','Nombre del notario *',d.nombre_notario,'single')}
+        ${campo('precio_compraventa','Precio de la compraventa *',d.precio_compraventa,'single')}
+      </div>
+      <div class="seccion-form">
+        <div class="seccion-titulo">🏠 Propiedad y deslindes</div>
+        <div class="form-row single"><div class="form-group"><label>Descripción del inmueble *</label><textarea id="descripcion_propiedad" rows="3" class="ia-filled">${d.descripcion_propiedad||''}</textarea></div></div>
+        <div class="form-row">${campo('d_norte','NORTE *',d.d_norte)}${campo('d_sur','SUR *',d.d_sur)}</div>
+        <div class="form-row">${campo('d_oriente','ORIENTE *',d.d_oriente)}${campo('d_poniente','PONIENTE *',d.d_poniente)}</div>
+        <div class="form-row">${campo('rol_avaluo','Rol de avalúo *',d.rol_avaluo)}${campo('comuna_avaluo','Comuna *',d.comuna_avaluo)}</div>
+      </div>
+      <div class="seccion-form">
+        <div class="seccion-titulo">📍 Datos del CBR</div>
+        <div class="form-row">${campo('ciudad','Ciudad *',d.ciudad)}${campo('fecha','Fecha inscripción *',d.fecha,'',true)}</div>
+        ${campo('requirente','Requirente *',d.requirente,'single')}
+        ${campo('firma_conservador','Firma del conservador *',d.firma_conservador,'single')}
+      </div>`;
+    }
+ 
+    else if (tipoDoc === 'cesion') {
+      html = `
+      <div class="seccion-form">
+        <div class="seccion-titulo">✅ Título vigente del cedente</div>
+        <div class="tv-box-form">
+          <div class="tv-alerta">⚠️ Verifique que corresponda al Fojas/N° del <strong>margen izquierdo</strong>, NO al título anterior.</div>
+          <div class="form-row triple">${campo('tv_fojas','Fojas *',d.fojas_titulo_vigente)}${campo('tv_numero','Número *',d.numero_titulo_vigente)}${campo('tv_anio','Año *',d.anio_titulo_vigente)}</div>
+          ${campo('tv_cbr','CBR *',d.cbr_titulo_vigente,'single')}
+        </div>
+      </div>
+      <div class="seccion-form">
+        <div class="seccion-titulo">👤 Cedente (transfiere sus derechos)</div>
+        ${campo('nombre_cedente','Nombre completo *',d.nombre_cedente,'single')}
+        <div class="form-row">${campo('rut_cedente','RUT *',d.rut_cedente)}${campoSelect('nac_cedente','Nacionalidad *',d.nac_cedente,['chileno(a)','argentino(a)','peruano(a)'])}</div>
+        <div class="form-row">${campoSelect('ec_cedente','Estado civil *',d.ec_cedente,['soltero(a)','casado(a)','casado(a), separado(a) totalmente de bienes','divorciado(a)','viudo(a)'])}${campo('prof_cedente','Profesión *',d.prof_cedente)}</div>
+        ${campo('dom_cedente','Domicilio *',d.dom_cedente,'single')}
+      </div>
+      <div class="seccion-form">
+        <div class="seccion-titulo">👤 Cesionario (recibe los derechos)</div>
+        ${campo('nombre_cesionario','Nombre completo *',d.nombre_cesionario,'single')}
+        <div class="form-row">${campo('rut_cesionario','RUT *',d.rut_cesionario)}${campo('dom_cesionario','Domicilio *',d.dom_cesionario)}</div>
+      </div>
+      <div class="seccion-form">
+        <div class="seccion-titulo">📄 Escritura de cesión</div>
+        <div class="form-row">${campo('fecha_escritura','Fecha escritura *',d.fecha_escritura,'',true)}${campo('repertorio_escritura','N° repertorio *',d.repertorio_escritura)}</div>
+        ${campo('notaria','Notaría *',d.notaria,'single')}
+        ${campo('nombre_notario','Nombre del notario *',d.nombre_notario,'single')}
+        ${campo('precio_cesion','Precio de la cesión *',d.precio_cesion,'single')}
+      </div>
+      <div class="seccion-form">
+        <div class="seccion-titulo">🏠 Propiedad y deslindes</div>
+        <div class="form-row single"><div class="form-group"><label>Descripción del inmueble *</label><textarea id="descripcion_propiedad" rows="3" class="ia-filled">${d.descripcion_propiedad||''}</textarea></div></div>
+        <div class="form-row">${campo('d_norte','NORTE *',d.d_norte)}${campo('d_sur','SUR *',d.d_sur)}</div>
+        <div class="form-row">${campo('d_oriente','ESTE *',d.d_oriente)}${campo('d_poniente','OESTE *',d.d_poniente)}</div>
+        <div class="form-row">${campo('rol_avaluo','Rol de avalúo *',d.rol_avaluo)}${campo('comuna_avaluo','Comuna *',d.comuna_avaluo)}</div>
+      </div>
+      <div class="seccion-form">
+        <div class="seccion-titulo">📍 Datos del CBR</div>
+        <div class="form-row">${campo('ciudad','Ciudad *',d.ciudad)}${campo('fecha','Fecha inscripción *',d.fecha,'',true)}</div>
+        ${campo('requirente','Requirente *',d.requirente,'single')}
+        ${campo('firma_conservador','Firma del conservador *',d.firma_conservador,'single')}
+      </div>`;
+    }
+ 
+    else if (tipoDoc === 'pe') {
+      herederosList = (d.herederos && d.herederos.length > 0) ? d.herederos : [{nombre:'',rut:'',calidad:''}];
+      const bienesArr = (d.bienes && d.bienes.length > 0) ? d.bienes : [''];
+      html = `
+      <div class="seccion-form">
+        <div class="seccion-titulo">⚰️ Causante</div>
+        ${campo('nombre_causante','Nombre completo *',d.nombre_causante,'single')}
+        <div class="form-row">${campo('rut_causante','RUT *',d.rut_causante)}${campoSelect('ec_causante','Estado civil (era) *',d.ec_causante,['soltero(a)','casado(a)','viudo(a)','divorciado(a)'])}</div>
+        <div class="form-row">${campo('fecha_fallecimiento','Fecha de fallecimiento *',d.fecha_fallecimiento,'',true)}${campo('region','Región *',d.region)}</div>
+        ${campo('ultimo_domicilio','Último domicilio *',d.ultimo_domicilio,'single')}
+      </div>
+      <div class="seccion-form">
+        <div class="seccion-titulo">📋 Resolución de posesión efectiva</div>
+        <div class="form-row">${campo('num_resolucion','N° de resolución *',d.num_resolucion)}${campo('fecha_resolucion','Fecha resolución *',d.fecha_resolucion,'',true)}</div>
+        ${campo('director_regional','Director Regional / Servicio *',d.director_regional,'single')}
+        <div class="form-row">${campo('num_repertorio','N° repertorio CBR *',d.num_repertorio)}${campo('anio_repertorio','Año *',d.anio_repertorio)}</div>
+      </div>
+      <div class="seccion-form">
+        <div class="seccion-titulo">✅ Inscripciones practicadas</div>
+        <div class="tv-box-form">
+          <div style="font-size:12px;font-weight:700;color:#065F46;margin-bottom:.5rem;">Posesión efectiva</div>
+          <div class="form-row triple">${campo('pe_fojas','Fojas *',d.pe_fojas)}${campo('pe_numero','Número *',d.pe_numero)}${campo('pe_anio','Año *',d.pe_anio)}</div>
+          <div style="font-size:12px;font-weight:700;color:#065F46;margin:.75rem 0 .5rem;">Herencia</div>
+          <div class="form-row triple">${campo('h_fojas','Fojas *',d.h_fojas)}${campo('h_numero','Número *',d.h_numero)}${campo('h_anio','Año *',d.h_anio)}</div>
+          ${campo('cbr_inscripcion','CBR donde se inscribe *',d.cbr_inscripcion,'single')}
+        </div>
+      </div>
+      <div class="seccion-form" id="seccion-herederos">
+        <div class="seccion-titulo">👨‍👩‍👧‍👦 Herederos</div>
+        <div id="herederos-render"></div>
+        <button class="btn-add-h" onclick="agregarHeredero()">+ Agregar heredero</button>
+      </div>
+      <div class="seccion-form">
+        <div class="seccion-titulo">🏠 Bienes del inventario</div>
+        <div id="bienes-render">${bienesArr.map((b,i)=>`<div style="display:flex;gap:.5rem;margin-bottom:.5rem"><input type="text" id="bien-${i}" value="${b}" class="ia-filled" style="flex:1;padding:9px 13px;border:1.5px solid #8B5CF6;border-radius:8px;font-size:13px;font-family:Plus Jakarta Sans,sans-serif;box-sizing:border-box"/></div>`).join('')}</div>
+      </div>
+      <div class="seccion-form">
+        <div class="seccion-titulo">📍 Datos del CBR</div>
+        <div class="form-row">${campo('ciudad','Ciudad *',d.ciudad)}${campo('fecha','Fecha certificación *',d.fecha,'',true)}</div>
+        ${campo('requirente','Requirente *',d.requirente,'single')}
+        ${campo('firma_conservador','Firma del conservador *',d.firma_conservador,'single')}
+      </div>`;
+    }
+ 
+    container.innerHTML = html;
+ 
+    // Renderizar herederos si es PE
+    if (tipoDoc === 'pe') renderHeredeosUI();
+  }
+ 
+  // ── HELPERS CAMPOS ──
+  function campo(id, label, valor, layout='', esFecha=false) {
+    const lleno = valor && valor.trim && valor.trim() !== '';
+    const clase = lleno ? 'ia-filled' : '';
+    const tipo = esFecha ? 'date' : 'text';
+    const wrap = layout === 'single' ? '<div class="form-row single">' : '';
+    const wrapEnd = layout === 'single' ? '</div>' : '';
+    return `${wrap}<div class="form-group"><label>${label}</label><input type="${tipo}" id="${id}" value="${(valor||'').replace(/"/g,'&quot;')}" class="${clase}" />${lleno?'<div class="campo-ia-badge">✨ Extraído por IA</div>':''}</div>${wrapEnd}`;
+  }
+ 
+  function campoSelect(id, label, valor, opciones) {
+    const lleno = valor && opciones.includes(valor);
+    return `<div class="form-group"><label>${label}</label><select id="${id}" class="${lleno?'ia-filled':''}"><option value="">Seleccionar...</option>${opciones.map(o=>`<option value="${o}" ${o===valor?'selected':''}>${o}</option>`).join('')}</select>${lleno?'<div class="campo-ia-badge">✨ Extraído por IA</div>':''}</div>`;
+  }
+ 
+  // ── HEREDEROS ──
+  function renderHeredeosUI() {
+    const c = document.getElementById('herederos-render');
+    if (!c) return;
+    c.innerHTML = herederosList.map((h,i) => `
+      <div class="heredero-item">
+        <div class="heredero-num">Heredero ${i+1}</div>
+        ${herederosList.length > 1 ? `<button class="btn-remove-h" onclick="quitarH(${i})">✕</button>` : ''}
+        <div class="form-row single"><div class="form-group"><label>Nombre *</label><input type="text" id="h-nom-${i}" value="${h.nombre||''}" class="${h.nombre?'ia-filled':''}" oninput="herederosList[${i}].nombre=this.value"/></div></div>
+        <div class="form-row"><div class="form-group"><label>RUT *</label><input type="text" id="h-rut-${i}" value="${h.rut||''}" class="${h.rut?'ia-filled':''}" oninput="herederosList[${i}].rut=this.value"/></div>
+        <div class="form-group"><label>Calidad *</label><select id="h-cal-${i}" class="${h.calidad?'ia-filled':''}" onchange="herederosList[${i}].calidad=this.value"><option value="">Seleccionar...</option>${['hijo','hija','cónyuge','conviviente civil','padre','madre','hermano(a)','nieto(a)'].map(o=>`<option value="${o}" ${o===h.calidad?'selected':''}>${o}</option>`).join('')}</select></div></div>
+      </div>`).join('');
+  }
+  function agregarHeredero() { herederosList.push({nombre:'',rut:'',calidad:''}); renderHeredeosUI(); }
+  function quitarH(i) { if(herederosList.length<=1)return; herederosList.splice(i,1); renderHeredeosUI(); }
+ 
+  // ── ACCIONES ──
+  function setAccion(accion) {
+    accionSeleccionada = accion;
+    const colores = {
+      'Validado':   {bg:'#DBEAFE',text:'#1E40AF',emoji:'✔️'},
+      'Completado': {bg:'#D1FAE5',text:'#065F46',emoji:'✅'},
+      'En proceso': {bg:'#FEF3C7',text:'#92400E',emoji:'✏️'},
+      'Rechazado':  {bg:'#FEE2E2',text:'#991B1B',emoji:'❌'}
+    };
+    const col = colores[accion];
+    const pill = document.getElementById('estado-seleccionado');
+    pill.style.background = col.bg;
+    pill.style.color = col.text;
+    pill.textContent = col.emoji + ' ' + accion;
+    pill.classList.add('visible');
+    document.getElementById('btn-guardar-final').classList.add('visible');
+    avanzarFlujo(5);
+  }
+ 
+  // ── RECOLECTAR DATOS DEL FORMULARIO ──
+  function recolectarDatos() {
+    const get = (id) => document.getElementById(id)?.value?.trim() || '';
+    if (tipoDoc === 'compraventa') {
+      return { titulo_vigente:`Fojas ${get('tv_fojas')} N° ${get('tv_numero')} del año ${get('tv_anio')}`, cbr_titulo_vigente:get('tv_cbr'), nombre_comprador:get('nombre_comprador')||get('razon_social'), rut_comprador:get('rut_comprador')||get('rut_empresa'), nombre_vendedor:get('nombre_vendedor'), fecha_escritura:get('fecha_escritura'), notaria:get('notaria'), nombre_notario:get('nombre_notario'), repertorio:get('repertorio_escritura'), precio:get('precio_compraventa'), descripcion_propiedad:get('descripcion_propiedad'), d_norte:get('d_norte'), d_sur:get('d_sur'), d_oriente:get('d_oriente'), d_poniente:get('d_poniente'), rol_avaluo:get('rol_avaluo'), comuna:get('comuna_avaluo'), ciudad:get('ciudad'), fecha:get('fecha'), requirente:get('requirente'), firma_conservador:get('firma_conservador'), nombre_otorgante:get('nombre_comprador')||get('razon_social') };
+    }
+    if (tipoDoc === 'cesion') {
+      return { titulo_vigente:`Fojas ${get('tv_fojas')} N° ${get('tv_numero')} del año ${get('tv_anio')}`, cbr_titulo_vigente:get('tv_cbr'), nombre_cedente:get('nombre_cedente'), rut_cedente:get('rut_cedente'), nombre_cesionario:get('nombre_cesionario'), rut_cesionario:get('rut_cesionario'), fecha_escritura:get('fecha_escritura'), notaria:get('notaria'), precio:get('precio_cesion'), descripcion_propiedad:get('descripcion_propiedad'), d_norte:get('d_norte'), d_sur:get('d_sur'), d_oriente:get('d_oriente'), d_poniente:get('d_poniente'), rol_avaluo:get('rol_avaluo'), comuna:get('comuna_avaluo'), ciudad:get('ciudad'), fecha:get('fecha'), requirente:get('requirente'), firma_conservador:get('firma_conservador'), nombre_otorgante:get('nombre_cedente') };
+    }
+    if (tipoDoc === 'pe') {
+      const bienes = [];
+      document.querySelectorAll('[id^="bien-"]').forEach(el => { if(el.value.trim()) bienes.push(el.value.trim()); });
+      return { nombre_causante:get('nombre_causante'), rut_causante:get('rut_causante'), ec_causante:get('ec_causante'), fecha_fallecimiento:get('fecha_fallecimiento'), ultimo_domicilio:get('ultimo_domicilio'), num_resolucion:get('num_resolucion'), fecha_resolucion:get('fecha_resolucion'), num_repertorio:get('num_repertorio'), anio_repertorio:get('anio_repertorio'), inscripcion_pe:`Fojas ${get('pe_fojas')} N° ${get('pe_numero')} año ${get('pe_anio')}`, inscripcion_herencia:`Fojas ${get('h_fojas')} N° ${get('h_numero')} año ${get('h_anio')}`, cbr_inscripcion:get('cbr_inscripcion'), herederos:herederosList.map(h=>({...h})), bienes, ciudad:get('ciudad'), fecha:get('fecha'), requirente:get('requirente'), firma_conservador:get('firma_conservador'), nombre_otorgante:get('nombre_causante') };
+    }
+    return {};
+  }
+ 
+  // ── GUARDAR EN JSONBIN ──
+  async function guardarDocumento() {
+    const user = usuarioActual();
+    if (!user) return window.location.href = 'login.html';
+    const btn = document.getElementById('btn-guardar-final');
+    btn.disabled = true; btn.textContent = '⏳ Guardando...';
+    try {
+      const data = await JSONBIN.get('tramites');
+      const formulario = recolectarDatos();
+      const tiposLabel = { compraventa:'Inscripción — Compraventa', cesion:'Inscripción — Cesión de derechos', pe:'Inscripción — Posesión efectiva' };
+      const emojis = { compraventa:'🏠', cesion:'🔄', pe:'⚖️' };
+      const tramite = {
+        id: Date.now(), codigo: codigoDoc,
+        usuarioId: user.id, usuarioNombre: user.nombre, usuarioEmail: user.email,
+        tipo: tiposLabel[tipoDoc], emoji: emojis[tipoDoc],
+        estado: accionSeleccionada,
+        comentario_notario: document.getElementById('obs-textarea').value.trim() || null,
+        fecha: new Date().toISOString(),
+        origen: 'lector-ia', archivo_original: pdfNombre,
+        formulario
+      };
+      data.tramites.push(tramite);
+      await JSONBIN.set('tramites', data);
+      alert(`✅ Documento guardado correctamente.\nEstado: ${accionSeleccionada}\nCódigo: ${codigoDoc}`);
+      window.location.href = 'mis-documentos.html';
+    } catch(e) {
+      alert('Error al guardar. Intenta más tarde.');
+      btn.disabled = false;
+      btn.textContent = '💾 Guardar documento en el sistema';
+    }
+  }
+</script>
+</body>
+</html>
