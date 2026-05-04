@@ -338,9 +338,11 @@ Formato fecha: YYYY-MM-DD. Los herederos van en el array con nombre, RUT y calid
     };
  
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
+      const response = await fetch('/api/claude', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
           model: 'claude-sonnet-4-20250514',
           max_tokens: 2000,
@@ -374,7 +376,14 @@ Formato fecha: YYYY-MM-DD. Los herederos van en el array con nombre, RUT y calid
       document.getElementById('ia-loading').classList.remove('visible');
       document.getElementById('btn-extraer').disabled = false;
       avanzarFlujo(3);
-      alert('Error al procesar el documento: ' + err.message + '\n\nIntenta nuevamente o verifica que el PDF sea legible.');
+      console.error('Error completo:', err);
+      let msg = 'Error al procesar el documento.';
+      if (err.message.includes('fetch') || err.message.includes('CORS') || err.message.includes('Failed')) {
+        msg = 'Error de conexión con la API.\n\nEste módulo requiere ejecutarse desde Claude.ai (claude.ai/artifacts) para que la autenticación funcione correctamente.\n\nSi estás en Vercel, el administrador debe configurar un proxy backend.';
+      } else {
+        msg += '\n' + err.message;
+      }
+      alert(msg);
     }
   }
  
