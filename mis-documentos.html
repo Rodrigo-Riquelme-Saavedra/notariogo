@@ -10,12 +10,12 @@
     .nav-logo-text { font-size: 22px; font-weight: 800; color: #0D1B3E; text-decoration: none; letter-spacing: -0.5px; }
     .nav-logo-text span { color: #3B8BFF; }
     body { background: #F7F9FC; }
-
+ 
     .page-header { background: #0D1B3E; padding: 3rem 2rem; text-align: center; }
     .page-header h1 { font-family: 'DM Serif Display', serif; font-size: 2.4rem; color: white; margin-bottom: .5rem; }
     .page-header p { color: rgba(255,255,255,0.6); font-size: 15px; }
     .page-content { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-
+ 
     /* BIENVENIDA */
     .resumen-card { background: #0D1B3E; border-radius: 16px; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
     .resumen-card p { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: .25rem; }
@@ -26,7 +26,7 @@
     .btn-nuevo:hover { background: #FFCA40; transform: translateY(-1px); }
     .btn-salir { background: rgba(255,255,255,0.1); color: white; border: 1.5px solid rgba(255,255,255,0.25); border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all .2s; }
     .btn-salir:hover { background: rgba(255,255,255,0.18); }
-
+ 
     /* KPIs */
     .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 1rem; margin-bottom: 1.5rem; }
     .kpi-mini { background: white; border: 2px solid #EEF2F9; border-radius: 12px; padding: 1rem 1.25rem; box-shadow: 0 2px 6px rgba(13,27,62,0.05); cursor: pointer; transition: all .2s; }
@@ -39,7 +39,7 @@
     .kpi-mini.proceso .kpi-mini-num { color: #1E40AF; }
     .kpi-mini.completado .kpi-mini-num { color: #065F46; }
     .kpi-mini.rechazado .kpi-mini-num { color: #991B1B; }
-
+ 
     /* BARRA HERRAMIENTAS */
     .toolbar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
     .search-box { flex: 1; min-width: 200px; position: relative; }
@@ -50,7 +50,7 @@
     .sort-select { padding: 9px 12px; border: 1.5px solid #C1CBDF; border-radius: 8px; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; color: #0D1B3E; outline: none; background: white; cursor: pointer; }
     .sort-select:focus { border-color: #1E6FE8; }
     .results-count { font-size: 13px; color: #7888A8; font-weight: 600; white-space: nowrap; }
-
+ 
     /* TABLA */
     .tabla-wrap { background: white; border: 2px solid #EEF2F9; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(13,27,62,0.06); }
     .tabla-wrap table { width: 100%; border-collapse: collapse; }
@@ -63,7 +63,7 @@
     tbody tr:last-child { border-bottom: none; }
     tbody tr:hover { background: #F7F9FC; }
     tbody td { padding: .875rem 1rem; font-size: 13px; color: #0D1B3E; vertical-align: middle; }
-
+ 
     /* CELDAS ESPECÍFICAS */
     .td-codigo { font-family: 'Courier New', monospace; font-size: 11px; color: #7888A8; letter-spacing: .04em; white-space: nowrap; }
     .td-codigo button { background: none; border: none; cursor: pointer; font-size: 12px; opacity: .5; transition: opacity .2s; margin-left: 4px; }
@@ -75,9 +75,9 @@
     .td-nombre small { display: block; font-size: 11px; color: #7888A8; font-weight: 400; margin-top: 1px; }
     .td-fecha { font-size: 12px; color: #7888A8; white-space: nowrap; }
     .td-fecha small { display: block; font-size: 11px; color: #C1CBDF; margin-top: 1px; }
-
+ 
     .estado-pill { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 100px; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; display: inline-block; }
-
+ 
     /* PAGINACIÓN */
     .paginacion { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; border-top: 1px solid #EEF2F9; flex-wrap: wrap; gap: .75rem; }
     .pag-info { font-size: 13px; color: #7888A8; }
@@ -86,32 +86,32 @@
     .pag-btn:hover:not(:disabled) { border-color: #1E6FE8; color: #1E6FE8; }
     .pag-btn.active { border-color: #1E6FE8; background: #1E6FE8; color: white; }
     .pag-btn:disabled { opacity: .4; cursor: not-allowed; }
-
+ 
     /* EMPTY */
     .empty-state { text-align: center; padding: 4rem 2rem; }
     .empty-icon { font-size: 56px; margin-bottom: 1rem; }
     .empty-state h3 { font-family: 'DM Serif Display', serif; color: #0D1B3E; font-size: 1.6rem; margin-bottom: .5rem; }
     .empty-state p { color: #7888A8; font-size: 14px; margin-bottom: 1.5rem; }
-
+ 
     /* LOADING */
     .loading { text-align: center; padding: 4rem; color: #7888A8; }
     .spinner { width: 32px; height: 32px; border: 3px solid #EEF2F9; border-top-color: #1E6FE8; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
+ 
     /* FOOTER */
     footer { background: #0D1B3E; padding: 2rem; margin-top: 2rem; }
     .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.35); }
-
+ 
     @media (max-width: 768px) {
       .tabla-wrap { overflow-x: auto; }
       thead th, tbody td { white-space: nowrap; }
     }
-
+ 
     /* ── BOTÓN VER ── */
     .btn-ver-doc{background:#E6F0FF;color:#1E40AF;border:none;border-radius:7px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;white-space:nowrap}
     .btn-ver-doc:hover{background:#1E6FE8;color:white}
-
+ 
     /* ── MODAL DOCUMENTO ── */
     .modal-overlay-doc{position:fixed;inset:0;background:rgba(13,27,62,.55);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(3px)}
     .modal-overlay-doc.visible{display:flex}
@@ -142,7 +142,7 @@
   </style>
 </head>
 <body>
-
+ 
 <nav>
   <a class="nav-logo-text" href="index.html">Notario<span>Go</span></a>
   <div class="nav-links">
@@ -156,17 +156,17 @@
     <a href="tramites.html" class="btn-primary">Iniciar trámite</a>
   </div>
 </nav>
-
+ 
 <div class="page-header">
   <h1>Mis documentos</h1>
   <p>Historial completo de tus trámites notariales</p>
 </div>
-
+ 
 <div class="page-content">
-
+ 
   <!-- BIENVENIDA -->
   <div id="resumen-usuario"></div>
-
+ 
   <!-- KPIs CLICKEABLES -->
   <div class="kpi-row" id="kpi-row" style="display:none;">
     <div class="kpi-mini todos active" onclick="filtrarEstado('todos', this)">
@@ -190,7 +190,7 @@
       <div class="kpi-mini-label">❌ Rechazados</div>
     </div>
   </div>
-
+ 
   <!-- BARRA HERRAMIENTAS -->
   <div class="toolbar" id="toolbar" style="display:none;">
     <div class="search-box">
@@ -207,21 +207,21 @@
       <span class="results-count" id="results-count"></span>
     </div>
   </div>
-
+ 
   <!-- TABLA -->
   <div id="contenido-principal">
     <div class="loading"><div class="spinner"></div>Cargando tus documentos...</div>
   </div>
-
+ 
 </div>
-
+ 
 <footer>
   <div class="footer-bottom">
     <div class="footer-copy">© 2025 NotarioGO SpA · Santiago, Chile</div>
     <div class="footer-copy">Ley N° 19.799 sobre firma electrónica</div>
   </div>
 </footer>
-
+ 
 <script src="js/jsonbin.js"></script>
 <script src="js/app.js"></script>
 <script>
@@ -230,7 +230,7 @@
   let estadoActual = 'todos';
   const POR_PAGINA = 10;
   let paginaActual = 1;
-
+ 
   function estadoColor(estado) {
     const c = {
       'Pendiente':   { bg:'#FEF3C7', text:'#92400E' },
@@ -240,28 +240,28 @@
     };
     return c[estado] || { bg:'#EEF2F9', text:'#3A4A6B' };
   }
-
+ 
   function formatFecha(iso) {
     const d = new Date(iso);
     return d.toLocaleDateString('es-CL', { day:'2-digit', month:'short', year:'numeric' });
   }
-
+ 
   function formatHora(iso) {
     return new Date(iso).toLocaleTimeString('es-CL', { hour:'2-digit', minute:'2-digit' });
   }
-
+ 
   function parseTipo(tipo) {
     const p = tipo.split('—').map(s => s.trim());
     return { principal: p[0] || tipo, subtipo: p[1] || '' };
   }
-
+ 
   function copiarCodigo(codigo) {
     navigator.clipboard.writeText(codigo).catch(() => {});
     const btn = event.currentTarget;
     btn.textContent = '✅';
     setTimeout(() => btn.textContent = '📋', 1500);
   }
-
+ 
   // ── FILTROS + BÚSQUEDA + ORDEN ──
   function filtrarEstado(estado, kpi) {
     estadoActual = estado;
@@ -270,11 +270,11 @@
     kpi.classList.add('active');
     aplicarFiltros();
   }
-
+ 
   function aplicarFiltros() {
     const busqueda = document.getElementById('buscador').value.toLowerCase();
     const orden = document.getElementById('ordenar').value;
-
+ 
     let lista = tramitesAll.filter(t => {
       const matchEstado = estadoActual === 'todos' || t.estado === estadoActual;
       const hayBusqueda = !busqueda ||
@@ -284,7 +284,7 @@
         t.formulario?.nombre_apoderado?.toLowerCase().includes(busqueda);
       return matchEstado && hayBusqueda;
     });
-
+ 
     // Ordenar
     lista.sort((a,b) => {
       if (orden === 'fecha-desc') return new Date(b.fecha) - new Date(a.fecha);
@@ -293,12 +293,12 @@
       if (orden === 'estado-asc') return a.estado.localeCompare(b.estado);
       return 0;
     });
-
+ 
     tramitesFiltrados = lista;
     paginaActual = 1;
     renderTabla();
   }
-
+ 
   // ── RENDER TABLA ──
   function renderTabla() {
     const contenido = document.getElementById('contenido-principal');
@@ -307,10 +307,10 @@
     const fin = inicio + POR_PAGINA;
     const pagina = tramitesFiltrados.slice(inicio, fin);
     const totalPags = Math.ceil(total / POR_PAGINA);
-
+ 
     document.getElementById('results-count').textContent =
       `${total} documento${total !== 1 ? 's' : ''}`;
-
+ 
     if (total === 0) {
       contenido.innerHTML = `
         <div class="tabla-wrap">
@@ -322,18 +322,18 @@
         </div>`;
       return;
     }
-
+ 
     // Mapa para acceso seguro por id
     window.__misDocsMap__ = {};
     tramitesFiltrados.forEach(t => { window.__misDocsMap__[t.id] = t; });
-
+ 
     const filas = pagina.map(t => {
       const col = estadoColor(t.estado);
       const { principal, subtipo } = parseTipo(t.tipo);
       const otorgante = t.formulario?.nombre_otorgante || t.usuarioNombre || '—';
       const apoderado = t.formulario?.nombre_apoderado || null;
       const codigo = t.codigo || '—';
-
+ 
       return `
         <tr>
           <td class="td-codigo">
@@ -363,13 +363,13 @@
           </td>
         </tr>`;
     }).join('');
-
+ 
     // Paginación
     let pags = '';
     for (let i = 1; i <= totalPags; i++) {
       pags += `<button class="pag-btn ${i === paginaActual ? 'active' : ''}" onclick="irPagina(${i})">${i}</button>`;
     }
-
+ 
     contenido.innerHTML = `
       <div class="tabla-wrap">
         <table>
@@ -395,7 +395,7 @@
         </div>
       </div>`;
   }
-
+ 
   function irPagina(n) {
     const totalPags = Math.ceil(tramitesFiltrados.length / POR_PAGINA);
     if (n < 1 || n > totalPags) return;
@@ -403,7 +403,7 @@
     renderTabla();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
+ 
   function cambiarOrden(col) {
     const sel = document.getElementById('ordenar');
     if (col === 'fecha') sel.value = sel.value === 'fecha-desc' ? 'fecha-asc' : 'fecha-desc';
@@ -411,12 +411,12 @@
     else if (col === 'estado') sel.value = 'estado-asc';
     aplicarFiltros();
   }
-
+ 
   // ── INIT ──
   document.addEventListener('DOMContentLoaded', async () => {
     const user = usuarioActual();
     if (!user) return window.location.href = 'login.html';
-
+ 
     document.getElementById('resumen-usuario').innerHTML = `
       <div class="resumen-card">
         <div>
@@ -429,13 +429,13 @@
           <button onclick="cerrarSesion()" class="btn-salir">Cerrar sesión</button>
         </div>
       </div>`;
-
+ 
     try {
       const data = await JSONBIN.get('tramites');
       tramitesAll = (data.tramites || [])
-        .filter(t => t.usuarioId === user.id)
+        .filter(t => String(t.usuarioId) === String(user.id))
         .sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
-
+ 
       if (tramitesAll.length === 0) {
         document.getElementById('contenido-principal').innerHTML = `
           <div class="tabla-wrap">
@@ -448,7 +448,7 @@
           </div>`;
         return;
       }
-
+ 
       // KPIs
       document.getElementById('kpi-row').style.display = 'grid';
       document.getElementById('toolbar').style.display = 'flex';
@@ -457,18 +457,18 @@
       document.getElementById('kpi-proceso').textContent    = tramitesAll.filter(t => t.estado === 'En proceso').length;
       document.getElementById('kpi-completado').textContent = tramitesAll.filter(t => t.estado === 'Completado').length;
       document.getElementById('kpi-rechazado').textContent  = tramitesAll.filter(t => t.estado === 'Rechazado').length;
-
+ 
       tramitesFiltrados = [...tramitesAll];
       renderTabla();
-
+ 
     } catch(e) {
       document.getElementById('contenido-principal').innerHTML =
         '<p style="color:red; text-align:center; padding:2rem;">Error al cargar. Intenta más tarde.</p>';
     }
   });
 </script>
-
-
+ 
+ 
 <!-- ══════════ MODAL VER DOCUMENTO ══════════ -->
 <div class="modal-overlay-doc" id="modal-overlay-doc">
   <div class="modal-doc-card">
@@ -495,17 +495,17 @@
     <button class="btn-modal-cerrar" onclick="cerrarModalDoc()">Cerrar</button>
   </div>
 </div>
-
+ 
 <script>
   // ── MODAL VER DOCUMENTO ──
   function verDocumento(id) {
     const t = window.__misDocsMap__ && window.__misDocsMap__[id];
     if (!t) { alert('No se encontró el documento.'); return; }
-
+ 
     document.getElementById('modal-doc-titulo-header').textContent = (t.emoji||'📋') + ' ' + t.tipo;
     document.getElementById('modal-doc-meta').textContent =
       'Código: ' + (t.codigo||'—') + ' · ' + formatFecha(t.fecha) + ' · Estado: ' + t.estado;
-
+ 
     // Observación notario
     const obs = t.comentario_notario;
     const obsEl = document.getElementById('modal-doc-obs');
@@ -515,19 +515,19 @@
     } else {
       obsEl.classList.remove('visible');
     }
-
+ 
     // Renderizar documento
     renderDocMisDocs(t);
-
+ 
     document.getElementById('modal-overlay-doc').classList.add('visible');
     document.body.style.overflow = 'hidden';
   }
-
+ 
   function cerrarModalDoc() {
     document.getElementById('modal-overlay-doc').classList.remove('visible');
     document.body.style.overflow = '';
   }
-
+ 
   function imprimirDocModal() {
     const s = document.createElement('style');
     s.id = '__print-doc__';
@@ -536,13 +536,13 @@
     window.print();
     setTimeout(() => { const x = document.getElementById('__print-doc__'); if(x) x.remove(); }, 600);
   }
-
+ 
   // Cerrar con Escape o click en overlay
   document.addEventListener('keydown', e => { if(e.key==='Escape') cerrarModalDoc(); });
   document.getElementById('modal-overlay-doc').addEventListener('click', e => {
     if(e.target.id==='modal-overlay-doc') cerrarModalDoc();
   });
-
+ 
   function fvd(val, etiqueta) {
     return val ? '<strong>' + val + '</strong>' : '<em style="color:#92400E;background:#FEF3C7;padding:0 3px;border-radius:2px">[' + etiqueta + ']</em>';
   }
@@ -552,12 +552,12 @@
     const M = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
     return parseInt(parts[2]) + ' de ' + M[parseInt(parts[1])-1] + ' de ' + parts[0];
   }
-
+ 
   function renderDocMisDocs(t) {
     const f = t.formulario || {};
     const tipo = t.tipo || '';
     let titulo = '', cuerpo = '', firma = '';
-
+ 
     // ── PODERES SIMPLES ──
     if (tipo.includes('Poder simple') || tipo.includes('Poder Simple')) {
       titulo = 'PODER SIMPLE';
@@ -576,7 +576,7 @@
         + '<p style="margin-top:.75rem">En ' + fvd(f.ciudad,'ciudad') + ', a ' + fvd(fechaDoc,'fecha') + '.</p>';
       firma = '<div class="doc-firma-modal">' + fvd(f.nombre_otorgante,'nombre') + '<br><span style="font-size:11px;color:#555">C.I. ' + (f.rut_otorgante||'________________') + '</span></div>';
     }
-
+ 
     // ── PODER NOTARIAL ──
     else if (tipo.includes('notarial') || tipo.includes('Notarial')) {
       titulo = tipo.includes('Administración') ? 'PODER NOTARIAL PARA ADMINISTRACIÓN DE BIENES'
@@ -594,7 +594,7 @@
         + '<p style="margin-top:.75rem">El presente poder se otorga por tiempo ' + fvd(f.vigencia,'vigencia') + '.</p>';
       firma = '<div class="doc-firma-modal">' + fvd(f.nombre_mandante,'nombre') + '<br><span style="font-size:11px;color:#555">C.I. ' + (f.rut_mandante||'________________') + ' · MANDANTE</span><div class="notario-sello-modal">AUTORIZADA ANTE MÍ NOTARIO PÚBLICO</div></div>';
     }
-
+ 
     // ── DECLARACIONES ──
     else if (tipo.includes('Declaración') || tipo.includes('Declaracion')) {
       titulo = tipo.includes('notarial') ? 'DECLARACIÓN JURADA NOTARIAL' : 'DECLARACIÓN JURADA SIMPLE';
@@ -606,7 +606,7 @@
         + '<p style="margin-top:.75rem">En ' + fvd(f.ciudad,'ciudad') + ', a ' + fvd(fechaDoc,'fecha') + '.</p>';
       firma = '<div class="doc-firma-modal">' + fvd(f.nombre_declarante,'nombre') + '<br><span style="font-size:11px;color:#555">C.I. ' + (f.rut_declarante||'________________') + ' · DECLARANTE</span><div class="notario-sello-modal">AUTORIZADA ANTE MÍ NOTARIO PÚBLICO</div></div>';
     }
-
+ 
     // ── AUTORIZACIÓN DE FIRMA ──
     else if (tipo.includes('Autorización') || tipo.includes('Autorizacion')) {
       titulo = 'AUTORIZACIÓN DE FIRMA';
@@ -615,7 +615,7 @@
         + '<p style="margin-top:.75rem">En consecuencia, autorizo la firma que antecede.</p>';
       firma = '<div class="doc-firma-modal">' + fvd(f.nombre_firmante,'nombre') + '<div class="notario-sello-modal">AUTORIZADA ANTE MÍ NOTARIO PÚBLICO</div></div>';
     }
-
+ 
     // ── CARTA PODER ──
     else if (tipo.includes('Carta poder') || tipo.includes('Carta Poder')) {
       titulo = 'CARTA PODER';
@@ -629,7 +629,7 @@
         + '<p style="margin-top:.75rem">En ' + fvd(f.ciudad,'ciudad') + ', a ' + fvd(fechaDoc,'fecha') + '.</p>';
       firma = '<div class="doc-firma-modal">' + fvd(f.nombre_otorgante,'nombre') + '<br><span style="font-size:11px;color:#555">C.I. ' + (f.rut_otorgante||'________________') + '</span></div>';
     }
-
+ 
     // ── CONTRATO DE ARRIENDO ──
     else if (tipo.includes('arriendo') || tipo.includes('Arriendo')) {
       titulo = 'CONTRATO DE ARRIENDO';
@@ -645,7 +645,7 @@
         + '<div class="clausula"><span class="clausula-num">QUINTO: GARANTÍA</span> <strong>' + garantia + '</strong>.</div>';
       firma = '<div class="doc-firmas-modal"><div class="firma-col"><div class="linea"></div><div>' + (f.nombre_arrendador||'________________') + '</div><div class="rol">ARRENDADOR</div></div><div class="firma-col"><div class="linea"></div><div>' + (f.nombre_arrendatario||'________________') + '</div><div class="rol">ARRENDATARIO</div></div></div>';
     }
-
+ 
     // ── PROTOCOLIZACIÓN ──
     else if (tipo.includes('Protocolización') || tipo.includes('Protocolizacion')) {
       titulo = 'ACTA DE PROTOCOLIZACIÓN';
@@ -655,7 +655,7 @@
         + '<p style="margin-top:.75rem;text-align:center;font-family:monospace;font-size:13px;font-weight:700;background:#F0F6FF;padding:.5rem;border-radius:6px">Repertorio N° ' + (f.numero_repertorio||'[N° repertorio]') + '</p>';
       firma = '<div class="doc-firma-modal">' + fvd(f.nombre_compareciente,'nombre') + '<div class="notario-sello-modal">AUTORIZADA ANTE MÍ NOTARIO PÚBLICO</div></div>';
     }
-
+ 
     // ── COPIA AUTORIZADA ──
     else if (tipo.includes('Copia')) {
       titulo = 'COPIA AUTORIZADA';
@@ -664,7 +664,7 @@
         + '<p style="margin-top:.75rem">Copia extendida a solicitud de don (doña) ' + fvd(f.nombre_solicitante,'nombre') + ', C.I. N° ' + fvd(f.rut_solicitante,'RUT') + '.</p>';
       firma = '<div class="doc-firma-modal">NOTARIO PÚBLICO</div>';
     }
-
+ 
     // ── VERIFICACIÓN DE IDENTIDAD ──
     else if (tipo.includes('Verificación') || tipo.includes('Verificacion')) {
       titulo = 'CERTIFICADO DE VERIFICACIÓN DE IDENTIDAD';
@@ -673,14 +673,14 @@
         + '<p style="margin-top:.75rem">Verificación realizada para los fines de ' + fvd(f.finalidad_verificacion,'finalidad') + '.</p>';
       firma = '<div class="doc-firma-modal">NOTARIO PÚBLICO</div>';
     }
-
+ 
     // ── FALLBACK ──
     else {
       titulo = t.tipo || 'DOCUMENTO';
       cuerpo = '<p style="color:#7888A8;font-style:italic;text-align:center;padding:1rem">Vista previa en construcción para este tipo de documento.</p>';
       firma = '';
     }
-
+ 
     document.getElementById('modal-doc-codigo').textContent = t.codigo || '';
     document.getElementById('modal-doc-titulo').textContent = titulo;
     document.getElementById('modal-doc-cuerpo').innerHTML = cuerpo;
