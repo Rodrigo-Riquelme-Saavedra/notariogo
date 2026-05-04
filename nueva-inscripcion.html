@@ -128,6 +128,63 @@
     .btn-guardar-final:hover{background:#1A2F5E}
     .btn-guardar-final:disabled{background:#C1CBDF;cursor:not-allowed}
  
+ 
+    /* ── BARRA EDICIÓN ── */
+    .barra-edicion{background:linear-gradient(135deg,#0D1B3E,#1A2F5E);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .barra-edicion.vis{display:flex}
+    .barra-edicion-info{color:white}
+    .barra-edicion-info h3{font-size:14px;font-weight:700;margin-bottom:.2rem}
+    .barra-edicion-info p{font-size:12px;color:rgba(255,255,255,.6)}
+    .barra-edicion-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+    .btn-modo-edicion{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;border:none}
+    .btn-ver-preview{background:#1E6FE8;color:white}.btn-ver-preview:hover{background:#1458C4}
+    .btn-guardar-cambios{background:#10B981;color:white}.btn-guardar-cambios:hover{background:#059669}
+    .btn-resetear{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.25)!important}.btn-resetear:hover{background:rgba(255,255,255,.2)}
+ 
+    /* ── LAYOUT CON PREVIEW ── */
+    .editor-layout{display:grid;grid-template-columns:1fr;gap:1.5rem}
+    .editor-layout.con-preview{grid-template-columns:1fr 420px}
+    @media(max-width:960px){.editor-layout.con-preview{grid-template-columns:1fr}}
+ 
+    /* ── PANEL PREVIEW ── */
+    .preview-panel-doc{position:sticky;top:80px;display:none}
+    .preview-panel-doc.vis{display:block}
+    .preview-card-doc{background:white;border:2px solid #EEF2F9;border-radius:16px;padding:1.5rem;box-shadow:0 2px 8px rgba(13,27,62,.06)}
+    .preview-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+    .preview-card-titulo{font-size:13px;font-weight:700;color:#0D1B3E}
+    .preview-badge-live{font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;background:#D1FAE5;color:#065F46;animation:blink 2s ease-in-out infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.6}}
+    .doc-preview-content{font-family:'Times New Roman',Times,serif;font-size:12px;line-height:1.85;color:#1a1a1a;background:#FAFAFA;border:1px solid #E0E0E0;border-radius:8px;padding:1.25rem;max-height:560px;overflow-y:auto}
+    .doc-preview-content .margen{display:grid;grid-template-columns:110px 1fr;gap:.4rem;font-size:11px;line-height:1.6;color:#444;margin-bottom:.625rem}
+    .doc-preview-content .cuerpo-doc{text-align:justify;font-size:12px;line-height:1.85}
+    .campo-v{background:#FEF3C7;border-bottom:1px dashed #F59E0B;color:#92400E;padding:0 2px;border-radius:2px;font-style:italic;font-size:10px}
+    .campo-lleno{color:#1a1a1a;font-weight:600}
+    .tv-preview{background:#F0FFF4;border:1px solid #10B981;border-radius:4px;padding:1px 5px;font-family:'Courier New',monospace;font-size:11px;color:#065F46;font-weight:700}
+    .btn-imprimir-preview{width:100%;background:#0D1B3E;color:white;border:none;border-radius:8px;padding:9px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;margin-top:.75rem;transition:all .2s}
+    .btn-imprimir-preview:hover{background:#1A2F5E}
+ 
+    /* ── CAMPOS EN MODO EDICIÓN ACTIVO ── */
+    .edicion-activa .fg input:not([type="date"]),
+    .edicion-activa .fg select,
+    .edicion-activa .fg textarea{border-color:#8B5CF6!important;box-shadow:0 0 0 2px rgba(139,92,246,.08)}
+    .edicion-activa .fg label::after{content:' ✏️';font-size:10px;opacity:.5}
+    .campo-modificado{border-color:#F59E0B!important;background:#FFFBEB!important}
+ 
+    /* ── INDICADOR CAMPOS ── */
+    .resumen-campos{background:#F5F3FF;border:1.5px solid #C4B5FD;border-radius:10px;padding:.75rem 1rem;margin-bottom:1rem;font-size:12px;color:#5B21B6;display:none}
+    .resumen-campos.vis{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+    .chip-campo{padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700}
+    .chip-ok{background:#D1FAE5;color:#065F46}
+    .chip-pend{background:#FEE2E2;color:#991B1B}
+    .chip-ia{background:#EDE9FE;color:#7C3AED}
+ 
+    @media print{
+      .barra-edicion,.sec-tipo,.sec-docs,.progreso-ia,.acciones-bar,.nav,.breadcrumb,.page-header{display:none!important}
+      .editor-layout{display:block!important}
+      .preview-panel-doc{display:block!important;position:static!important}
+      .preview-card-doc{border:none!important;box-shadow:none!important;padding:0!important}
+      .doc-preview-content{border:none!important;background:white!important;max-height:unset!important;font-size:12pt!important;padding:1cm!important}
+    }
     footer{background:#0D1B3E;padding:2rem;margin-top:3rem}.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}.footer-copy{font-size:12px;color:rgba(255,255,255,.35)}
   </style>
 </head>
@@ -200,9 +257,42 @@
   </div>
  
   <!-- PASO 3: FORMULARIO EXTRAÍDO -->
-  <div class="seccion" id="sec-form">
-    <div class="sec-titulo">✏️ Paso 3 — Revisa y completa los datos</div>
-    <div id="form-container"></div>
+  <!-- BARRA EDICIÓN -->
+  <div class="barra-edicion" id="barra-edicion">
+    <div class="barra-edicion-info">
+      <h3>✏️ Modo edición activo</h3>
+      <p>Todos los campos son editables. El documento se actualiza en tiempo real.</p>
+    </div>
+    <div class="barra-edicion-btns">
+      <button class="btn-modo-edicion btn-resetear" onclick="resetearCampos()">↺ Restaurar IA</button>
+      <button class="btn-modo-edicion btn-ver-preview" onclick="togglePreview()">👁 <span id="toggle-preview-txt">Ver preview</span></button>
+      <button class="btn-modo-edicion btn-guardar-cambios" onclick="document.getElementById('sec-acciones').style.display='flex';document.getElementById('sec-acciones').scrollIntoView({behavior:'smooth'})">💾 Ir a guardar →</button>
+    </div>
+  </div>
+ 
+  <!-- RESUMEN CAMPOS -->
+  <div class="resumen-campos" id="resumen-campos"></div>
+ 
+  <!-- EDITOR CON PREVIEW LATERAL -->
+  <div class="editor-layout" id="editor-layout">
+    <div class="seccion" id="sec-form">
+      <div class="sec-titulo">✏️ Paso 3 — Revisa y completa los datos</div>
+      <div id="form-container"></div>
+    </div>
+ 
+    <!-- PANEL PREVIEW -->
+    <div class="preview-panel-doc" id="preview-panel-doc">
+      <div class="preview-card-doc">
+        <div class="preview-card-header">
+          <div class="preview-card-titulo">📄 Documento final</div>
+          <span class="preview-badge-live">🔴 LIVE</span>
+        </div>
+        <div class="doc-preview-content" id="doc-preview-content">
+          <p style="color:#7888A8;font-style:italic;text-align:center;padding:2rem 1rem">El documento aparecerá aquí...</p>
+        </div>
+        <button class="btn-imprimir-preview" onclick="imprimirDoc()">🖨️ Imprimir documento</button>
+      </div>
+    </div>
   </div>
  
   <!-- PASO 4: ACCIÓN Y GUARDADO -->
@@ -491,6 +581,12 @@ function renderFormulario() {
   document.querySelectorAll('input.ia-fill, select.ia-fill').forEach(el => {
     if (!el.value) el.classList.remove('ia-fill');
   });
+ 
+  // Guardar copia de datos originales IA para resetear
+  datosOriginalesIA = JSON.parse(JSON.stringify(datosIA));
+ 
+  // Activar modo edición
+  activarModoEdicion();
 }
  
 function fld(id, label, val, req=false, hint='', tipo='text') {
@@ -815,6 +911,168 @@ async function guardar() {
     btn.textContent = '💾 Guardar inscripción en el sistema';
   }
 }
+ 
+  // ── MODO EDICIÓN Y PREVIEW LIVE ──
+  let modoPreview = false;
+  let datosOriginalesIA = {};
+  let previewInterval = null;
+ 
+  function activarModoEdicion() {
+    document.getElementById('barra-edicion').classList.add('vis');
+    document.getElementById('sec-form').classList.add('edicion-activa');
+    actualizarResumenCampos();
+    actualizarPreviewDoc();
+    // Actualizar preview cada vez que cambie un campo
+    document.getElementById('form-container').addEventListener('input', () => {
+      actualizarResumenCampos();
+      if (modoPreview) actualizarPreviewDoc();
+    });
+    document.getElementById('form-container').addEventListener('change', () => {
+      actualizarResumenCampos();
+      if (modoPreview) actualizarPreviewDoc();
+    });
+  }
+ 
+  function togglePreview() {
+    modoPreview = !modoPreview;
+    const panel = document.getElementById('preview-panel-doc');
+    const layout = document.getElementById('editor-layout');
+    const txt = document.getElementById('toggle-preview-txt');
+    if (modoPreview) {
+      panel.classList.add('vis');
+      layout.classList.add('con-preview');
+      txt.textContent = 'Ocultar preview';
+      actualizarPreviewDoc();
+    } else {
+      panel.classList.remove('vis');
+      layout.classList.remove('con-preview');
+      txt.textContent = 'Ver preview';
+    }
+  }
+ 
+  function imprimirDoc() {
+    actualizarPreviewDoc();
+    window.print();
+  }
+ 
+  function resetearCampos() {
+    if (!confirm('¿Restaurar todos los campos a los valores originales extraídos por la IA?')) return;
+    renderFormulario();
+    document.querySelectorAll('input[id^="rut"]').forEach(applyRUTField);
+    actualizarResumenCampos();
+    if (modoPreview) actualizarPreviewDoc();
+  }
+ 
+  // ── RESUMEN DE CAMPOS ──
+  function actualizarResumenCampos() {
+    const el = document.getElementById('resumen-campos');
+    const inputs = document.getElementById('form-container').querySelectorAll('input,select,textarea');
+    let total = 0, llenos = 0, iaFill = 0, pendientes = [];
+    inputs.forEach(inp => {
+      if (inp.type === 'file' || inp.style.display === 'none') return;
+      total++;
+      const val = inp.value.trim();
+      if (val) { llenos++; if (inp.classList.contains('ia-fill')) iaFill++; }
+      else {
+        const label = inp.closest('.fg')?.querySelector('label')?.textContent?.replace(/[*✏️]/g,'').trim();
+        if (label && inp.closest('.fg')?.querySelector('.req')) pendientes.push(label);
+      }
+    });
+    const pct = Math.round((llenos/total)*100);
+    el.classList.add('vis');
+    el.innerHTML = `
+      <span>📊 Completitud:</span>
+      <span class="chip-campo chip-ok">✅ ${llenos}/${total} campos (${pct}%)</span>
+      <span class="chip-campo chip-ia">✨ ${iaFill} extraídos por IA</span>
+      ${pendientes.length > 0 ? `<span class="chip-campo chip-pend">⚠️ ${pendientes.length} pendiente${pendientes.length>1?'s':''}</span>` : '<span class="chip-campo chip-ok">🎉 Todo completo</span>'}
+    `;
+  }
+ 
+  // ── PREVIEW DOCUMENTO LIVE ──
+  function gv(id) { return document.getElementById(id)?.value?.trim() || ''; }
+  function cv(val, etiq) { return val ? `<span class="campo-lleno">${val}</span>` : `<span class="campo-v">[${etiq}]</span>`; }
+  function tvPrev() {
+    const f = gv('fojas_titulo_vigente')||gv('tv_fojas'); const n = gv('numero_titulo_vigente')||gv('tv_num'); const a = gv('anio_titulo_vigente')||gv('tv_anio'); const cbr = gv('cbr_titulo_vigente');
+    return f&&n&&a ? `<span class="tv-preview">Fojas ${f} N° ${n} del año ${a}</span>${cbr?' del '+cbr:''}` : '<span class="campo-v">[Título vigente]</span>';
+  }
+  function ffPreview(iso) {
+    if (!iso) return null;
+    const[y,m,d]=iso.split('-');
+    const M=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    return`${parseInt(d)} de ${M[parseInt(m)-1]} de ${y}`;
+  }
+ 
+  function actualizarPreviewDoc() {
+    const el = document.getElementById('doc-preview-content');
+    if (!el) return;
+    const fecha = gv('fecha') ? ffPreview(gv('fecha')) : null;
+    const ciudad = gv('ciudad');
+ 
+    let html = '';
+ 
+    if (tipoActual === 'compraventa') {
+      const fEsc = gv('fecha_escritura') ? ffPreview(gv('fecha_escritura')) : null;
+      const comprador = gv('nombre_comprador'); const vendedor = gv('nombre_vendedor');
+      const mF = gv('fojas_titulo_vigente'); const mN = gv('numero_titulo_vigente');
+      html = `
+        <div style="text-align:center;font-weight:bold;font-style:italic;font-size:13px;margin-bottom:.5rem">Fojas ${mF||'[Fojas]'}</div>
+        <div class="margen">
+          <div><strong>N°${mN||'[N°]'}</strong><br>${ciudad||'[ciudad]'}<br><br>COMPRAVENTA<br><br>${vendedor?vendedor.split(' ').slice(0,2).join(' ').toUpperCase():'[VENDEDOR]'}<br>A<br>${comprador?comprador.split(' ').slice(0,2).join(' ').toUpperCase():'[COMPRADOR]'}</div>
+          <div class="cuerpo-doc">
+            <p>${cv(ciudad,'ciudad')}, ${fecha?`<strong>${fecha}</strong>`:'<span class="campo-v">[fecha]</span>'}.— ${cv(comprador,'nombre comprador')}, ${cv(gv('nacionalidad_comprador'),'nac.')}, ${cv(gv('ec_comprador'),'estado civil')}, ${cv(gv('prof_comprador'),'profesión')}, C.I. ${cv(gv('rut_comprador'),'RUT')}, domiciliado en ${cv(gv('dom_comprador'),'domicilio')}, es dueño(a) del inmueble correspondiente a: ${cv(gv('desc_propiedad'),'descripción')}, que deslinda: NORTE, ${cv(gv('d_norte'),'norte')}; SUR, ${cv(gv('d_sur'),'sur')}; ORIENTE, ${cv(gv('d_oriente'),'oriente')}; PONIENTE, ${cv(gv('d_poniente'),'poniente')}.— Adquirió por compra a ${cv(vendedor,'vendedor')} ${gv('dom_vendedor')?', '+gv('dom_vendedor'):''}, según escritura de fecha ${fEsc?`<strong>${fEsc}</strong>`:'<span class="campo-v">[fecha esc.]</span>'}, otorgada en ${cv(gv('notaria'),'notaría')}, de don(ña) ${cv(gv('nom_notario'),'notario')}, Repertorio Número ${cv(gv('rep_escritura'),'repertorio')}, por el precio de ${cv(gv('precio'),'precio')}.— El título anterior está a ${tvPrev()}.— Rol de avalúo número ${cv(gv('rol_avaluo'),'rol')}, Comuna de ${cv(gv('comuna_avaluo'),'comuna')}.— Requirente: ${cv(gv('requirente'),'requirente')}.— ${cv(gv('firma_conservador'),'firma conservador')}.</p>
+          </div>
+        </div>
+        <div style="margin-top:.625rem;border-top:1px solid #ddd;padding-top:.5rem;font-size:10px;color:#777;text-align:center;font-style:italic">CERTIFICO QUE LA PRESENTE COPIA ESTA CONFORME CON SU ORIGINAL DEL REGISTRO DE PROPIEDAD Y QUE LA INSCRIPCION QUE CONSTA EN ELLA SE ENCUENTRA VIGENTE AL ${fecha||'[fecha]'}.— ${cv(ciudad,'ciudad')}, ${fecha||'[fecha]'}.— ${cv(gv('firma_conservador'),'firma')}</div>`;
+    }
+ 
+    else if (tipoActual === 'cesion') {
+      const cedente = gv('nombre_cedente'); const cesionario = gv('nombre_cesionario');
+      const mF = gv('fojas_titulo_vigente'); const mN = gv('numero_titulo_vigente');
+      const fEsc = gv('fecha_escritura') ? ffPreview(gv('fecha_escritura')) : null;
+      html = `
+        <div style="text-align:center;font-weight:bold;font-style:italic;font-size:13px;margin-bottom:.5rem">Fojas ${mF||'[Fojas]'}</div>
+        <div class="margen">
+          <div><strong>N°${mN||'[N°]'}</strong><br>${ciudad||'[ciudad]'}<br><br>CESIÓN DE DERECHOS<br><br>${cedente?cedente.split(' ').slice(0,2).join(' ').toUpperCase():'[CEDENTE]'}<br>A<br>${cesionario?cesionario.split(' ').slice(0,2).join(' ').toUpperCase():'[CESIONARIO]'}</div>
+          <div class="cuerpo-doc">
+            <p>${cv(ciudad,'ciudad')}, ${fecha?`<strong>${fecha}</strong>`:'<span class="campo-v">[fecha]</span>'}.— ${cv(cedente,'cedente')}, ${cv(gv('nac_cedente'),'nac.')}, ${cv(gv('ec_cedente'),'estado civil')}, ${cv(gv('prof_cedente'),'profesión')}, C.I. ${cv(gv('rut_cedente'),'RUT')}, domiciliado en ${cv(gv('dom_cedente'),'domicilio')}, cede y transfiere a don (doña) ${cv(cesionario,'cesionario')}, C.I. ${cv(gv('rut_cesionario'),'RUT')}, domiciliado en ${cv(gv('dom_cesionario'),'domicilio')}, los derechos que le corresponden en el inmueble: ${cv(gv('desc_propiedad'),'descripción')}, que deslinda: NORTE, ${cv(gv('d_norte'),'norte')}; SUR, ${cv(gv('d_sur'),'sur')}; ESTE, ${cv(gv('d_oriente'),'oriente')}; OESTE, ${cv(gv('d_poniente'),'poniente')}.— Adquirió según escritura de fecha ${fEsc?`<strong>${fEsc}</strong>`:'<span class="campo-v">[fecha esc.]</span>'}, otorgada ante ${cv(gv('notaria'),'notaría')}, Repertorio N° ${cv(gv('rep_escritura'),'repertorio')}, por el precio de ${cv(gv('precio'),'precio')}.— El título anterior está a ${tvPrev()}.— Rol N° ${cv(gv('rol_avaluo'),'rol')}, Comuna de ${cv(gv('comuna_avaluo'),'comuna')}.— Requirente: ${cv(gv('requirente'),'requirente')}.— ${cv(gv('firma_conservador'),'firma')}.</p>
+          </div>
+        </div>`;
+    }
+ 
+    else if (tipoActual === 'pe') {
+      const causante = gv('nombre_causante'); const numRes = gv('num_res'); const numRep = gv('num_rep');
+      const fFall = gv('fecha_fall') ? ffPreview(gv('fecha_fall')) : null;
+      const fRes = gv('fecha_res') ? ffPreview(gv('fecha_res')) : null;
+      const insPE = gv('pe_fojas')&&gv('pe_num') ? `<span class="tv-preview">Fojas ${gv('pe_fojas')} N° ${gv('pe_num')} año ${gv('pe_anio')}</span>` : '<span class="campo-v">[PE]</span>';
+      const insH = gv('h_fojas')&&gv('h_num') ? `<span class="tv-preview">Fojas ${gv('h_fojas')} N° ${gv('h_num')} año ${gv('h_anio')}</span>` : '<span class="campo-v">[Herencia]</span>';
+      const herList = herederos.map(h=>`don (doña) <strong>${h.nombre||'[nombre]'}</strong>, C.I. ${h.rut||'[RUT]'}, en calidad de ${h.calidad||'[calidad]'}`).join('; ');
+      html = `
+        <div style="text-align:center;font-weight:bold;font-size:12px;text-transform:uppercase;margin-bottom:.75rem;text-decoration:underline">Certificación Inscripción Posesión Efectiva</div>
+        <div class="cuerpo-doc">
+          <p>El ${cv(gv('cbr_ins'),'CBR')}, certifica que la Resolución Exenta PE número <strong>${numRes||'[N° resolución]'}</strong>, de fecha ${fRes?`<strong>${fRes}</strong>`:'<span class="campo-v">[fecha]</span>'}, fue presentada para inscripción bajo el número <strong>${numRep||'[N°]'}</strong> del año <strong>${gv('anio_rep')||'[año]'}</strong>.</p>
+          <p style="margin-top:.5rem">Causante: don (doña) <strong>${causante||'[causante]'}</strong>, C.I. ${cv(gv('rut_causante'),'RUT')}, ${gv('ec_causante')||''}, fallecido(a) el ${fFall?`<strong>${fFall}</strong>`:'<span class="campo-v">[fecha fallecimiento]</span>'}, con último domicilio en ${cv(gv('dom_causante'),'domicilio')}.</p>
+          <p style="margin-top:.5rem">Herederos: ${herList||'[sin herederos]'}.</p>
+          <p style="margin-top:.5rem">Inscripciones: PE → ${insPE} · Herencia → ${insH}</p>
+          <p style="margin-top:.5rem">En ${cv(ciudad,'ciudad')}, a ${fecha?`<strong>${fecha}</strong>`:'<span class="campo-v">[fecha]</span>'}.— Requirente: ${cv(gv('requirente'),'requirente')}.— ${cv(gv('firma_conservador'),'firma')}.</p>
+        </div>`;
+    }
+ 
+    else if (tipoActual === 'hipoteca') {
+      const deudor = gv('nombre_deudor'); const acreedor = gv('nombre_acreedor');
+      const mF = gv('fojas_titulo_vigente'); const mN = gv('numero_titulo_vigente');
+      html = `
+        <div style="text-align:center;font-weight:bold;font-style:italic;font-size:13px;margin-bottom:.5rem">Fojas ${mF||'[Fojas]'}</div>
+        <div class="margen">
+          <div><strong>N°${mN||'[N°]'}</strong><br>${ciudad||'[ciudad]'}<br><br>HIPOTECA<br><br>${deudor?deudor.split(' ').slice(0,2).join(' ').toUpperCase():'[DEUDOR]'}<br>A FAVOR DE<br>${acreedor?acreedor.split(' ').slice(0,2).join(' ').toUpperCase():'[ACREEDOR]'}</div>
+          <div class="cuerpo-doc">
+            <p>${cv(ciudad,'ciudad')}, ${fecha?`<strong>${fecha}</strong>`:'<span class="campo-v">[fecha]</span>'}.— ${cv(deudor,'deudor')}, C.I. ${cv(gv('rut_deudor'),'RUT')}, ${cv(gv('ec_deudor'),'estado civil')}, domiciliado en ${cv(gv('dom_deudor'),'domicilio')}, hipoteca a favor de ${cv(acreedor,'acreedor')}, R.U.T. ${cv(gv('rut_acreedor'),'RUT')}, el inmueble: ${cv(gv('desc_propiedad'),'descripción')}, que deslinda: NORTE, ${cv(gv('d_norte'),'norte')}; SUR, ${cv(gv('d_sur'),'sur')}; ORIENTE, ${cv(gv('d_oriente'),'oriente')}; PONIENTE, ${cv(gv('d_poniente'),'poniente')}.— Monto: ${cv(gv('monto'),'monto')}.— Plazo: ${cv(gv('plazo'),'plazo')}.— El título anterior está a ${tvPrev()}.— Rol N° ${cv(gv('rol_avaluo'),'rol')}, Comuna de ${cv(gv('comuna_avaluo'),'comuna')}.— Requirente: ${cv(gv('requirente'),'requirente')}.— ${cv(gv('firma_conservador'),'firma')}.</p>
+          </div>
+        </div>`;
+    }
+ 
+    el.innerHTML = html || '<p style="color:#7888A8;font-style:italic;text-align:center;padding:2rem">Completa los campos para ver el documento...</p>';
+  }
+ 
 </script>
 </body>
 </html>
