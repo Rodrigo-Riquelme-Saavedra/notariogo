@@ -141,27 +141,35 @@
     .btn-guardar-cambios{background:#10B981;color:white}.btn-guardar-cambios:hover{background:#059669}
     .btn-resetear{background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.25)!important}.btn-resetear:hover{background:rgba(255,255,255,.2)}
  
-    /* ── LAYOUT CON PREVIEW ── */
+    /* ── LAYOUT (sin columna lateral) ── */
     .editor-layout{display:grid;grid-template-columns:1fr;gap:1.5rem}
-    .editor-layout.con-preview{grid-template-columns:1fr 420px}
-    @media(max-width:960px){.editor-layout.con-preview{grid-template-columns:1fr}}
  
-    /* ── PANEL PREVIEW ── */
-    .preview-panel-doc{position:sticky;top:80px;display:none}
-    .preview-panel-doc.vis{display:block}
-    .preview-card-doc{background:white;border:2px solid #EEF2F9;border-radius:16px;padding:1.5rem;box-shadow:0 2px 8px rgba(13,27,62,.06)}
-    .preview-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
-    .preview-card-titulo{font-size:13px;font-weight:700;color:#0D1B3E}
-    .preview-badge-live{font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;background:#D1FAE5;color:#065F46;animation:blink 2s ease-in-out infinite}
+    /* ── MODAL PREVIEW PANTALLA COMPLETA ── */
+    .modal-preview{position:fixed;inset:0;z-index:2000;background:rgba(13,27,62,.7);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:center;padding:1.5rem;overflow-y:auto}
+    .modal-preview.vis{display:flex}
+    .modal-preview-card{background:white;border-radius:20px;width:100%;max-width:820px;margin:auto;box-shadow:0 24px 80px rgba(13,27,62,.35);display:flex;flex-direction:column;max-height:calc(100vh - 3rem);overflow:hidden}
+    .modal-preview-header{background:#0D1B3E;padding:1.25rem 1.75rem;display:flex;align-items:center;justify-content:space-between;border-radius:20px 20px 0 0;flex-shrink:0}
+    .modal-preview-titulo{color:white;font-size:15px;font-weight:700;display:flex;align-items:center;gap:.75rem}
+    .preview-badge-live{font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;background:rgba(16,185,129,.3);color:#6EE7B7;border:1px solid rgba(16,185,129,.4);animation:blink 2s ease-in-out infinite}
     @keyframes blink{0%,100%{opacity:1}50%{opacity:.6}}
-    .doc-preview-content{font-family:'Times New Roman',Times,serif;font-size:12px;line-height:1.85;color:#1a1a1a;background:#FAFAFA;border:1px solid #E0E0E0;border-radius:8px;padding:1.25rem;max-height:560px;overflow-y:auto}
-    .doc-preview-content .margen{display:grid;grid-template-columns:110px 1fr;gap:.4rem;font-size:11px;line-height:1.6;color:#444;margin-bottom:.625rem}
-    .doc-preview-content .cuerpo-doc{text-align:justify;font-size:12px;line-height:1.85}
-    .campo-v{background:#FEF3C7;border-bottom:1px dashed #F59E0B;color:#92400E;padding:0 2px;border-radius:2px;font-style:italic;font-size:10px}
+    .modal-preview-acciones{display:flex;align-items:center;gap:.75rem}
+    .btn-modal-close{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.25);color:white;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:6px}
+    .btn-modal-close:hover{background:rgba(255,255,255,.2)}
+    .btn-modal-print{background:#10B981;border:none;color:white;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:6px}
+    .btn-modal-print:hover{background:#059669}
+    .modal-preview-body{padding:2rem;overflow-y:auto;flex:1}
+    .modal-preview-footer{background:#F7F9FC;border-top:1px solid #EEF2F9;padding:1rem 1.75rem;display:flex;align-items:center;justify-content:space-between;border-radius:0 0 20px 20px;flex-shrink:0;flex-wrap:wrap;gap:.75rem}
+    .modal-footer-info{font-size:12px;color:#7888A8}
+    .btn-modal-editar{background:#1E6FE8;border:none;color:white;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
+    .btn-modal-editar:hover{background:#1458C4}
+ 
+    /* ── DOCUMENTO DENTRO DEL MODAL ── */
+    .doc-preview-content{font-family:'Times New Roman',Times,serif;font-size:13px;line-height:1.9;color:#1a1a1a;background:#FAFAFA;border:1px solid #E0E0E0;border-radius:10px;padding:2rem}
+    .doc-preview-content .margen{display:grid;grid-template-columns:130px 1fr;gap:.5rem;font-size:12px;line-height:1.7;color:#444;margin-bottom:.75rem}
+    .doc-preview-content .cuerpo-doc{text-align:justify;font-size:13px;line-height:1.9}
+    .campo-v{background:#FEF3C7;border-bottom:1px dashed #F59E0B;color:#92400E;padding:0 3px;border-radius:2px;font-style:italic;font-size:11px}
     .campo-lleno{color:#1a1a1a;font-weight:600}
-    .tv-preview{background:#F0FFF4;border:1px solid #10B981;border-radius:4px;padding:1px 5px;font-family:'Courier New',monospace;font-size:11px;color:#065F46;font-weight:700}
-    .btn-imprimir-preview{width:100%;background:#0D1B3E;color:white;border:none;border-radius:8px;padding:9px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;margin-top:.75rem;transition:all .2s}
-    .btn-imprimir-preview:hover{background:#1A2F5E}
+    .tv-preview{background:#F0FFF4;border:1px solid #10B981;border-radius:4px;padding:1px 6px;font-family:'Courier New',monospace;font-size:12px;color:#065F46;font-weight:700}
  
     /* ── CAMPOS EN MODO EDICIÓN ACTIVO ── */
     .edicion-activa .fg input:not([type="date"]),
@@ -280,17 +288,29 @@
       <div id="form-container"></div>
     </div>
  
-    <!-- PANEL PREVIEW -->
-    <div class="preview-panel-doc" id="preview-panel-doc">
-      <div class="preview-card-doc">
-        <div class="preview-card-header">
-          <div class="preview-card-titulo">📄 Documento final</div>
+  </div>
+ 
+  <!-- MODAL PREVIEW PANTALLA COMPLETA -->
+  <div class="modal-preview" id="modal-preview" onclick="if(event.target===this)cerrarPreview()">
+    <div class="modal-preview-card">
+      <div class="modal-preview-header">
+        <div class="modal-preview-titulo">
+          📄 Vista previa del documento
           <span class="preview-badge-live">🔴 LIVE</span>
         </div>
-        <div class="doc-preview-content" id="doc-preview-content">
-          <p style="color:#7888A8;font-style:italic;text-align:center;padding:2rem 1rem">El documento aparecerá aquí...</p>
+        <div class="modal-preview-acciones">
+          <button class="btn-modal-print" onclick="imprimirDoc()">🖨️ Imprimir</button>
+          <button class="btn-modal-close" onclick="cerrarPreview()">✕ Cerrar</button>
         </div>
-        <button class="btn-imprimir-preview" onclick="imprimirDoc()">🖨️ Imprimir documento</button>
+      </div>
+      <div class="modal-preview-body">
+        <div class="doc-preview-content" id="doc-preview-content">
+          <p style="color:#7888A8;font-style:italic;text-align:center;padding:3rem">El documento aparecerá aquí...</p>
+        </div>
+      </div>
+      <div class="modal-preview-footer">
+        <div class="modal-footer-info" id="modal-footer-info">Completa los campos para ver el documento completo</div>
+        <button class="btn-modal-editar" onclick="cerrarPreview()">✏️ Volver a editar campos</button>
       </div>
     </div>
   </div>
@@ -923,36 +943,61 @@ async function guardar() {
     actualizarResumenCampos();
     actualizarPreviewDoc();
     // Actualizar preview cada vez que cambie un campo
-    document.getElementById('form-container').addEventListener('input', () => {
+    // Cerrar modal con Escape
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') cerrarPreview(); });
+ 
+  document.getElementById('form-container').addEventListener('input', () => {
       actualizarResumenCampos();
-      if (modoPreview) actualizarPreviewDoc();
+      const modalEl = document.getElementById('modal-preview');
+      if (modalEl && modalEl.classList.contains('vis')) actualizarPreviewDoc();
     });
     document.getElementById('form-container').addEventListener('change', () => {
       actualizarResumenCampos();
-      if (modoPreview) actualizarPreviewDoc();
+      const modalEl2 = document.getElementById('modal-preview');
+      if (modalEl2 && modalEl2.classList.contains('vis')) actualizarPreviewDoc();
     });
   }
  
   function togglePreview() {
-    modoPreview = !modoPreview;
-    const panel = document.getElementById('preview-panel-doc');
-    const layout = document.getElementById('editor-layout');
-    const txt = document.getElementById('toggle-preview-txt');
-    if (modoPreview) {
-      panel.classList.add('vis');
-      layout.classList.add('con-preview');
-      txt.textContent = 'Ocultar preview';
-      actualizarPreviewDoc();
-    } else {
-      panel.classList.remove('vis');
-      layout.classList.remove('con-preview');
-      txt.textContent = 'Ver preview';
-    }
+    actualizarPreviewDoc();
+    document.getElementById('modal-preview').classList.add('vis');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('toggle-preview-txt').textContent = 'Ver preview';
+    modoPreview = true;
+    // Actualizar footer con estado de completitud
+    const inputs = document.getElementById('form-container').querySelectorAll('input,select,textarea');
+    let total=0, llenos=0;
+    inputs.forEach(inp => { if(inp.type==='file') return; total++; if(inp.value.trim()) llenos++; });
+    const pct = Math.round((llenos/total)*100);
+    const fi = document.getElementById('modal-footer-info');
+    if(fi) fi.textContent = `Completitud: ${llenos}/${total} campos (${pct}%) — Cierra para continuar editando`;
+  }
+ 
+  function cerrarPreview() {
+    document.getElementById('modal-preview').classList.remove('vis');
+    document.body.style.overflow = '';
+    modoPreview = false;
+    document.getElementById('toggle-preview-txt').textContent = 'Ver preview';
   }
  
   function imprimirDoc() {
     actualizarPreviewDoc();
-    window.print();
+    // Imprimir solo el contenido del modal
+    const content = document.getElementById('doc-preview-content').innerHTML;
+    const win = window.open('', '_blank', 'width=900,height=700');
+    win.document.write(`<!DOCTYPE html><html><head><title>Documento — NotarioGO</title>
+    <style>
+      body{font-family:'Times New Roman',Times,serif;font-size:12pt;line-height:1.9;color:#1a1a1a;padding:2cm;margin:0}
+      .margen{display:grid;grid-template-columns:130px 1fr;gap:.5rem;font-size:11pt;line-height:1.7;color:#444;margin-bottom:.75rem}
+      .cuerpo-doc{text-align:justify}
+      .campo-v{background:#FEF3C7;color:#92400E;font-style:italic}
+      .campo-lleno{font-weight:600}
+      .tv-preview{background:#F0FFF4;border:1px solid #10B981;border-radius:4px;padding:1px 6px;font-family:'Courier New',monospace;font-size:11pt;color:#065F46;font-weight:700}
+      @media print{body{padding:1cm}}
+    </style></head><body>${content}</body></html>`);
+    win.document.close();
+    win.focus();
+    setTimeout(() => { win.print(); win.close(); }, 400);
   }
  
   function resetearCampos() {
