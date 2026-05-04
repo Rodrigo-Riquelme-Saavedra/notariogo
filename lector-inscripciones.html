@@ -231,6 +231,23 @@
 <script src="js/jsonbin.js"></script>
 <script src="js/app.js"></script>
 <script>
+  // ── USUARIO ACTUAL (inline fallback) ──
+  function obtenerUsuario() {
+    try {
+      // Intentar con usuarioActual() de app.js
+      if (typeof usuarioActual === 'function') {
+        const u = usuarioActual();
+        if (u) return u;
+      }
+    } catch(e) {}
+    // Fallback directo a localStorage
+    try {
+      const raw = localStorage.getItem('notariogo_user');
+      if (raw) return JSON.parse(raw);
+    } catch(e) {}
+    return null;
+  }
+ 
   // ── ESTADO GLOBAL ──
   let pdfBase64 = '';
   let pdfNombre = '';
@@ -636,8 +653,8 @@ Formato fecha: YYYY-MM-DD. Los herederos van en el array con nombre, RUT y calid
  
   // ── GUARDAR EN JSONBIN ──
   async function guardarDocumento() {
-    const user = usuarioActual();
-    if (!user) return window.location.href = 'login.html';
+    const user = obtenerUsuario();
+    if (!user) { alert('Debes iniciar sesión para guardar el documento.'); return window.location.href = 'login.html'; }
     const btn = document.getElementById('btn-guardar-final');
     btn.disabled = true; btn.textContent = '⏳ Guardando...';
     try {
@@ -647,7 +664,7 @@ Formato fecha: YYYY-MM-DD. Los herederos van en el array con nombre, RUT y calid
       const emojis = { compraventa:'🏠', cesion:'🔄', pe:'⚖️' };
       const tramite = {
         id: Date.now(), codigo: codigoDoc,
-        usuarioId: user.id, usuarioNombre: user.nombre, usuarioEmail: user.email,
+        usuarioId: typeof user.id === 'number' ? user.id : Number(user.id), usuarioNombre: user.nombre, usuarioEmail: user.email,
         tipo: tiposLabel[tipoDoc], emoji: emojis[tipoDoc],
         estado: accionSeleccionada,
         comentario_notario: document.getElementById('obs-textarea').value.trim() || null,
@@ -655,6 +672,8 @@ Formato fecha: YYYY-MM-DD. Los herederos van en el array con nombre, RUT y calid
         origen: 'lector-ia', archivo_original: pdfNombre,
         formulario
       };
+      console.log('Guardando trámite:', tramite);
+      console.log('Usuario:', user.id, typeof user.id);
       data.tramites.push(tramite);
       await JSONBIN.set('tramites', data);
       alert(`✅ Documento guardado correctamente.\nEstado: ${accionSeleccionada}\nCódigo: ${codigoDoc}`);
