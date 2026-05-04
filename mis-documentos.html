@@ -674,6 +674,108 @@
       firma = '<div class="doc-firma-modal">NOTARIO PÚBLICO</div>';
     }
  
+    // ── INSCRIPCIÓN COMPRAVENTA ──
+    else if (tipo.includes('Compraventa')) {
+      titulo = 'INSCRIPCIÓN — COMPRAVENTA';
+      const tv = f.titulo_vigente || (f.tv_fojas ? `Fojas ${f.tv_fojas} N° ${f.tv_numero} del año ${f.tv_anio}` : '');
+      const cbr = f.cbr_titulo_vigente || f.tv_cbr || '';
+      const mFojas = f.tv_fojas || (tv.match(/Fojas\s+([^\s]+)/)?.[1]) || '[Fojas]';
+      const mNum = f.tv_numero || (tv.match(/N°\s*([^\s]+)/)?.[1]) || '[N°]';
+      const mAnio = f.tv_anio || (tv.match(/año\s*(\d{4})/)?.[1]) || '[Año]';
+      const comprador = f.nombre_comprador || f.razon_social || '';
+      const vendedor = f.nombre_vendedor || '';
+      const ciudad = f.ciudad || '';
+      const desc = f.descripcion_propiedad || '';
+      const norte = f.d_norte || ''; const sur = f.d_sur || '';
+      const oriente = f.d_oriente || ''; const poniente = f.d_poniente || '';
+      const rol = f.rol_avaluo || ''; const com = f.comuna_avaluo || f.comuna || '';
+      const precio = f.precio_compraventa || f.precio || '';
+      const not = f.notaria || ''; const nomNot = f.nombre_notario || '';
+      const rep = f.repertorio_escritura || f.repertorio || '';
+      const req = f.requirente || ''; const firma_cbr = f.firma_conservador || '';
+      const fechaDoc = f.fecha ? ffechad(f.fecha) : null;
+      const fechaEsc = f.fecha_escritura ? ffechad(f.fecha_escritura) : null;
+      cuerpo = `
+        <div style="text-align:center;font-weight:bold;font-size:15px;font-style:italic;margin-bottom:.75rem">Fojas ${mFojas}</div>
+        <div style="display:grid;grid-template-columns:130px 1fr;gap:.5rem;font-size:12px;line-height:1.7;color:#444;margin-bottom:.75rem">
+          <div><strong>N°${mNum}</strong><br>${ciudad}<br><br>COMPRAVENTA<br><br>${vendedor?vendedor.split(' ').slice(0,3).join(' ').toUpperCase():'[VENDEDOR]'}<br>A<br>${comprador?comprador.split(' ').slice(0,3).join(' ').toUpperCase():'[COMPRADOR]'}</div>
+          <div style="font-family:Times New Roman,serif;font-size:13px;line-height:1.9;color:#1a1a1a;text-align:justify">
+            <p>${fvd(ciudad,'ciudad')}, ${fechaDoc?`<strong>${fechaDoc}</strong>`:'[fecha]'}.— ${fvd(comprador,'nombre comprador')}, es dueño(a) del inmueble correspondiente a: ${fvd(desc,'descripción')}, que deslinda: NORTE, ${fvd(norte,'norte')}; SUR, ${fvd(sur,'sur')}; ORIENTE, ${fvd(oriente,'oriente')}; PONIENTE, ${fvd(poniente,'poniente')}.— Adquirió por compra a ${fvd(vendedor,'vendedor')}, según escritura de fecha ${fechaEsc?`<strong>${fechaEsc}</strong>`:'[fecha escritura]'}, otorgada en ${fvd(not,'notaría')}, de don(ña) ${fvd(nomNot,'notario')}, Repertorio Número ${fvd(rep,'repertorio')}, por el precio de ${fvd(precio,'precio')}.— El título anterior está a <span style="background:#F0FFF4;border:1px solid #10B981;border-radius:4px;padding:1px 6px;font-family:Courier New,monospace;font-size:12px;color:#065F46;font-weight:700">${tv}${cbr?' del '+cbr:''}</span>.— Rol de avalúo número ${fvd(rol,'rol')}, Comuna de ${fvd(com,'comuna')}.— Requirente: ${fvd(req,'requirente')}.— ${fvd(firma_cbr,'firma conservador')}.</p>
+          </div>
+        </div>
+        <div style="margin-top:.75rem;border-top:1px solid #ddd;padding-top:.625rem;font-size:11px;color:#777;text-align:center;font-style:italic">CERTIFICO QUE LA PRESENTE COPIA ESTA CONFORME CON SU ORIGINAL DEL REGISTRO DE PROPIEDAD Y QUE LA INSCRIPCION QUE CONSTA EN ELLA SE ENCUENTRA VIGENTE AL ${fechaDoc||'[fecha]'}.— ${fvd(ciudad,'ciudad')}, ${fechaDoc||'[fecha]'}.— ${fvd(firma_cbr,'firma')}</div>`;
+      firma = '';
+    }
+ 
+    // ── INSCRIPCIÓN CESIÓN DE DERECHOS ──
+    else if (tipo.includes('Cesión') || tipo.includes('Cesion')) {
+      titulo = 'INSCRIPCIÓN — CESIÓN DE DERECHOS';
+      const tv = f.titulo_vigente || '';
+      const cbr = f.cbr_titulo_vigente || f.tv_cbr || '';
+      const mFojas = f.tv_fojas || (tv.match(/Fojas\s+([^\s]+)/)?.[1]) || '[Fojas]';
+      const mNum = f.tv_numero || (tv.match(/N°\s*([^\s]+)/)?.[1]) || '[N°]';
+      const cedente = f.nombre_cedente || f.razon_social_c || '';
+      const cesionario = f.nombre_cesionario || '';
+      const ciudad = f.ciudad || '';
+      const desc = f.descripcion_propiedad || '';
+      const norte = f.d_norte || ''; const sur = f.d_sur || '';
+      const oriente = f.d_oriente || ''; const poniente = f.d_poniente || '';
+      const rol = f.rol_avaluo || ''; const com = f.comuna_avaluo || f.comuna || '';
+      const precio = f.precio_cesion || f.precio || '';
+      const not = f.notaria || ''; const nomNot = f.nombre_notario || '';
+      const rep = f.repertorio_escritura || f.repertorio || '';
+      const req = f.requirente || ''; const firma_cbr = f.firma_conservador || '';
+      const fechaDoc = f.fecha ? ffechad(f.fecha) : null;
+      const fechaEsc = f.fecha_escritura ? ffechad(f.fecha_escritura) : null;
+      cuerpo = `
+        <div style="text-align:center;font-weight:bold;font-size:15px;font-style:italic;margin-bottom:.75rem">Fojas ${mFojas}</div>
+        <div style="display:grid;grid-template-columns:130px 1fr;gap:.5rem;font-size:12px;line-height:1.7;color:#444;margin-bottom:.75rem">
+          <div><strong>N°${mNum}</strong><br>${ciudad}<br><br>CESIÓN DE DERECHOS<br><br>${cedente?cedente.split(' ').slice(0,3).join(' ').toUpperCase():'[CEDENTE]'}<br>A<br>${cesionario?cesionario.split(' ').slice(0,3).join(' ').toUpperCase():'[CESIONARIO]'}</div>
+          <div style="font-family:Times New Roman,serif;font-size:13px;line-height:1.9;color:#1a1a1a;text-align:justify">
+            <p>${fvd(ciudad,'ciudad')}, ${fechaDoc?`<strong>${fechaDoc}</strong>`:'[fecha]'}.— ${fvd(cedente,'cedente')}, cede y transfiere a don (doña) ${fvd(cesionario,'cesionario')}, los derechos que le corresponden en el inmueble correspondiente a: ${fvd(desc,'descripción')}, que deslinda: NORTE, ${fvd(norte,'norte')}; SUR, ${fvd(sur,'sur')}; ESTE, ${fvd(oriente,'oriente')}; OESTE, ${fvd(poniente,'poniente')}.— Adquirió según escritura de fecha ${fechaEsc?`<strong>${fechaEsc}</strong>`:'[fecha escritura]'}, otorgada ante ${fvd(not,'notaría')}, de don(ña) ${fvd(nomNot,'notario')}, Repertorio N° ${fvd(rep,'repertorio')}, por el precio de ${fvd(precio,'precio')}.— El título anterior está a <span style="background:#F0FFF4;border:1px solid #10B981;border-radius:4px;padding:1px 6px;font-family:Courier New,monospace;font-size:12px;color:#065F46;font-weight:700">${tv}${cbr?' del '+cbr:''}</span>.— Rol de avalúo N° ${fvd(rol,'rol')}, Comuna de ${fvd(com,'comuna')}.— Requirente: ${fvd(req,'requirente')}.— ${fvd(firma_cbr,'firma')}.</p>
+          </div>
+        </div>
+        <div style="margin-top:.75rem;border-top:1px solid #ddd;padding-top:.625rem;font-size:11px;color:#777;text-align:center;font-style:italic">CERTIFICO QUE LA PRESENTE COPIA ESTA CONFORME CON SU ORIGINAL DEL REGISTRO DE PROPIEDAD Y QUE LA INSCRIPCION QUE CONSTA EN ELLA SE ENCUENTRA VIGENTE AL ${fechaDoc||'[fecha]'}.— ${fvd(ciudad,'ciudad')}, ${fechaDoc||'[fecha]'}.— ${fvd(firma_cbr,'firma')}</div>`;
+      firma = '';
+    }
+ 
+    // ── INSCRIPCIÓN POSESIÓN EFECTIVA ──
+    else if (tipo.includes('Posesión') || tipo.includes('Posesion')) {
+      titulo = 'CERTIFICACIÓN DE INSCRIPCIÓN DE POSESIÓN EFECTIVA';
+      const causante = f.nombre_causante || '';
+      const rutCaus = f.rut_causante || '';
+      const ecCaus = f.ec_causante || '';
+      const ciudad = f.ciudad || '';
+      const numRes = f.num_resolucion || '';
+      const numRep = f.num_repertorio || '';
+      const anioRep = f.anio_repertorio || '';
+      const cbrIns = f.cbr_inscripcion || '';
+      const req = f.requirente || ''; const firma_cbr = f.firma_conservador || '';
+      const fechaDoc = f.fecha ? ffechad(f.fecha) : null;
+      const fechaFall = f.fecha_fallecimiento ? ffechad(f.fecha_fallecimiento) : null;
+      const fechaRes = f.fecha_resolucion ? ffechad(f.fecha_resolucion) : null;
+      const insPE = f.inscripcion_pe || (f.pe_fojas ? `Fojas ${f.pe_fojas} N° ${f.pe_numero} año ${f.pe_anio}` : '');
+      const insH = f.inscripcion_herencia || (f.h_fojas ? `Fojas ${f.h_fojas} N° ${f.h_numero} año ${f.h_anio}` : '');
+      const tvBox = (v) => v ? `<span style="background:#F0FFF4;border:1px solid #10B981;border-radius:4px;padding:1px 6px;font-family:Courier New,monospace;font-size:12px;color:#065F46;font-weight:700">${v}</span>` : '[sin datos]';
+      const heredList = (f.herederos || []).map(h => `don (doña) <strong>${h.nombre||'[nombre]'}</strong>, C.I. ${h.rut||'[RUT]'}, en calidad de ${h.calidad||'[calidad]'}`).join('; ');
+      const bienesArr = f.bienes || [];
+      const bienesHTML = bienesArr.length > 0 ? '<ul style="margin:.25rem 0 .5rem 1.5rem;font-size:12.5px">' + bienesArr.map(b=>`<li>${b}</li>`).join('') + '</ul>' : '<p>[sin bienes declarados]</p>';
+      cuerpo = `
+        <div style="text-align:center;font-weight:bold;font-size:13px;text-transform:uppercase;margin-bottom:1rem;text-decoration:underline">Certificación de Inscripción de Resolución de Posesión Efectiva</div>
+        <div style="text-align:center;font-weight:bold;margin-bottom:.75rem">${fvd(cbrIns,'CBR')}</div>
+        <p style="text-align:justify;font-family:Times New Roman,serif;font-size:13px;line-height:1.9">El ${fvd(cbrIns,'CBR')} que suscribe, certifica que la Resolución Exenta de Posesión Efectiva número <strong>${numRes||'[N° resolución]'}</strong>, de fecha ${fechaRes?`<strong>${fechaRes}</strong>`:'[fecha resolución]'}, fue presentada para inscripción, anotándose en el libro de repertorio bajo el número <strong>${numRep||'[N°]'}</strong> del año <strong>${anioRep||'[año]'}</strong>.</p>
+        <p style="margin-top:.75rem;font-family:Times New Roman,serif;font-size:13px;line-height:1.9">Causante: don (doña) <strong>${causante||'[causante]'}</strong>, C.I. ${rutCaus||'[RUT]'}, ${ecCaus}, fallecido(a) el ${fechaFall?`<strong>${fechaFall}</strong>`:'[fecha fallecimiento]'}, con último domicilio en ${fvd(f.ultimo_domicilio,'domicilio')}.</p>
+        <p style="margin-top:.75rem;font-family:Times New Roman,serif;font-size:13px">Herederos: ${heredList||'[sin herederos]'}.</p>
+        <p style="margin-top:.75rem;font-family:Times New Roman,serif;font-size:13px">Bienes del inventario:</p>${bienesHTML}
+        <p style="font-family:Times New Roman,serif;font-size:13px">Inscripciones practicadas:</p>
+        <ul style="margin:.25rem 0 .75rem 1.5rem;font-size:12.5px">
+          <li>Posesión efectiva: ${tvBox(insPE)}</li>
+          <li>Herencia: ${tvBox(insH)}</li>
+        </ul>
+        <p style="font-family:Times New Roman,serif;font-size:13px">En ${fvd(ciudad,'ciudad')}, a ${fechaDoc?`<strong>${fechaDoc}</strong>`:'[fecha]'}.— Requirente: ${fvd(req,'requirente')}.— ${fvd(firma_cbr,'firma')}.</p>`;
+      firma = '';
+    }
+ 
     // ── FALLBACK ──
     else {
       titulo = t.tipo || 'DOCUMENTO';
