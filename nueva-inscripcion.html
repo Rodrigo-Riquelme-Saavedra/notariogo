@@ -193,6 +193,47 @@
       .preview-card-doc{border:none!important;box-shadow:none!important;padding:0!important}
       .doc-preview-content{border:none!important;background:white!important;max-height:unset!important;font-size:12pt!important;padding:1cm!important}
     }
+ 
+    /* ── LECTOR CÉDULAS ── */
+    .cedula-section{background:#F7F9FC;border:2px solid #EEF2F9;border-radius:14px;padding:1.5rem;margin-bottom:1.25rem}
+    .cedula-section-titulo{font-size:13px;font-weight:700;color:#0D1B3E;margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+    .num-personas-wrap{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap}
+    .num-personas-label{font-size:12px;font-weight:700;color:#3A4A6B;text-transform:uppercase;letter-spacing:.04em}
+    .num-btn{width:36px;height:36px;border-radius:8px;border:1.5px solid #C1CBDF;background:white;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;color:#3A4A6B}
+    .num-btn.sel{border-color:#8B5CF6;background:#8B5CF6;color:white}
+    .num-btn:hover:not(.sel){border-color:#8B5CF6;color:#8B5CF6}
+    .persona-card{background:white;border:2px solid #EEF2F9;border-radius:12px;padding:1.25rem;margin-bottom:.75rem}
+    .persona-card-titulo{font-size:12px;font-weight:700;color:#5B21B6;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1rem}
+    .cedulas-upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem}
+    @media(max-width:600px){.cedulas-upload-grid{grid-template-columns:1fr}}
+    .cedula-slot{border:2px dashed #C1CBDF;border-radius:10px;padding:1rem;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:#FAFAFA;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35rem}
+    .cedula-slot:hover{border-color:#8B5CF6;background:#F5F3FF}
+    .cedula-slot.cargada{border-color:#10B981;border-style:solid;background:#F0FFF4}
+    .cedula-slot.procesando{border-color:#F59E0B;border-style:solid;background:#FFFBEB;animation:pulseCed 1.2s ease-in-out infinite}
+    @keyframes pulseCed{0%,100%{opacity:1}50%{opacity:.6}}
+    .cedula-slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .cedula-slot-icono{font-size:22px}
+    .cedula-slot-label{font-size:11px;font-weight:700;color:#3A4A6B}
+    .cedula-slot-desc{font-size:10px;color:#7888A8;line-height:1.4}
+    .cedula-slot-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;margin-top:.2rem;display:none}
+    .ced-st-ok{background:#D1FAE5;color:#065F46}
+    .btn-extraer-ced{width:100%;background:linear-gradient(135deg,#7C3AED,#8B5CF6);color:white;border:none;border-radius:8px;padding:9px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+    .btn-extraer-ced:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(139,92,246,.35)}
+    .btn-extraer-ced:disabled{background:#C1CBDF;box-shadow:none;transform:none;cursor:not-allowed}
+    .datos-ced{background:#EDE9FE;border:1.5px solid #C4B5FD;border-radius:10px;padding:.875rem 1rem;margin-top:.75rem;display:none}
+    .datos-ced.vis{display:block}
+    .ced-subtitulo{font-size:11px;font-weight:700;color:#5B21B6;margin-bottom:.625rem;display:flex;align-items:center;gap:6px}
+    .ced-row{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.5rem}
+    .ced-label{font-size:10px;font-weight:700;color:#3A4A6B;text-transform:uppercase;letter-spacing:.03em;margin-bottom:.2rem}
+    .ced-input{width:100%;padding:7px 10px;border:1.5px solid #C4B5FD;border-radius:7px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;color:#0D1B3E;outline:none;box-sizing:border-box;background:white;transition:border-color .2s}
+    .ced-input:focus{border-color:#8B5CF6}
+    .ced-input.rut-ok{border-color:#10B981;background:#F0FFF4}
+    .ced-input.rut-err{border-color:#EF4444;background:#FEF2F2}
+    .ced-rut-msg{font-size:10px;font-weight:600;margin-top:.15rem}
+    .ced-rut-ok{color:#10B981}.ced-rut-err{color:#EF4444}
+    .btn-aplicar-ced{width:100%;background:#10B981;color:white;border:none;border-radius:7px;padding:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;margin-top:.625rem;transition:all .2s}
+    .btn-aplicar-ced:hover{background:#059669}
+    .ia-ced-badge{font-size:9px;font-weight:700;background:rgba(139,92,246,.2);color:#7C3AED;padding:2px 6px;border-radius:100px}
     footer{background:#0D1B3E;padding:2rem;margin-top:3rem}.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}.footer-copy{font-size:12px;color:rgba(255,255,255,.35)}
   </style>
 </head>
@@ -594,6 +635,14 @@ function renderFormulario() {
   // Render herederos si PE
   if (tipoActual === 'pe') renderHerUI();
  
+  // Inicializar lector cédulas si es compraventa
+  if (tipoActual === 'compraventa') {
+    setTimeout(() => {
+      renderCardsNI('comp', 1);
+      renderCardsNI('vend', 1);
+    }, 50);
+  }
+ 
   // Aplicar validación RUT a todos los campos rut
   document.querySelectorAll('input[id^="rut"]').forEach(applyRUTField);
  
@@ -652,25 +701,67 @@ const EC_OPTS = ['soltero(a)','casado(a)','casado(a), separado(a) totalmente de 
 const NAC_OPTS = ['chileno(a)','argentino(a)','peruano(a)','colombiano(a)','venezolano(a)','español(a)','otro'];
  
 function renderCompraventa(d) {
+  // Resetear estado cédulas
+  numCompNI = 1; numVendNI = 1; archCedulasNI = {};
   return `
   ${tvBox(d,'fojas_titulo_vigente','numero_titulo_vigente','anio_titulo_vigente','cbr_titulo_vigente')}
-  <div class="sec-titulo" style="margin-top:1.5rem">👤 Comprador (adquirente)</div>
-  <div class="form-grid">${fld('nombre_comprador','Nombre completo',d.nombre_comprador,true,'Nombre del comprador')}</div>
-  <div class="form-grid">
-    ${fld('rut_comprador','RUT *',d.rut_comprador,true,'Ej: 12.345.678-9')}
-    ${fldSelect('nacionalidad_comprador','Nacionalidad *',d.nacionalidad_comprador,NAC_OPTS,true)}
+ 
+  <!-- COMPRADOR(ES) -->
+  <div class="sec-titulo" style="margin-top:1.5rem">👤 Comprador(es) (adquirente)</div>
+  <div class="cedula-section">
+    <div class="cedula-section-titulo">🪪 Lector de cédulas — Compradores</div>
+    <div class="num-personas-wrap">
+      <span class="num-personas-label">N° de compradores:</span>
+      <button class="num-btn sel" onclick="setNumNI('comp',1,this)">1</button>
+      <button class="num-btn" onclick="setNumNI('comp',2,this)">2</button>
+      <button class="num-btn" onclick="setNumNI('comp',3,this)">3</button>
+      <button class="num-btn" onclick="setNumNI('comp',4,this)">4</button>
+      <button class="num-btn" onclick="setNumNI('comp',5,this)">5</button>
+    </div>
+    <div id="ni-cards-comp"></div>
   </div>
-  <div class="form-grid">
-    ${fldSelect('ec_comprador','Estado civil *',d.estado_civil_comprador,EC_OPTS,true)}
-    ${fld('prof_comprador','Profesión *',d.profesion_comprador,true,'Ej: comerciante')}
+  <div id="ni-comp-fields">
+    <div class="form-grid">${fld('nombre_comprador','Nombre comprador 1 *',d.nombre_comprador,true)}</div>
+    <div class="form-grid">
+      ${fld('rut_comprador','RUT *',d.rut_comprador,true,'Ej: 12.345.678-9')}
+      ${fld('numdoc_comprador','N° Documento (reverso)',d.numdoc_comprador||'',false,'Ej: 123.456.789')}
+    </div>
+    <div class="form-grid">
+      ${fldSelect('nacionalidad_comprador','Nacionalidad *',d.nacionalidad_comprador,NAC_OPTS,true)}
+      ${fldSelect('ec_comprador','Estado civil *',d.estado_civil_comprador,EC_OPTS,true)}
+    </div>
+    <div class="form-grid">
+      ${fld('prof_comprador','Profesión *',d.profesion_comprador,true)}
+      ${fld('dom_comprador','Domicilio *',d.domicilio_comprador,true)}
+    </div>
+    <div id="ni-comp-adicionales"></div>
   </div>
-  ${fld('dom_comprador','Domicilio *',d.domicilio_comprador,true,'Dirección completa')}
-  <div class="sec-titulo" style="margin-top:1.25rem">👤 Vendedor (enajenante)</div>
-  <div class="form-grid">${fld('nombre_vendedor','Nombre completo *',d.nombre_vendedor,true)}</div>
-  <div class="form-grid">
-    ${fld('rut_vendedor','RUT *',d.rut_vendedor||'',true,'Ej: 9.876.543-2')}
-    ${fld('dom_vendedor','Domicilio',d.domicilio_vendedor,false)}
+ 
+  <!-- VENDEDOR(ES) -->
+  <div class="sec-titulo" style="margin-top:1.5rem">👤 Vendedor(es) (enajenante)</div>
+  <div class="cedula-section">
+    <div class="cedula-section-titulo">🪪 Lector de cédulas — Vendedores</div>
+    <div class="num-personas-wrap">
+      <span class="num-personas-label">N° de vendedores:</span>
+      <button class="num-btn sel" onclick="setNumNI('vend',1,this)">1</button>
+      <button class="num-btn" onclick="setNumNI('vend',2,this)">2</button>
+      <button class="num-btn" onclick="setNumNI('vend',3,this)">3</button>
+      <button class="num-btn" onclick="setNumNI('vend',4,this)">4</button>
+      <button class="num-btn" onclick="setNumNI('vend',5,this)">5</button>
+    </div>
+    <div id="ni-cards-vend"></div>
   </div>
+  <div id="ni-vend-fields">
+    <div class="form-grid">${fld('nombre_vendedor','Nombre vendedor 1 *',d.nombre_vendedor,true)}</div>
+    <div class="form-grid">
+      ${fld('rut_vendedor','RUT vendedor *',d.rut_vendedor||'',true,'Ej: 9.876.543-2')}
+      ${fld('numdoc_vendedor','N° Documento (reverso)',d.numdoc_vendedor||'',false,'Ej: 123.456.789')}
+    </div>
+    <div class="form-grid single">${fld('dom_vendedor','Domicilio',d.domicilio_vendedor,false)}</div>
+    <div id="ni-vend-adicionales"></div>
+  </div>
+ 
+  <!-- ESCRITURA -->
   <div class="sec-titulo" style="margin-top:1.25rem">📄 Escritura de compraventa</div>
   <div class="form-grid">
     ${fld('fecha_escritura','Fecha escritura *',d.fecha_escritura,true,'','date')}
@@ -1116,6 +1207,226 @@ async function guardar() {
     }
  
     el.innerHTML = html || '<p style="color:#7888A8;font-style:italic;text-align:center;padding:2rem">Completa los campos para ver el documento...</p>';
+  }
+ 
+ 
+  // ══════════════════════════════════════════════════
+  // MÓDULO LECTOR CÉDULAS — nueva-inscripcion.html
+  // ══════════════════════════════════════════════════
+  let numCompNI = 1;
+  let numVendNI = 1;
+  const archCedulasNI = {};
+ 
+  function renderCardsNI(tipo, n) {
+    const containerId = tipo === 'comp' ? 'ni-cards-comp' : 'ni-cards-vend';
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const rol = tipo === 'comp' ? 'Comprador' : 'Vendedor';
+    let html = '';
+    for (let i = 0; i < n; i++) {
+      html += `
+      <div class="persona-card">
+        <div class="persona-card-titulo">👤 ${rol} ${n > 1 ? i + 1 : ''}</div>
+        <div class="cedulas-upload-grid">
+          <div class="cedula-slot" id="ni-slot-${tipo}-${i}-anv"
+               onclick="document.getElementById('ni-file-${tipo}-${i}-anv').click()">
+            <input type="file" id="ni-file-${tipo}-${i}-anv" accept="image/*,.pdf"
+                   onchange="onCedulaNI(event,'${tipo}',${i},'anv')"
+                   onclick="event.stopPropagation()"/>
+            <div class="cedula-slot-icono">🪪</div>
+            <div class="cedula-slot-label">Anverso — Frente</div>
+            <div class="cedula-slot-desc">Nombre y RUT</div>
+            <div id="ni-status-${tipo}-${i}-anv" class="cedula-slot-status"></div>
+          </div>
+          <div class="cedula-slot" id="ni-slot-${tipo}-${i}-rev"
+               onclick="document.getElementById('ni-file-${tipo}-${i}-rev').click()">
+            <input type="file" id="ni-file-${tipo}-${i}-rev" accept="image/*,.pdf"
+                   onchange="onCedulaNI(event,'${tipo}',${i},'rev')"
+                   onclick="event.stopPropagation()"/>
+            <div class="cedula-slot-icono">🪪</div>
+            <div class="cedula-slot-label">Reverso — Dorso</div>
+            <div class="cedula-slot-desc" style="color:#10B981;font-weight:700">N° documento 9 dígitos</div>
+            <div id="ni-status-${tipo}-${i}-rev" class="cedula-slot-status"></div>
+          </div>
+        </div>
+        <button class="btn-extraer-ced" id="ni-btn-${tipo}-${i}"
+                onclick="extraerCedulaNI('${tipo}',${i})" disabled>
+          🤖 Extraer datos con IA
+        </button>
+        <div class="datos-ced" id="ni-datos-${tipo}-${i}">
+          <div class="ced-subtitulo">✨ Datos extraídos <span class="ia-ced-badge">Claude AI</span></div>
+          <div class="ced-row">
+            <div>
+              <div class="ced-label">Nombre completo</div>
+              <input type="text" id="ni-ced-${tipo}-${i}-nombre" class="ced-input"
+                     placeholder="Extraído del anverso"/>
+            </div>
+            <div>
+              <div class="ced-label">RUT</div>
+              <input type="text" id="ni-ced-${tipo}-${i}-rut" class="ced-input"
+                     placeholder="RUT extraído"
+                     oninput="validarRutNI(this,'ni-msg-${tipo}-${i}')"/>
+              <div class="ced-rut-msg" id="ni-msg-${tipo}-${i}"></div>
+            </div>
+          </div>
+          <div>
+            <div class="ced-label">N° Documento — reverso (9 dígitos)</div>
+            <input type="text" id="ni-ced-${tipo}-${i}-numdoc" class="ced-input"
+                   placeholder="Ej: 123.456.789"
+                   oninput="fmtNumDocNI(this)"/>
+            <div style="font-size:10px;color:#7888A8;margin-top:.2rem">Campo exclusivo del reverso, distinto al RUT</div>
+          </div>
+          <button class="btn-aplicar-ced" onclick="aplicarCedulaNI('${tipo}',${i})">
+            ✅ Aplicar al formulario
+          </button>
+        </div>
+      </div>`;
+    }
+    container.innerHTML = html;
+  }
+ 
+  function setNumNI(tipo, n, btnEl) {
+    btnEl.parentElement.querySelectorAll('.num-btn').forEach(b => b.classList.remove('sel'));
+    btnEl.classList.add('sel');
+    if (tipo === 'comp') numCompNI = n;
+    else numVendNI = n;
+    // Limpiar archivos
+    Object.keys(archCedulasNI).forEach(k => { if (k.startsWith(tipo + '_')) delete archCedulasNI[k]; });
+    renderCardsNI(tipo, n);
+    // Renderizar campos adicionales
+    renderAdicionalesNI(tipo, n);
+  }
+ 
+  function renderAdicionalesNI(tipo, n) {
+    const containerId = tipo === 'comp' ? 'ni-comp-adicionales' : 'ni-vend-adicionales';
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    let html = '';
+    for (let i = 1; i < n; i++) {
+      const rol = tipo === 'comp' ? 'Comprador' : 'Vendedor';
+      const bg  = tipo === 'comp' ? '#EFF6FF' : '#F0FFF4';
+      const bc  = tipo === 'comp' ? '#BFDBFE' : '#A7F3D0';
+      html += `<div style="background:${bg};border:1.5px solid ${bc};border-radius:10px;padding:1rem;margin-top:.75rem">
+        <div style="font-size:11px;font-weight:700;color:#1E40AF;text-transform:uppercase;margin-bottom:.75rem">${rol} ${i+1}</div>
+        <div class="form-grid single"><div class="fg"><label>Nombre *</label><input type="text" id="ni-nombre-${tipo}-${i}" class="fg-input" placeholder="Nombre completo"/></div></div>
+        <div class="form-grid">
+          <div class="fg"><label>RUT *</label><input type="text" id="ni-rut-${tipo}-${i}" class="fg-input" placeholder="XX.XXX.XXX-X"/></div>
+          <div class="fg"><label>N° Documento</label><input type="text" id="ni-numdoc-${tipo}-${i}" class="fg-input" placeholder="NNN.NNN.NNN" oninput="fmtNumDocNI(this)"/></div>
+        </div>
+        ${tipo === 'comp' ? `<div class="form-grid">
+          <div class="fg"><label>Estado civil *</label><select id="ni-ec-${tipo}-${i}" class="fg-input"><option value="">Seleccionar...</option>${['soltero(a)','casado(a)','casado(a), separado(a) totalmente de bienes','divorciado(a)','viudo(a)'].map(o=>`<option>${o}</option>`).join('')}</select></div>
+          <div class="fg"><label>Profesión *</label><input type="text" id="ni-prof-${tipo}-${i}" class="fg-input" placeholder="Ej: comerciante"/></div>
+        </div>` : ''}
+      </div>`;
+    }
+    container.innerHTML = html;
+    // Estilos inline para fg-input
+    container.querySelectorAll('.fg-input').forEach(el => {
+      el.style.cssText = 'width:100%;padding:9px 13px;border:1.5px solid #C1CBDF;border-radius:8px;font-size:13px;font-family:Plus Jakarta Sans,sans-serif;color:#0D1B3E;outline:none;box-sizing:border-box;background:white';
+      el.addEventListener('focus', () => el.style.borderColor = '#8B5CF6');
+      el.addEventListener('blur',  () => el.style.borderColor = '#C1CBDF');
+    });
+  }
+ 
+  function onCedulaNI(event, tipo, idx, lado) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const key = `${tipo}_${idx}_${lado}`;
+    const slot   = document.getElementById(`ni-slot-${tipo}-${idx}-${lado}`);
+    const status = document.getElementById(`ni-status-${tipo}-${idx}-${lado}`);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const base64 = e.target.result.split(',')[1];
+      const esPDF  = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+      archCedulasNI[key] = { base64, esPDF, mediaType: esPDF ? 'application/pdf' : (file.type || 'image/jpeg'), nombre: file.name };
+      slot.classList.add('cargada');
+      status.style.display  = 'inline-block';
+      status.className      = 'cedula-slot-status ced-st-ok';
+      status.textContent    = '✅ ' + file.name.substring(0, 20) + (file.name.length > 20 ? '…' : '');
+      const btn = document.getElementById(`ni-btn-${tipo}-${idx}`);
+      if (btn) btn.disabled = !(archCedulasNI[`${tipo}_${idx}_anv`] || archCedulasNI[`${tipo}_${idx}_rev`]);
+    };
+    reader.readAsDataURL(file);
+  }
+ 
+  async function extraerCedulaNI(tipo, idx) {
+    const btn = document.getElementById(`ni-btn-${tipo}-${idx}`);
+    btn.disabled = true;
+    btn.textContent = '⏳ Procesando con IA...';
+    const archAnv = archCedulasNI[`${tipo}_${idx}_anv`];
+    const archRev = archCedulasNI[`${tipo}_${idx}_rev`];
+    const content = [];
+    if (archAnv) content.push(archAnv.esPDF
+      ? { type:'document', source:{ type:'base64', media_type:'application/pdf', data: archAnv.base64 }}
+      : { type:'image',    source:{ type:'base64', media_type: archAnv.mediaType, data: archAnv.base64 }});
+    if (archRev) content.push(archRev.esPDF
+      ? { type:'document', source:{ type:'base64', media_type:'application/pdf', data: archRev.base64 }}
+      : { type:'image',    source:{ type:'base64', media_type: archRev.mediaType, data: archRev.base64 }});
+    content.push({ type:'text', text: `Eres experto en cédulas de identidad chilenas. Analiza ${content.length > 1 ? 'las imágenes del anverso y reverso' : 'la imagen'} de la cédula. Devuelve SOLO JSON sin texto adicional ni backticks:
+{"nombre":"nombre completo del titular","rut":"RUT con formato XX.XXX.XXX-X","num_documento":"número de 9 dígitos del reverso con formato NNN.NNN.NNN"}
+IMPORTANTE: El num_documento está en el REVERSO, son 9 dígitos separados por puntos, distinto al RUT. Si no encuentras un campo usa null.` });
+    try {
+      const resp = await fetch('/api/claude', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:300, messages:[{role:'user',content}] })
+      });
+      const data  = await resp.json();
+      if (data.error) throw new Error(data.error);
+      const texto = data.content?.[0]?.text || '';
+      const match = texto.match(/\{[\s\S]*\}/);
+      if (!match) throw new Error('Sin JSON');
+      const ex = JSON.parse(match[0]);
+      const setVal = (id, val) => { const el = document.getElementById(id); if(el && val) el.value = val; };
+      setVal(`ni-ced-${tipo}-${idx}-nombre`, ex.nombre);
+      if (ex.rut) { setVal(`ni-ced-${tipo}-${idx}-rut`, ex.rut); validarRutNI(document.getElementById(`ni-ced-${tipo}-${idx}-rut`), `ni-msg-${tipo}-${idx}`); }
+      if (ex.num_documento) { setVal(`ni-ced-${tipo}-${idx}-numdoc`, ex.num_documento); fmtNumDocNI(document.getElementById(`ni-ced-${tipo}-${idx}-numdoc`)); }
+      document.getElementById(`ni-datos-${tipo}-${idx}`)?.classList.add('vis');
+      btn.textContent = '✅ Extracción completada'; btn.style.background = '#10B981';
+      setTimeout(() => { btn.textContent = '🔄 Volver a extraer'; btn.style.background = ''; btn.disabled = false; }, 2000);
+    } catch(err) {
+      btn.textContent = '❌ Error — Reintentar'; btn.style.background = '#EF4444'; btn.disabled = false;
+      setTimeout(() => { btn.textContent = '🤖 Extraer datos con IA'; btn.style.background = ''; }, 3000);
+      console.error(err);
+    }
+  }
+ 
+  function validarRutNI(inputEl, msgId) {
+    const calcDV = r => { let s=0,m=2; for(let i=r.length-1;i>=0;i--){s+=parseInt(r[i])*m;m=m<7?m+1:2} const x=s%11; return x===0?'0':x===1?'k':String(11-x); };
+    const validar = r => { const l=r.replace(/[.\-]/g,'').toLowerCase(); return l.length>=2 && /^\d+$/.test(l.slice(0,-1)) && calcDV(l.slice(0,-1))===l.slice(-1); };
+    const fmt = r => { const l=r.replace(/[^0-9kK]/g,''); if(l.length<2)return l; return l.slice(0,-1).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+'-'+l.slice(-1); };
+    inputEl.value = fmt(inputEl.value.replace(/[^0-9kK]/g,''));
+    const msgEl = document.getElementById(msgId);
+    if (inputEl.value.length < 3) { inputEl.className='ced-input'; if(msgEl) msgEl.textContent=''; return; }
+    const ok = validar(inputEl.value);
+    inputEl.className = 'ced-input ' + (ok ? 'rut-ok' : 'rut-err');
+    if (msgEl) { msgEl.textContent = ok ? '✅ RUT válido' : '❌ RUT inválido'; msgEl.className = 'ced-rut-msg ' + (ok ? 'ced-rut-ok' : 'ced-rut-err'); }
+  }
+ 
+  function fmtNumDocNI(el) {
+    let d = el.value.replace(/[^0-9]/g,'').substring(0,9);
+    if (d.length > 6)      d = d.slice(0,3)+'.'+d.slice(3,6)+'.'+d.slice(6);
+    else if (d.length > 3) d = d.slice(0,3)+'.'+d.slice(3);
+    el.value = d;
+  }
+ 
+  function aplicarCedulaNI(tipo, idx) {
+    const nombre  = document.getElementById(`ni-ced-${tipo}-${idx}-nombre`)?.value?.trim();
+    const rut     = document.getElementById(`ni-ced-${tipo}-${idx}-rut`)?.value?.trim();
+    const numdoc  = document.getElementById(`ni-ced-${tipo}-${idx}-numdoc`)?.value?.trim();
+    // idx === 0 → campos principales; idx > 0 → campos adicionales
+    const sufijo  = idx === 0 ? '' : `_${tipo}_${idx}`;
+    const prefNom = idx === 0 ? (tipo==='comp' ? 'nombre_comprador' : 'nombre_vendedor') : `ni-nombre-${tipo}-${idx}`;
+    const prefRut = idx === 0 ? (tipo==='comp' ? 'rut_comprador'    : 'rut_vendedor')    : `ni-rut-${tipo}-${idx}`;
+    const prefDoc = idx === 0 ? (tipo==='comp' ? 'numdoc_comprador' : 'numdoc_vendedor') : `ni-numdoc-${tipo}-${idx}`;
+    const set = (id, val) => { const el=document.getElementById(id); if(el&&val) el.value=val; };
+    set(prefNom, nombre);
+    set(prefRut, rut);
+    set(prefDoc, numdoc);
+    // Feedback
+    const btn = event.currentTarget;
+    const orig = btn.textContent;
+    btn.textContent = '✅ ¡Aplicado!'; btn.style.background='#059669';
+    setTimeout(()=>{ btn.textContent=orig; btn.style.background=''; }, 2000);
   }
  
 </script>
