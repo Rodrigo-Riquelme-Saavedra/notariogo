@@ -18,6 +18,52 @@
     .doc-acciones{display:flex;gap:.75rem;margin-top:1rem}.btn-imprimir{background:#0D1B3E;color:white;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}.btn-imprimir:disabled{background:#C1CBDF;cursor:not-allowed}.btn-enviar{background:#10B981;color:white;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;flex:1}.btn-enviar:disabled{background:#C1CBDF;cursor:not-allowed}
     footer{background:#0D1B3E;padding:2rem;margin-top:3rem}.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}.footer-copy{font-size:12px;color:rgba(255,255,255,.35)}
     @media print{nav,.breadcrumb,.form-panel,.page-header,.codigo-doc,.progreso-wrap,.doc-acciones,footer,.preview-header{display:none!important}.form-layout{display:block;padding:0}.preview-panel{position:static}.preview-card{border:none;padding:0;box-shadow:none}.doc-legal{border:none;background:white;font-size:11pt;padding:1cm;min-height:unset;max-height:unset;overflow:visible}}
+ 
+    /* ── LECTOR CÉDULAS ── */
+    .cedula-section{background:#F7F9FC;border:2px solid #EEF2F9;border-radius:14px;padding:1.5rem;margin-bottom:1.25rem}
+    .cedula-section-titulo{font-size:13px;font-weight:700;color:#0D1B3E;margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+    .num-personas-wrap{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap}
+    .num-personas-label{font-size:12px;font-weight:700;color:#3A4A6B;text-transform:uppercase;letter-spacing:.04em}
+    .num-btn{width:36px;height:36px;border-radius:8px;border:1.5px solid #C1CBDF;background:white;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;color:#3A4A6B;display:flex;align-items:center;justify-content:center}
+    .num-btn.sel{border-color:#1E6FE8;background:#1E6FE8;color:white}
+    .num-btn:hover:not(.sel){border-color:#1E6FE8;color:#1E6FE8}
+    .persona-cards{display:flex;flex-direction:column;gap:1rem}
+    .persona-card{background:white;border:2px solid #EEF2F9;border-radius:12px;padding:1.25rem}
+    .persona-card-titulo{font-size:12px;font-weight:700;color:#1E40AF;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1rem;display:flex;align-items:center;gap:6px}
+    .cedulas-upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem}
+    @media(max-width:600px){.cedulas-upload-grid{grid-template-columns:1fr}}
+    .cedula-slot{border:2px dashed #C1CBDF;border-radius:10px;padding:1rem;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:#FAFAFA;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem}
+    .cedula-slot:hover{border-color:#1E6FE8;background:#F0F6FF}
+    .cedula-slot.cargada{border-color:#10B981;border-style:solid;background:#F0FFF4}
+    .cedula-slot.procesando{border-color:#F59E0B;border-style:solid;background:#FFFBEB;animation:pulseCed 1.2s ease-in-out infinite}
+    .cedula-slot.error-ced{border-color:#EF4444;border-style:solid;background:#FEF2F2}
+    @keyframes pulseCed{0%,100%{opacity:1}50%{opacity:.6}}
+    .cedula-slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .cedula-slot-icono{font-size:24px}
+    .cedula-slot-label{font-size:11px;font-weight:700;color:#3A4A6B}
+    .cedula-slot-desc{font-size:10px;color:#7888A8}
+    .cedula-slot-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;margin-top:.25rem}
+    .cedula-status-ok{background:#D1FAE5;color:#065F46}
+    .cedula-status-proc{background:#FEF3C7;color:#92400E}
+    .cedula-status-err{background:#FEE2E2;color:#991B1B}
+    .btn-extraer-cedula{background:linear-gradient(135deg,#1E6FE8,#3B8BFF);color:white;border:none;border-radius:8px;padding:9px 18px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:6px;width:100%;justify-content:center;margin-top:.5rem}
+    .btn-extraer-cedula:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(30,111,232,.35)}
+    .btn-extraer-cedula:disabled{background:#C1CBDF;box-shadow:none;transform:none;cursor:not-allowed}
+    .datos-extraidos-cedula{background:#E6F0FF;border:1.5px solid #C5D9FF;border-radius:10px;padding:.875rem 1rem;margin-top:.75rem;display:none}
+    .datos-extraidos-cedula.vis{display:block}
+    .dato-cedula-row{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.5rem}
+    .dato-cedula-row:last-child{margin-bottom:0}
+    .dato-cedula-label{font-size:10px;font-weight:700;color:#3A4A6B;text-transform:uppercase;letter-spacing:.03em;margin-bottom:.2rem}
+    .dato-cedula-input{width:100%;padding:7px 10px;border:1.5px solid #C5D9FF;border-radius:7px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;color:#0D1B3E;outline:none;box-sizing:border-box;background:white;transition:border-color .2s}
+    .dato-cedula-input:focus{border-color:#1E6FE8}
+    .dato-cedula-input.rut-ced-ok{border-color:#10B981;background:#F0FFF4}
+    .dato-cedula-input.rut-ced-err{border-color:#EF4444;background:#FEF2F2}
+    .rut-cedula-msg{font-size:10px;font-weight:600;margin-top:.15rem}
+    .rut-ced-msg-ok{color:#10B981}
+    .rut-ced-msg-err{color:#EF4444}
+    .btn-aplicar-cedula{background:#10B981;color:white;border:none;border-radius:7px;padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;margin-top:.625rem;transition:all .2s;width:100%}
+    .btn-aplicar-cedula:hover{background:#059669}
+    .ia-cedula-badge{font-size:9px;font-weight:700;background:#D1FAE5;color:#065F46;padding:2px 6px;border-radius:100px;margin-left:4px}
   </style>
 </head>
 <body>
@@ -49,48 +95,120 @@
  
   <!-- COMPRADOR -->
   <div class="form-section">
-    <div class="form-section-title">👤 Comprador (adquirente)</div>
-    <div style="font-size:12px;font-weight:700;color:#3A4A6B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.5rem;">Tipo de persona</div>
+    <div class="form-section-title">👤 Comprador(es) (adquirente)</div>
+ 
+    <!-- LECTOR CÉDULAS COMPRADORES -->
+    <div class="cedula-section">
+      <div class="cedula-section-titulo">🪪 Lector de cédulas de identidad — Compradores</div>
+      <div class="num-personas-wrap">
+        <span class="num-personas-label">N° de compradores:</span>
+        <button class="num-btn sel" onclick="setNumPersonas('comp',1,this)">1</button>
+        <button class="num-btn" onclick="setNumPersonas('comp',2,this)">2</button>
+        <button class="num-btn" onclick="setNumPersonas('comp',3,this)">3</button>
+        <button class="num-btn" onclick="setNumPersonas('comp',4,this)">4</button>
+        <button class="num-btn" onclick="setNumPersonas('comp',5,this)">5</button>
+      </div>
+      <div class="persona-cards" id="cards-comp"></div>
+    </div>
+ 
+    <!-- TIPO PERSONA -->
+    <div style="font-size:12px;font-weight:700;color:#3A4A6B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.5rem;margin-top:.25rem">Tipo de persona</div>
     <div class="persona-toggle">
       <button class="persona-btn sel" id="btn-natural" onclick="setPersona('natural')">👤 Persona natural</button>
       <button class="persona-btn" id="btn-juridica" onclick="setPersona('juridica')">🏢 Persona jurídica</button>
     </div>
+ 
     <!-- NATURAL -->
     <div id="bloque-natural">
-      <div class="form-row single"><div class="form-group"><label>Nombre completo *</label><input type="text" id="nombre_comprador" placeholder="Ej: Mitzy Yessenia Villarroel Olave" oninput="actualizar()"/></div></div>
-      <div class="form-row">
-        <div class="form-group" id="g-rut_comprador"><label>RUT *</label><div class="rut-wrap"><input type="text" id="rut_comprador" placeholder="Ej: 17.934.705-9" oninput="onRUT(this,'g-rut_comprador')" maxlength="12"/><span class="rut-icon" id="icon-rut_comprador"></span></div><div class="error-msg" id="err-rut_comprador">RUT inválido</div><div class="valid-msg" id="ok-rut_comprador">✓ Válido</div></div>
-        <div class="form-group"><label>Nacionalidad *</label><select id="nacionalidad_comprador" onchange="actualizar()"><option value="">Seleccionar...</option><option value="chileno(a)">Chileno(a)</option><option value="argentino(a)">Argentino(a)</option><option value="peruano(a)">Peruano(a)</option><option value="colombiano(a)">Colombiano(a)</option><option value="venezolano(a)">Venezolano(a)</option><option value="español(a)">Español(a)</option><option value="otro">Otro</option></select></div>
+      <div id="compradores-fields">
+        <!-- Se renderiza dinámicamente -->
+        <div class="form-row single"><div class="form-group"><label>Nombre completo *</label><input type="text" id="nombre_comprador" placeholder="Ej: Mitzy Yessenia Villarroel Olave" oninput="actualizar()"/></div></div>
+        <div class="form-row">
+          <div class="form-group" id="g-rut_comprador"><label>RUT *</label><div class="rut-wrap"><input type="text" id="rut_comprador" placeholder="Ej: 17.934.705-9" oninput="onRUT(this,'g-rut_comprador');actualizar()" maxlength="12"/><span class="rut-icon" id="icon-rut_comprador"></span></div><div class="error-msg" id="err-rut_comprador">RUT inválido</div><div class="valid-msg" id="ok-rut_comprador">✓ RUT válido</div></div>
+          <div class="form-group"><label>N° Documento (reverso cédula)</label><input type="text" id="numdoc_comprador" placeholder="Ej: 123.456.789"/></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Nacionalidad *</label><select id="nacionalidad_comprador" onchange="actualizar()"><option value="">Seleccionar...</option><option value="chilena">Chilena</option><option value="argentina">Argentina</option><option value="peruana">Peruana</option><option value="colombiana">Colombiana</option><option value="venezolana">Venezolana</option><option value="boliviana">Boliviana</option><option value="española">Española</option><option value="otra">Otra</option></select></div>
+          <div class="form-group"><label>Estado civil *</label><select id="estado_civil_comprador" onchange="actualizar()"><option value="">Seleccionar...</option><option value="soltero(a)">Soltero(a)</option><option value="casado(a)">Casado(a)</option><option value="casado(a), separado(a) totalmente de bienes">Casado(a), sep. bienes</option><option value="divorciado(a)">Divorciado(a)</option><option value="viudo(a)">Viudo(a)</option><option value="conviviente civil">Conviviente civil</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Profesión u oficio *</label><input type="text" id="profesion_comprador" placeholder="Ej: comerciante" oninput="actualizar()"/></div>
+          <div class="form-group"><label>Domicilio *</label><input type="text" id="domicilio_comprador" placeholder="Ej: de este domicilio" oninput="actualizar()"/></div>
+        </div>
       </div>
-      <div class="form-row">
-        <div class="form-group"><label>Estado civil *</label><select id="estado_civil_comprador" onchange="actualizar()"><option value="">Seleccionar...</option><option value="soltero(a)">Soltero(a)</option><option value="casado(a)">Casado(a)</option><option value="casado(a), separado(a) totalmente de bienes">Casado(a), sep. bienes</option><option value="divorciado(a)">Divorciado(a)</option><option value="viudo(a)">Viudo(a)</option><option value="conviviente civil">Conviviente civil</option></select></div>
-        <div class="form-group"><label>Profesión u oficio *</label><input type="text" id="profesion_comprador" placeholder="Ej: comerciante, ingeniero" oninput="actualizar()"/></div>
-      </div>
-      <div class="form-row single"><div class="form-group"><label>Domicilio *</label><input type="text" id="domicilio_comprador" placeholder="Ej: de este domicilio / calle X N°123, comuna de Y" oninput="actualizar()"/></div></div>
     </div>
+ 
     <!-- JURÍDICA -->
     <div id="bloque-juridica" style="display:none;">
       <div class="form-row single"><div class="form-group"><label>Razón social *</label><input type="text" id="razon_social" placeholder="Ej: Sociedad de Inversiones Idecc Limitada" oninput="actualizar()"/></div></div>
       <div class="form-row">
-        <div class="form-group" id="g-rut_empresa"><label>RUT empresa *</label><div class="rut-wrap"><input type="text" id="rut_empresa" placeholder="Ej: 76.495.694-K" oninput="onRUT(this,'g-rut_empresa')" maxlength="12"/><span class="rut-icon" id="icon-rut_empresa"></span></div><div class="error-msg" id="err-rut_empresa">RUT inválido</div><div class="valid-msg" id="ok-rut_empresa">✓ Válido</div></div>
+        <div class="form-group" id="g-rut_empresa"><label>RUT empresa *</label><div class="rut-wrap"><input type="text" id="rut_empresa" placeholder="Ej: 76.495.694-K" oninput="onRUT(this,'g-rut_empresa');actualizar()" maxlength="12"/><span class="rut-icon" id="icon-rut_empresa"></span></div><div class="error-msg" id="err-rut_empresa">RUT inválido</div><div class="valid-msg" id="ok-rut_empresa">✓ Válido</div></div>
         <div class="form-group"><label>Giro *</label><input type="text" id="giro_empresa" placeholder="Ej: sociedad del giro de su denominación" oninput="actualizar()"/></div>
       </div>
-      <div class="form-row single"><div class="form-group"><label>Representada por (nombre completo) *</label><input type="text" id="rep_nombre" placeholder="Ej: Mauricio Oliver Chacón Figueroa" oninput="actualizar()"/></div></div>
+      <div class="form-row single"><div class="form-group"><label>Representada por *</label><input type="text" id="rep_nombre" placeholder="Ej: Mauricio Oliver Chacón Figueroa" oninput="actualizar()"/></div></div>
       <div class="form-row">
-        <div class="form-group" id="g-rep_rut"><label>RUT representante *</label><div class="rut-wrap"><input type="text" id="rep_rut" placeholder="Ej: 9.870.721-2" oninput="onRUT(this,'g-rep_rut')" maxlength="12"/><span class="rut-icon" id="icon-rep_rut"></span></div><div class="error-msg" id="err-rep_rut">RUT inválido</div><div class="valid-msg" id="ok-rep_rut">✓ Válido</div></div>
+        <div class="form-group" id="g-rep_rut"><label>RUT representante *</label><div class="rut-wrap"><input type="text" id="rep_rut" placeholder="Ej: 9.870.721-2" oninput="onRUT(this,'g-rep_rut');actualizar()" maxlength="12"/><span class="rut-icon" id="icon-rep_rut"></span></div><div class="error-msg" id="err-rep_rut">RUT inválido</div><div class="valid-msg" id="ok-rep_rut">✓ Válido</div></div>
         <div class="form-group"><label>Estado civil rep. *</label><select id="rep_estado_civil" onchange="actualizar()"><option value="">Seleccionar...</option><option value="soltero(a)">Soltero(a)</option><option value="casado(a)">Casado(a)</option><option value="casado(a), separado(a) totalmente de bienes">Casado(a), sep. bienes</option><option value="divorciado(a)">Divorciado(a)</option><option value="viudo(a)">Viudo(a)</option></select></div>
       </div>
       <div class="form-row">
         <div class="form-group"><label>Profesión representante *</label><input type="text" id="rep_profesion" placeholder="Ej: ingeniero" oninput="actualizar()"/></div>
         <div class="form-group"><label>Domicilio empresa *</label><input type="text" id="rep_domicilio" placeholder="Ej: San Ignacio N°091-B, Quilicura" oninput="actualizar()"/></div>
       </div>
+      <!-- Cédula representante legal -->
+      <div class="cedula-section" style="margin-top:1rem">
+        <div class="cedula-section-titulo">🪪 Cédula del representante legal</div>
+        <div class="cedulas-upload-grid">
+          <div class="cedula-slot" onclick="document.getElementById('file-rep-anv').click()">
+            <input type="file" id="file-rep-anv" accept="image/*,.pdf" onchange="onCedulaFile(event,'rep',0,'anv')" onclick="event.stopPropagation()"/>
+            <div class="cedula-slot-icono">🪪</div>
+            <div class="cedula-slot-label">Anverso (frente)</div>
+            <div class="cedula-slot-desc">Foto o escaneo</div>
+            <div id="status-rep-0-anv" class="cedula-slot-status" style="display:none"></div>
+          </div>
+          <div class="cedula-slot" onclick="document.getElementById('file-rep-rev').click()">
+            <input type="file" id="file-rep-rev" accept="image/*,.pdf" onchange="onCedulaFile(event,'rep',0,'rev')" onclick="event.stopPropagation()"/>
+            <div class="cedula-slot-icono">🪪</div>
+            <div class="cedula-slot-label">Reverso (dorso)</div>
+            <div class="cedula-slot-desc">Foto o escaneo</div>
+            <div id="status-rep-0-rev" class="cedula-slot-status" style="display:none"></div>
+          </div>
+        </div>
+        <button class="btn-extraer-cedula" id="btn-extr-rep-0" onclick="extraerCedula('rep',0)" disabled>🤖 Extraer datos del representante</button>
+        <div class="datos-extraidos-cedula" id="datos-cedula-rep-0">
+          <div class="dato-cedula-row">
+            <div><div class="dato-cedula-label">Nombre</div><input type="text" id="ced-rep-0-nombre" class="dato-cedula-input" placeholder="Nombre extraído"/></div>
+            <div><div class="dato-cedula-label">RUT <span id="rut-val-rep-0"></span></div><input type="text" id="ced-rep-0-rut" class="dato-cedula-input" placeholder="RUT extraído" oninput="validarRutCedula(this,'msg-rep-0')"/><div class="rut-cedula-msg" id="msg-rep-0"></div></div>
+          </div>
+          <div><div class="dato-cedula-label">N° Documento (reverso)</div><input type="text" id="ced-rep-0-numdoc" class="dato-cedula-input" placeholder="Ej: 123.456.789"/></div>
+          <button class="btn-aplicar-cedula" onclick="aplicarCedula('rep',0)">✅ Aplicar al representante</button>
+        </div>
+      </div>
     </div>
   </div>
  
   <!-- VENDEDOR -->
   <div class="form-section">
-    <div class="form-section-title">👤 Vendedor (enajenante)</div>
+    <div class="form-section-title">👤 Vendedor(es) (enajenante)</div>
+ 
+    <!-- LECTOR CÉDULAS VENDEDORES -->
+    <div class="cedula-section">
+      <div class="cedula-section-titulo">🪪 Lector de cédulas de identidad — Vendedores</div>
+      <div class="num-personas-wrap">
+        <span class="num-personas-label">N° de vendedores:</span>
+        <button class="num-btn sel" onclick="setNumPersonas('vend',1,this)">1</button>
+        <button class="num-btn" onclick="setNumPersonas('vend',2,this)">2</button>
+        <button class="num-btn" onclick="setNumPersonas('vend',3,this)">3</button>
+        <button class="num-btn" onclick="setNumPersonas('vend',4,this)">4</button>
+        <button class="num-btn" onclick="setNumPersonas('vend',5,this)">5</button>
+      </div>
+      <div class="persona-cards" id="cards-vend"></div>
+    </div>
+ 
     <div class="form-row single"><div class="form-group"><label>Nombre completo *</label><input type="text" id="nombre_vendedor" placeholder="Ej: Jéssica de las Mercedes Álvarez Pacheco" oninput="actualizar()"/></div></div>
+    <div class="form-row">
+      <div class="form-group" id="g-rut_vendedor"><label>RUT *</label><div class="rut-wrap"><input type="text" id="rut_vendedor" placeholder="Ej: 12.345.678-9" oninput="onRUT(this,'g-rut_vendedor');actualizar()" maxlength="12"/><span class="rut-icon" id="icon-rut_vendedor"></span></div><div class="error-msg" id="err-rut_vendedor" style="display:none;font-size:11px;color:#EF4444">RUT inválido</div><div class="valid-msg" id="ok-rut_vendedor" style="display:none;font-size:11px;color:#10B981">✓ RUT válido</div></div>
+      <div class="form-group"><label>N° Documento (reverso cédula)</label><input type="text" id="numdoc_vendedor" placeholder="Ej: 123.456.789"/></div>
+    </div>
     <div class="form-row single"><div class="form-group"><label>Domicilio del vendedor</label><input type="text" id="domicilio_vendedor" placeholder="Ej: con domicilio en la comuna de San Miguel" oninput="actualizar()"/><div class="hint">Opcional — aparecerá en la escritura</div></div></div>
   </div>
  
@@ -211,7 +329,7 @@
   function v(id){return document.getElementById(id)?.value?.trim()||''}
   function campo(val,e){return val?`<span class="campo-ok">${val}</span>`:`<span class="campo-vacio">[${e}]</span>`}
  
-  document.addEventListener('DOMContentLoaded',()=>{document.getElementById('fecha').value=new Date().toISOString().split('T')[0];actualizar()});
+  document.addEventListener('DOMContentLoaded',()=>{document.getElementById('fecha').value=new Date().toISOString().split('T')[0];renderCardsPersonas('comp',1);renderCardsPersonas('vend',1);actualizar()});
  
   function actualizar(){
     const fechaLetras=v('fecha')?numLetras(v('fecha')):null;
@@ -286,6 +404,338 @@
       alert(`✅ Inscripción guardada.\nCódigo: ${codigoDoc}`);window.location.href='mis-documentos.html';
     }catch(e){alert('Error al guardar.');btnG.disabled=false;btnG.textContent='✅ Guardar inscripción';if(btnE)btnE.disabled=false;}
   }
+ 
+  // ══════════════════════════════════════════════════
+  // MÓDULO LECTOR DE CÉDULAS DE IDENTIDAD
+  // ══════════════════════════════════════════════════
+ 
+  // Estado de archivos cargados: {comp_0_anv, comp_0_rev, vend_0_anv, ...}
+  const archCedulas = {};
+ 
+  // ── RENDER CARDS DE PERSONAS ──
+  function renderCardsPersonas(tipo, n) {
+    const container = document.getElementById('cards-' + tipo);
+    if (!container) return;
+    let html = '';
+    for (let i = 0; i < n; i++) {
+      const rol = tipo === 'comp' ? 'Comprador' : 'Vendedor';
+      const keyAnv = `${tipo}_${i}_anv`;
+      const keyRev = `${tipo}_${i}_rev`;
+      html += `
+      <div class="persona-card">
+        <div class="persona-card-titulo">👤 ${rol} ${n > 1 ? i + 1 : ''}</div>
+        <div class="cedulas-upload-grid">
+          <!-- ANVERSO -->
+          <div class="cedula-slot" id="slot-${tipo}-${i}-anv"
+               onclick="document.getElementById('file-${tipo}-${i}-anv').click()">
+            <input type="file" id="file-${tipo}-${i}-anv" accept="image/*,.pdf"
+                   onchange="onCedulaFile(event,'${tipo}',${i},'anv')"
+                   onclick="event.stopPropagation()"/>
+            <div class="cedula-slot-icono">🪪</div>
+            <div class="cedula-slot-label">Anverso — Frente</div>
+            <div class="cedula-slot-desc">Foto o escaneo del frente</div>
+            <div id="status-${tipo}-${i}-anv" class="cedula-slot-status" style="display:none"></div>
+          </div>
+          <!-- REVERSO -->
+          <div class="cedula-slot" id="slot-${tipo}-${i}-rev"
+               onclick="document.getElementById('file-${tipo}-${i}-rev').click()">
+            <input type="file" id="file-${tipo}-${i}-rev" accept="image/*,.pdf"
+                   onchange="onCedulaFile(event,'${tipo}',${i},'rev')"
+                   onclick="event.stopPropagation()"/>
+            <div class="cedula-slot-icono">🪪</div>
+            <div class="cedula-slot-label">Reverso — Dorso</div>
+            <div class="cedula-slot-desc">Foto o escaneo del dorso<br><small style="color:#10B981;font-weight:700">N° documento (9 dígitos)</small></div>
+            <div id="status-${tipo}-${i}-rev" class="cedula-slot-status" style="display:none"></div>
+          </div>
+        </div>
+        <button class="btn-extraer-cedula" id="btn-extr-${tipo}-${i}"
+                onclick="extraerCedula('${tipo}',${i})" disabled>
+          🤖 Extraer datos con IA
+        </button>
+        <!-- DATOS EXTRAÍDOS -->
+        <div class="datos-extraidos-cedula" id="datos-cedula-${tipo}-${i}">
+          <div style="font-size:11px;font-weight:700;color:#1E40AF;margin-bottom:.75rem;display:flex;align-items:center;gap:6px">
+            ✨ Datos extraídos por IA
+            <span class="ia-cedula-badge">Claude AI</span>
+          </div>
+          <div class="dato-cedula-row">
+            <div>
+              <div class="dato-cedula-label">Nombre completo</div>
+              <input type="text" id="ced-${tipo}-${i}-nombre" class="dato-cedula-input"
+                     placeholder="Nombre extraído del anverso"/>
+            </div>
+            <div>
+              <div class="dato-cedula-label">RUT</div>
+              <input type="text" id="ced-${tipo}-${i}-rut" class="dato-cedula-input"
+                     placeholder="RUT extraído"
+                     oninput="validarRutCedula(this,'msg-${tipo}-${i}')"/>
+              <div class="rut-cedula-msg" id="msg-${tipo}-${i}"></div>
+            </div>
+          </div>
+          <div>
+            <div class="dato-cedula-label">N° Documento — reverso (9 dígitos con puntos)</div>
+            <input type="text" id="ced-${tipo}-${i}-numdoc" class="dato-cedula-input"
+                   placeholder="Ej: 123.456.789"
+                   oninput="formatNumDoc(this)"/>
+            <div style="font-size:10px;color:#7888A8;margin-top:.2rem">Campo de 9 números separados por puntos del reverso de la cédula</div>
+          </div>
+          <button class="btn-aplicar-cedula" onclick="aplicarCedula('${tipo}',${i})">
+            ✅ Aplicar datos al formulario
+          </button>
+        </div>
+      </div>`;
+    }
+    container.innerHTML = html;
+  }
+ 
+  // ── SELECCIONAR NÚMERO DE PERSONAS ──
+  function setNumPersonas(tipo, n, btnEl) {
+    // Actualizar botones
+    const prefix = btnEl.parentElement;
+    prefix.querySelectorAll('.num-btn').forEach(b => b.classList.remove('sel'));
+    btnEl.classList.add('sel');
+    // Limpiar archivos anteriores
+    Object.keys(archCedulas).forEach(k => { if (k.startsWith(tipo + '_')) delete archCedulas[k]; });
+    // Re-renderizar cards
+    renderCardsPersonas(tipo, n);
+  }
+ 
+  // ── CARGAR ARCHIVO ──
+  function onCedulaFile(event, tipo, idx, lado) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const key = `${tipo}_${idx}_${lado}`;
+    const slotEl   = document.getElementById(`slot-${tipo}-${idx}-${lado}`);
+    const statusEl = document.getElementById(`status-${tipo}-${idx}-${lado}`);
+ 
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const base64 = e.target.result.split(',')[1];
+      const esPDF  = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+      archCedulas[key] = { base64, esPDF, mediaType: esPDF ? 'application/pdf' : (file.type || 'image/jpeg'), nombre: file.name };
+ 
+      slotEl.classList.remove('error-ced');
+      slotEl.classList.add('cargada');
+      statusEl.style.display  = 'inline-block';
+      statusEl.className      = 'cedula-slot-status cedula-status-ok';
+      statusEl.textContent    = '✅ ' + file.name.substring(0, 22) + (file.name.length > 22 ? '…' : '');
+ 
+      // Habilitar botón si tiene al menos un lado cargado
+      const btnExtr = document.getElementById(`btn-extr-${tipo}-${idx}`);
+      const tieneAlgo = archCedulas[`${tipo}_${idx}_anv`] || archCedulas[`${tipo}_${idx}_rev`];
+      if (btnExtr) btnExtr.disabled = !tieneAlgo;
+    };
+    reader.readAsDataURL(file);
+  }
+ 
+  // ── EXTRAER CON IA ──
+  async function extraerCedula(tipo, idx) {
+    const btnExtr = document.getElementById(`btn-extr-${tipo}-${idx}`);
+    btnExtr.disabled = true;
+    btnExtr.textContent = '⏳ Procesando con IA...';
+ 
+    const archAnv = archCedulas[`${tipo}_${idx}_anv`];
+    const archRev = archCedulas[`${tipo}_${idx}_rev`];
+ 
+    // Construir content para Claude: puede tener 1 o 2 imágenes
+    const content = [];
+    if (archAnv) {
+      content.push(archAnv.esPDF
+        ? { type:'document', source:{ type:'base64', media_type:'application/pdf', data: archAnv.base64 }}
+        : { type:'image',    source:{ type:'base64', media_type: archAnv.mediaType, data: archAnv.base64 }});
+    }
+    if (archRev) {
+      content.push(archRev.esPDF
+        ? { type:'document', source:{ type:'base64', media_type:'application/pdf', data: archRev.base64 }}
+        : { type:'image',    source:{ type:'base64', media_type: archRev.mediaType, data: archRev.base64 }});
+    }
+    content.push({ type:'text', text: `Eres experto en lectura de cédulas de identidad chilenas.
+Analiza ${content.length - 1 === 2 ? 'las dos imágenes (anverso y reverso)' : 'la imagen'} de la cédula de identidad chilena.
+ 
+Extrae ÚNICAMENTE estos campos y devuelve SOLO JSON válido sin texto adicional ni backticks:
+{
+  "nombre": "Nombre completo como aparece en la cédula",
+  "rut": "RUT con formato XX.XXX.XXX-X",
+  "num_documento": "Número de 9 dígitos con puntos del REVERSO, formato NNN.NNN.NNN"
+}
+ 
+IMPORTANTE:
+- El RUT aparece en el anverso (frente) generalmente bajo el nombre
+- El número de documento es un campo de 9 dígitos separados por puntos que aparece en el REVERSO (dorso), diferente al RUT
+- Si no encuentras algún campo, usa null
+- Solo devuelve el JSON, nada más` });
+ 
+    try {
+      const resp = await fetch('/api/claude', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 300,
+          messages: [{ role: 'user', content }]
+        })
+      });
+ 
+      const data = await resp.json();
+      if (data.error) throw new Error(data.error);
+      const texto = data.content?.[0]?.text || '';
+      const match = texto.match(/\{[\s\S]*\}/);
+      if (!match) throw new Error('Sin JSON en respuesta');
+      const extraido = JSON.parse(match[0]);
+ 
+      // Rellenar campos extraídos
+      const campoNombre  = document.getElementById(`ced-${tipo}-${idx}-nombre`);
+      const campoRut     = document.getElementById(`ced-${tipo}-${idx}-rut`);
+      const campoNumDoc  = document.getElementById(`ced-${tipo}-${idx}-numdoc`);
+ 
+      if (campoNombre && extraido.nombre)      campoNombre.value  = extraido.nombre;
+      if (campoRut    && extraido.rut) {
+        campoRut.value = extraido.rut;
+        validarRutCedula(campoRut, `msg-${tipo}-${idx}`);
+      }
+      if (campoNumDoc && extraido.num_documento) {
+        campoNumDoc.value = extraido.num_documento;
+        formatNumDoc(campoNumDoc);
+      }
+ 
+      // Mostrar panel de datos
+      const panel = document.getElementById(`datos-cedula-${tipo}-${idx}`);
+      if (panel) panel.classList.add('vis');
+ 
+      btnExtr.textContent = '✅ Extracción completada';
+      btnExtr.style.background = '#10B981';
+      setTimeout(() => {
+        btnExtr.textContent = '🔄 Volver a extraer';
+        btnExtr.style.background = '';
+        btnExtr.disabled = false;
+      }, 2000);
+ 
+    } catch(err) {
+      btnExtr.textContent = '❌ Error — Reintentar';
+      btnExtr.style.background = '#EF4444';
+      btnExtr.disabled = false;
+      console.error('Error extracción cédula:', err);
+      setTimeout(() => { btnExtr.textContent = '🤖 Extraer datos con IA'; btnExtr.style.background = ''; }, 3000);
+    }
+  }
+ 
+  // ── VALIDAR RUT EN CAMPO CÉDULA ──
+  function validarRutCedula(inputEl, msgId) {
+    const msgEl = document.getElementById(msgId);
+    inputEl.value = formatRUT(inputEl.value.replace(/[^0-9kK]/g, ''));
+    if (inputEl.value.length < 3) {
+      inputEl.className = 'dato-cedula-input';
+      if (msgEl) msgEl.textContent = '';
+      return;
+    }
+    const ok = validarRUT(inputEl.value);
+    inputEl.className = 'dato-cedula-input ' + (ok ? 'rut-ced-ok' : 'rut-ced-err');
+    if (msgEl) {
+      msgEl.textContent  = ok ? '✅ RUT válido' : '❌ RUT inválido';
+      msgEl.className    = 'rut-cedula-msg ' + (ok ? 'rut-ced-msg-ok' : 'rut-ced-msg-err');
+    }
+  }
+ 
+  // ── FORMATEAR N° DOCUMENTO (9 dígitos con puntos) ──
+  function formatNumDoc(inputEl) {
+    let digits = inputEl.value.replace(/[^0-9]/g, '').substring(0, 9);
+    if (digits.length > 6)      digits = digits.slice(0,3) + '.' + digits.slice(3,6) + '.' + digits.slice(6);
+    else if (digits.length > 3) digits = digits.slice(0,3) + '.' + digits.slice(3);
+    inputEl.value = digits;
+  }
+ 
+  // ── APLICAR DATOS AL FORMULARIO PRINCIPAL ──
+  function aplicarCedula(tipo, idx) {
+    const nombre  = document.getElementById(`ced-${tipo}-${idx}-nombre`)?.value?.trim();
+    const rut     = document.getElementById(`ced-${tipo}-${idx}-rut`)?.value?.trim();
+    const numDoc  = document.getElementById(`ced-${tipo}-${idx}-numdoc`)?.value?.trim();
+ 
+    if (tipo === 'comp') {
+      // Primer comprador → campos principales del formulario
+      if (idx === 0) {
+        if (nombre  && document.getElementById('nombre_comprador'))   { document.getElementById('nombre_comprador').value   = nombre;  }
+        if (rut     && document.getElementById('rut_comprador'))      { document.getElementById('rut_comprador').value      = rut; onRUT(document.getElementById('rut_comprador'),'g-rut_comprador'); }
+        if (numDoc  && document.getElementById('numdoc_comprador'))   { document.getElementById('numdoc_comprador').value   = numDoc;  }
+      }
+      // Compradores adicionales → campos extra dinámicos
+      else {
+        aplicarCompradorAdicional(idx, nombre, rut, numDoc);
+      }
+    }
+ 
+    if (tipo === 'vend') {
+      if (idx === 0) {
+        if (nombre  && document.getElementById('nombre_vendedor'))    { document.getElementById('nombre_vendedor').value    = nombre;  }
+        if (rut     && document.getElementById('rut_vendedor'))       { document.getElementById('rut_vendedor').value       = rut; onRUT(document.getElementById('rut_vendedor'),'g-rut_vendedor'); }
+        if (numDoc  && document.getElementById('numdoc_vendedor'))    { document.getElementById('numdoc_vendedor').value    = numDoc;  }
+      } else {
+        aplicarVendedorAdicional(idx, nombre, rut, numDoc);
+      }
+    }
+ 
+    if (tipo === 'rep') {
+      if (nombre  && document.getElementById('rep_nombre'))           { document.getElementById('rep_nombre').value         = nombre;  }
+      if (rut     && document.getElementById('rep_rut'))              { document.getElementById('rep_rut').value            = rut; onRUT(document.getElementById('rep_rut'),'g-rep_rut'); }
+    }
+ 
+    actualizar();
+    // Feedback visual
+    const btn = event.target;
+    btn.textContent = '✅ Aplicado';
+    btn.style.background = '#059669';
+    setTimeout(() => { btn.textContent = '✅ Aplicar datos al formulario'; btn.style.background = ''; }, 2000);
+  }
+ 
+  // Compradores/Vendedores adicionales (2-5) → agregar sección dinámica
+  function aplicarCompradorAdicional(idx, nombre, rut, numDoc) {
+    let seccion = document.getElementById(`comp-adicional-${idx}`);
+    if (!seccion) {
+      seccion = document.createElement('div');
+      seccion.id = `comp-adicional-${idx}`;
+      seccion.style.cssText = 'background:#F0F6FF;border:1.5px solid #C5D9FF;border-radius:10px;padding:1rem;margin-top:.75rem';
+      seccion.innerHTML = `
+        <div style="font-size:11px;font-weight:700;color:#1E40AF;text-transform:uppercase;margin-bottom:.75rem">Comprador ${idx+1}</div>
+        <div class="form-row single"><div class="form-group"><label>Nombre *</label><input type="text" id="nombre_comp_${idx}" oninput="actualizar()"/></div></div>
+        <div class="form-row">
+          <div class="form-group"><label>RUT *</label><input type="text" id="rut_comp_${idx}" oninput="actualizar()"/></div>
+          <div class="form-group"><label>N° Documento</label><input type="text" id="numdoc_comp_${idx}"/></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Estado civil *</label><select id="ec_comp_${idx}" onchange="actualizar()"><option value="">Seleccionar...</option><option>soltero(a)</option><option>casado(a)</option><option>casado(a), separado(a) totalmente de bienes</option><option>divorciado(a)</option><option>viudo(a)</option><option>conviviente civil</option></select></div>
+          <div class="form-group"><label>Profesión *</label><input type="text" id="prof_comp_${idx}" oninput="actualizar()"/></div>
+        </div>`;
+      document.getElementById('compradores-fields').appendChild(seccion);
+    }
+    if (nombre) document.getElementById(`nombre_comp_${idx}`).value  = nombre;
+    if (rut)    document.getElementById(`rut_comp_${idx}`).value     = rut;
+    if (numDoc) document.getElementById(`numdoc_comp_${idx}`).value  = numDoc;
+  }
+ 
+  function aplicarVendedorAdicional(idx, nombre, rut, numDoc) {
+    let seccion = document.getElementById(`vend-adicional-${idx}`);
+    if (!seccion) {
+      seccion = document.createElement('div');
+      seccion.id = `vend-adicional-${idx}`;
+      seccion.style.cssText = 'background:#F0FFF4;border:1.5px solid #A7F3D0;border-radius:10px;padding:1rem;margin-top:.75rem';
+      seccion.innerHTML = `
+        <div style="font-size:11px;font-weight:700;color:#065F46;text-transform:uppercase;margin-bottom:.75rem">Vendedor ${idx+1}</div>
+        <div class="form-row single"><div class="form-group"><label>Nombre *</label><input type="text" id="nombre_vend_${idx}" oninput="actualizar()"/></div></div>
+        <div class="form-row">
+          <div class="form-group"><label>RUT *</label><input type="text" id="rut_vend_${idx}" oninput="actualizar()"/></div>
+          <div class="form-group"><label>N° Documento</label><input type="text" id="numdoc_vend_${idx}"/></div>
+        </div>`;
+      // Insertar después del campo nombre_vendedor principal
+      const fieldNombre = document.getElementById('nombre_vendedor');
+      if (fieldNombre) fieldNombre.closest('.form-row').after(seccion);
+      else document.querySelector('.form-section:has(#nombre_vendedor)')?.appendChild(seccion);
+    }
+    if (nombre) document.getElementById(`nombre_vend_${idx}`).value  = nombre;
+    if (rut)    document.getElementById(`rut_vend_${idx}`).value     = rut;
+    if (numDoc) document.getElementById(`numdoc_vend_${idx}`).value  = numDoc;
+  }
+ 
+ 
+ 
 </script>
 </body>
 </html>
